@@ -1,0 +1,142 @@
+.film {
+  margin-top: 80px;
+
+  &__title {
+    margin: 0;
+    font-size: 58px;
+    line-height: 64px;
+    font-weight: 600;
+    color: #FFFFFF;
+  }
+  &__genres-list {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 24px;
+    display: flex;
+    gap: 12px;
+  }
+  &__genres-item {
+    cursor: pointer;
+    font-size: 24px;
+    line-height: 28px;
+    font-weight: 500;
+    padding: 8px;
+    border-radius: 23px;
+    border: 1px solid #FFFFFF;
+    color: #FFFFFF;
+    transition: color .3s, border-color .3s;
+
+    &:hover {
+      border-color: #fff5a1;
+      color: #fff5a1;
+    }
+  }
+  &__heading {
+    display: flex;
+    column-gap: 16px;
+  }
+  &__main {
+    display: flex;
+    column-gap: 28px;
+  }
+  &__image {
+    width: 400px;
+    height: 534px;
+    flex-shrink: 0
+  }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  &__description {
+    margin: 0;
+    font-size: 24px;
+    line-height: 28px;
+    font-weight: 500;
+    color: #FFFFFF;
+    max-width: 852px;
+    width: 100%;
+  }
+  &__watch {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    p {
+      margin: 0;
+      font-size: 22px;
+      line-height: 24px;
+      font-weight: 500;
+      color: #FFFFFF;
+    }
+
+    &-list {
+      list-style: none;
+      display: flex;
+      gap: 12px;
+      padding: 0;
+      margin: 0;
+    }
+    &-item {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      transition: box-shadow .5s;
+
+      &:hover {
+        box-shadow: 0px 0px 14px 0px rgba(255,255,255,0.75);
+      }
+
+      img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+      }
+    }
+  }
+  &__rating {
+    margin: 0;
+    padding: 0 12px;
+    border-radius: 20px;
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 64px;
+    color: #FFFFFF;
+    max-height: 64px;
+
+    &_bad {
+      background-color: #7c3131;
+    }
+    &_average {
+      background-color: #bfbf4b;
+    }
+    &_good {
+      background-color: #119011;
+    }
+  }
+}
+
+@media (max-width: 1280px) {
+  .film__image {
+    width: 40%;
+    height: fit-content;
+  }
+  .film__description {
+    font-size: 18px;
+    line-height: 22px;
+  }
+}
+@media (max-width: 768px) {
+  .film__main {
+    flex-direction: column;
+  }
+  .film__image {
+    width: 100%;
+    height: fit-content;
+  }
+  .film__description {
+    font-size: 18px;
+    line-height: 22px;
+  }
+}
