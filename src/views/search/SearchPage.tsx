@@ -8,23 +8,34 @@ import { IFilm } from "../../models/models";
 import Loader from "../../Components/Loader/Loader";
 
 export default function SearchPage(): ReactElement {
-  const [filmsData, setFilmsData] = useState<FilmItemType[]>([]);
+  const [filmsData, setFilmsData] = useState<IFilm[]>([]);
 
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [testQuery, setTestQuery] = useState<string>(searchQuery);
+  const [storageFilmsData, setStorageFilmsData] = useState<string|null>(localStorage.getItem("JSONFilmsData"));
 
-  const {isLoading, isError, data} = useSearchFilmsQuery(testQuery, {
+  const {isSuccess, isLoading, data: fetchedFilmsData} = useSearchFilmsQuery(testQuery, {
     skip: testQuery.length < 1
   });
 
-  useEffect(() => {
-    console.log(filmsData)
-  }, [filmsData])
+  const currentData = fetchedFilmsData || JSON.parse(storageFilmsData || '');
 
   function searchMovie(event: React.FormEvent): void {
     event.preventDefault();
-    setTestQuery(searchQuery)
+    setTestQuery(searchQuery);
   }
+
+  useEffect(() => {
+    if (!storageFilmsData) return;
+    console.log((JSON.parse(storageFilmsData)))
+  }, [])
+
+  useEffect(() => {
+    if (!isSuccess) return;
+    setFilmsData(fetchedFilmsData);
+    setStorageFilmsData(JSON.stringify(fetchedFilmsData))
+    localStorage.setItem('JSONFilmsData', JSON.stringify(fetchedFilmsData))
+  }, [isSuccess]);
 
   return (
     <div className="search">
@@ -36,18 +47,18 @@ export default function SearchPage(): ReactElement {
         isLoading ? <Loader /> :
         <ul className="film-items">
           {
-            data?.map((film: IFilm) => {
-
+            currentData.map((film: IFilm) => {
               return <FilmItem 
                       name={film.name} 
                       description={film.description} 
                       genres={film.genres} 
-                      movieLength={film.movieLength} 
+                      movieLength={film.movieLength || film.seriesLength} 
                       rating={film.rating.kp > 0 ? film.rating.kp : film.rating.imdb}
                       poster={film.poster?.previewUrl}
                       top={film.top250}
                       key={film.id}
                       id={film.id}
+                      isSeries={(film.seriesLength||0) > film.movieLength}
                       />
             })
           }

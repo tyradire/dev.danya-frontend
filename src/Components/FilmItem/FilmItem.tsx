@@ -2,18 +2,23 @@ import { ReactElement, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FilmGenresType } from "../../types/FilmTypes";
 import './film-item.scss';
-import defaultMovieImage from '../../assets/images/default-movie-image.svg';
+import defaultMoviePreview from '../../assets/images/default-movie-preview-image.svg';
+import likeIconActive from '../../assets/images/like-icon-active.svg';
+import likeIcon from '../../assets/images/like-icon-disabled.svg';
 
-export default function FilmItem({ name, description, genres, movieLength, rating, poster, top, id }: 
+export default function FilmItem({ name, description, genres, movieLength, rating, poster, top, id, isSeries }: 
   { name: string, 
-    description: string, 
+    description: string,
     genres: FilmGenresType[], 
-    movieLength: number,
+    movieLength?: number,
     rating: number,
     poster?: string,
     top?: number,
-    id: number
+    id: number,
+    isSeries: boolean;
   }): ReactElement {
+
+  const [isLiked, setIsLiked] = useState<boolean>(false);
 
   function setFilmLength(length: number): string {
     if (length > 60) {
@@ -21,40 +26,51 @@ export default function FilmItem({ name, description, genres, movieLength, ratin
     } else return length + ' мин';
   }
 
-  console.log(name, poster, defaultMovieImage)
-
   return (
     <li className="film-item">
-      <div className="film-item__heading">
-        <img src={poster || defaultMovieImage} className="film-item__image" />
-        <div className="film-item__ranks">
+      <Link to={`/search/${id}`}>
+        <div className="film-item__heading">
+          <img src={poster || defaultMoviePreview} className="film-item__image" />
           {
-            rating ? <p className={`${rating > 8 ? 'film-item__rating film-item__rating_good' : rating > 6 ? 'film-item__rating film-item__rating_average' : 'film-item__rating film-item__rating_bad'}`}>{(rating.toString().slice(0,3))}</p>
-            : ''
+            rating > 0 &&
+            <div className="film-item__ranks">
+              {
+                rating ? <p className={`${rating > 8 ? 'film-item__rating film-item__rating_good' : rating > 6 ? 'film-item__rating film-item__rating_average' : 'film-item__rating film-item__rating_bad'}`}>{(rating.toString().slice(0,3))}</p>
+                : ''
+              }
+              {
+                top && <p className="film-item__top">Топ {top}</p>
+              }
+            </div>
           }
-          {
-            top && <p className="film-item__top">Топ {top}</p>
-          }
+          <p className="film-item__name">{name}</p>
         </div>
+      </Link>
+      <div className="film-item__discription-container">
+        {
+          description ? <p className="film-item__description film-item__description_expand">{description}</p> 
+          : <p className="film-item__description film-item__description_disabled">Описание отсутствует</p>
+        }
       </div>
-      <Link to={`/search/${id}`} className="film-item__name">{name}</Link>
       {
-        description ? <p className="film-item__description film-item__description_expand">{description}</p> 
-        : <p className="film-item__description film-item__description_disabled">Описание отсутствует</p>
+        movieLength ? <p className="film-item__length">{
+          isSeries ? `Серия ~ ${setFilmLength(movieLength)}` :
+          setFilmLength(movieLength)
+        }</p>
+        : ''
       }
       <ul className="film-item__genres-list">
         {
           genres.map((genre, index) => {
             if (index < 3) {
-              return <li className="film-item__genres-item">{genre.name}</li>
+              return <li className="film-item__genres-item" key={index}>{genre.name}</li>
             } else return;
           })
         }
       </ul>
-      {
-        movieLength ? <p className="film-item__length">{setFilmLength(movieLength)}</p>
-        : ''
-      }
+      <button className="film-item__fav-btn" onClick={() => setIsLiked(!isLiked)}>
+        <img src={isLiked ? likeIconActive : likeIcon} width="22px" height="22px"/>
+      </button>
     </li>
   )
 }

@@ -1,7 +1,8 @@
 .film-items {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 40px;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fit, 260px);
+  gap: 32px;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -11,14 +12,12 @@
 .film-item {
   display: flex;
   flex-direction: column;
-
-  max-height: 520px;
-  min-height: 520px;
-
-  cursor: pointer;
-  padding: 24px;
+  position: relative;
+  padding: 0 16px 8px 16px;
+  border-radius: 8px;
   box-sizing: border-box;
   transition: background-color .3s;
+  box-shadow: 0 0 31px -6px rgba(0, 0, 0, .5);
 
   a {
     list-style: none;
@@ -33,36 +32,100 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    position: relative;
+    top: 0;
+    left: -16px;
+    border-radius: 8px 8px 0 0;
+    width: 260px;
+    height: 390px;
+    overflow: hidden;
+
+    &:hover .film-item__name {
+      transform: translateY(0);
+    }
+  }
+  &__fav-btn {
+    cursor: pointer;
+    padding: 0;
+    position: absolute;
+    bottom: -4px;
+    right: -4px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background-color: #3e3e3e;
+    z-index: 1;
+    transition: box-shadow .3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img svg path {
+      fill: white;
+    }
+
+    &:hover {
+      box-shadow: 0px 0px 8px 0px rgba(207, 138, 138, 0.75);
+    }
   }
   &__image {
-    width: 146px;
-    height: 220px;
+    position: absolute;
+    width: 260px;
+    height: 390px;
+    border-radius: 8px 8px 0 0;
   }
   &__ranks {
+    font-family: 'Montserrat', sans-serif;
+    position: absolute;
+    top: 12px;
+    right: 12px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     gap: 8px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    width: 56px;
+    box-shadow: 0 0 16px 0 hsla(0, 0%, 100%, .35);
   }
   &__name {
+    position: absolute;
+    bottom: 0;
+    left: 0;
     margin: 0;
-    margin-top: 12px;
+    padding: 0 4px 8px 4px;
+    width: 100%;
+    box-sizing: border-box;
     font-size: 24px;
-    line-height: normal;
+    height: fit-content;
+    line-height: 28px;
     color: #FFFFFF;
     display: -webkit-box; 
     text-overflow: ellipsis;
     overflow: hidden;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+    text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.3);
+    background-color: rgba(0, 0, 0, 0.7);
+    transform: translateY(100%);
+    transition: transform .3s;
+  }
+  &__discription-container {
+    position: relative;
   }
   &__description {
-    margin: 8px -12px 0 -12px;
-    padding: 12px;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    margin-top: 8px;
     font-size: 16px;
     line-height: normal;
+    font-weight: 400;
     color: #FFFFFF;
-    height: 52px;
+    height: 60px;
     border-radius: 8px;
 
     display: -webkit-box; 
@@ -74,12 +137,18 @@
 
     &_expand {
       &:hover {
+        position: absolute;
+        top: -8px;
+        left: -25%;
         overflow: visible;
         text-overflow: unset;
         display: flex;
         background-color: rgb(255 255 255 / 90%);
         color: #000000;
         height: fit-content;
+        padding: 12px;
+        box-sizing: border-box;
+        width: 150%;
 
         z-index: 2;
       }
@@ -93,13 +162,11 @@
   &__genres-list {
     height: 48px;
     list-style: none;
-    margin-top: 8px;
+    margin-top: 12px;
     padding: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-
-    z-index: 2;
+    gap: 2px;
   }
   &__genres-item {
     height: 20px;
@@ -107,20 +174,21 @@
     box-sizing: border-box;
     font-size: 12px;
     line-height: 14px;
-    background-color: #323232;
+    background-color: #232526;
     color: #FFFFFF;
-    border: 1px solid #FFFFFF;
+    border: 1px solid #353535;
     border-radius: 12px;
   }
   &__length {
     margin: 0;
     margin-top: auto;
-    color: #FFFFFF;
+    color: #fff9c6;
     font-size: 14px;
     line-height: 16px;
-    font-weight: 600;
+    font-weight: 400;
   }
   &__rating {
+    font-family: inherit;
     margin: 0;
     padding: 0;
     font-size: 20px;
@@ -128,20 +196,21 @@
     font-weight: 600;
 
     &_bad {
-      color: #7c3131;
+      color: #edb5b5;
     }
     &_average {
-      color: #bfbf4b;
+      color: #d7d781;
     }
     &_good {
-      color: #119011;
+      color: #498a49;
     }
   }
   &__top {
+    font-family: inherit;
     margin: 0;
     font-size: 14px;
     line-height: 14px;
-    font-weight: 600;
-    color: #454545;
+    font-weight: 200;
+    color: #cec99d;
   }
 }

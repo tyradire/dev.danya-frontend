@@ -20,8 +20,8 @@ export default function FilmPage(): ReactElement {
         }
       </div>
       <ul className="film__genres-list">{
-        film?.genres.map((genre) => {
-          return <li className="film__genres-item">{genre.name}</li>
+        film?.genres.map((genre, index) => {
+          return <li className="film__genres-item" key={index}>{genre.name}</li>
           })
         }
       </ul>
@@ -33,8 +33,8 @@ export default function FilmPage(): ReactElement {
             film?.watchability.items.length !== 0 ?
             <div className="film__watch">
               <p>Смотреть:</p>
-              <ul className="film__watch-list">{film?.watchability.items.map((resource) => {
-                return <li className="film__watch-item"><a href={resource.url} target="_blank"><img src={resource.logo.url} width="60px" height="60px"/></a></li>
+              <ul className="film__watch-list">{film?.watchability.items.map((resource, index) => {
+                return <li className="film__watch-item" key={index}><a href={resource.url} target="_blank"><img src={resource.logo.url} width="60px" height="60px"/></a></li>
               })}</ul>
             </div>
             : ''

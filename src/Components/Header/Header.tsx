@@ -1,8 +1,9 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import mobileProfileIcon from '../../assets/images/default-user-icon.svg';
 import './Header.scss';
 
-export default function Header(): ReactElement {
+export default function Header({isMobileDevice}: {isMobileDevice: boolean}): ReactElement {
 
   const [movieCounter, setMovieCounter] = useState<number>(0);
 
@@ -21,7 +22,14 @@ export default function Header(): ReactElement {
           </li>
         </ul>
       </nav>
-      <Link to="profile" className="nav__profile">Профиль</Link>
+      {
+        isMobileDevice ? 
+        <Link to="profile" className="nav__profile">Профиль</Link> 
+        : 
+        <Link to="profile" className="nav__mobile-profile">
+          <img src={mobileProfileIcon}/>
+        </Link>
+      }
     </header>
   )
 } 

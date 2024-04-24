@@ -42,7 +42,8 @@
   &__image {
     width: 400px;
     height: 534px;
-    flex-shrink: 0
+    flex-shrink: 0;
+    object-fit: cover;
   }
   &__content {
     display: flex;
