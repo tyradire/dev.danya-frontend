@@ -7,6 +7,7 @@ import { useSearchFilmsQuery } from '../../store/films/api.kinopoisk';
 import { IFilm } from "../../models/models";
 import Loader from "../../Components/Loader/Loader";
 import { useParams } from "react-router-dom";
+import FilmItems from "../../Components/FilmItems/FilmItems";
 
 export default function SearchPage(): ReactElement {
 
@@ -38,26 +39,7 @@ export default function SearchPage(): ReactElement {
         <button className="search__submit-btn" type="submit"></button>
       </form>
       {
-        isLoading ? <Loader /> :
-        <ul className="film-items">
-          { 
-            fetchedFilmsData?.map((film: IFilm) => {
-              return <FilmItem 
-                      name={film.name} 
-                      // description={film.shortDescription}
-                      year={film.year}
-                      genres={film.genres} 
-                      movieLength={film.movieLength || film.seriesLength} 
-                      rating={film.rating.kp > 0 ? film.rating.kp : film.rating.imdb}
-                      poster={film.poster?.previewUrl}
-                      top={film.top250}
-                      key={film.id}
-                      id={film.id}
-                      isSeries={(film.seriesLength||0) > film.movieLength}
-                      />
-            })
-          }
-        </ul>
+        isLoading ? <Loader /> : <FilmItems data={fetchedFilmsData || []} />
       }
     </div>
   )

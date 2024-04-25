@@ -18,7 +18,11 @@ export default function Header({isMobileDevice}: {isMobileDevice: boolean}): Rea
             <Link to="/search">Поиск</Link>
           </li>
           <li className="nav__item">
-            <Link to="collection">Моя коллекция <span>{movieCounter}</span></Link>
+            <Link to="collection">Моя коллекция 
+              { movieCounter > 0 &&
+                <span>{movieCounter}</span>
+              }
+            </Link>
           </li>
         </ul>
       </nav>

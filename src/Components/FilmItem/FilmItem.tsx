@@ -1,12 +1,13 @@
-import { ReactElement, useEffect, useState } from "react";
+import { Dispatch, ReactElement, SetStateAction, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FilmGenresType } from "../../types/FilmTypes";
 import './film-item.scss';
 import defaultMoviePreview from '../../assets/images/default-movie-preview-image.svg';
 import likeIconActive from '../../assets/images/like-icon-active.svg';
 import likeIcon from '../../assets/images/like-icon-disabled.svg';
+import { StorageFilmItem } from "../../models/models";
 
-export default function FilmItem({ name, year, genres, movieLength, rating, poster, top, id, isSeries }: 
+export default function FilmItem({ name, year, genres, movieLength, rating, poster, top, id, isSeries, isLiked, likedFilms, setLikedFilms }: 
   { name: string,
     year: number,
     genres: FilmGenresType[], 
@@ -15,15 +16,27 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
     poster?: string,
     top?: number,
     id: number,
-    isSeries: boolean;
+    isSeries: boolean,
+    isLiked: boolean,
+    likedFilms: StorageFilmItem[]
+    setLikedFilms: Dispatch<SetStateAction<StorageFilmItem[]>>,
   }): ReactElement {
 
-  const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [liked, setLiked] = useState<boolean>(isLiked);
 
   function setFilmLength(length: number): string {
     if (length > 60) {
       return `${Math.floor(length / 60)} ч ${length % 60} мин`;
     } else return length + ' мин';
+  }
+
+  const handleLikeFilm = () => {
+    setLiked(!liked)
+    if (liked) {
+      setLikedFilms([...likedFilms].filter(film => film.filmId !== id))
+  } else {
+    setLikedFilms([...likedFilms, {filmId: id, userRating: 0}])
+  }
   }
 
   return (
@@ -66,8 +79,8 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
           })
         }
       </ul>
-      <button className="film-item__fav-btn" onClick={() => setIsLiked(!isLiked)}>
-        <img src={isLiked ? likeIconActive : likeIcon} width="22px" height="22px"/>
+      <button className="film-item__fav-btn" onClick={handleLikeFilm}>
+        <img src={liked ? likeIconActive : likeIcon} width="22px" height="22px"/>
       </button>
     </li>
   )

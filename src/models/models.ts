@@ -181,3 +181,8 @@ export interface WatchabilityItem {
   logo: Logo
   url: string
 }
+
+export interface StorageFilmItem {
+  filmId?: number,
+  userRating?: number
+}
