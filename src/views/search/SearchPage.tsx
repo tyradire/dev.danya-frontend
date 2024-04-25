@@ -1,6 +1,6 @@
 import { ReactElement, useEffect, useState } from "react";
 import FilmItem from "../../Components/FilmItem/FilmItem";
-import {API_KEY, SEARCH_TOP_MOVIES_QUERY, SEARCH_WITH_ID, SEARCH_WITH_NAME, options} from '../../data/constants';
+import {API_KEY, SEARCH_TOP_MOVIES_QUERY, SEARCH_WITH_ID, SEARCH_WITH_NAME, options, initialSearchPageFilms} from '../../data/constants';
 import type { FilmItemType } from "../../types/FilmTypes";
 import './search.scss';
 import { useSearchFilmsQuery } from '../../store/films/api.kinopoisk';
@@ -12,28 +12,23 @@ export default function SearchPage(): ReactElement {
 
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [testQuery, setTestQuery] = useState<string>(searchQuery);
-  const [storageFilmsData, setStorageFilmsData] = useState<string|null>(localStorage.getItem("JSONFilmsData"));
+  const [storageFilmsData, setStorageFilmsData] = useState<string>(localStorage.getItem('JSONFilmsData') || initialSearchPageFilms);
 
   const {isSuccess, isLoading, data: fetchedFilmsData} = useSearchFilmsQuery(testQuery, {
     skip: testQuery.length < 1
   });
 
-  const currentData = fetchedFilmsData || JSON.parse(storageFilmsData || '');
 
   function searchMovie(event: React.FormEvent): void {
     event.preventDefault();
     setTestQuery(searchQuery);
   }
-
-  useEffect(() => {
-    if (!storageFilmsData) return;
-    console.log((JSON.parse(storageFilmsData)))
-  }, [])
+  
+  let currentData = fetchedFilmsData || JSON.parse(storageFilmsData);
 
   useEffect(() => {
     if (!isSuccess) return;
-    setFilmsData(fetchedFilmsData);
-    setStorageFilmsData(JSON.stringify(fetchedFilmsData))
+    setStorageFilmsData(JSON.stringify(fetchedFilmsData));
     localStorage.setItem('JSONFilmsData', JSON.stringify(fetchedFilmsData))
   }, [isSuccess]);
 
@@ -46,7 +41,7 @@ export default function SearchPage(): ReactElement {
       {
         isLoading ? <Loader /> :
         <ul className="film-items">
-          {
+          { 
             currentData.map((film: IFilm) => {
               return <FilmItem 
                       name={film.name} 
