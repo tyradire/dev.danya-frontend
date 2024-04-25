@@ -5,8 +5,7 @@
   gap: 32px;
   list-style: none;
   padding: 0;
-  margin: 0;
-  margin-top: 120px;
+  margin: 120px 0 80px;
 }
 
 .film-item {
@@ -78,8 +77,8 @@
   &__ranks {
     font-family: 'Montserrat', sans-serif;
     position: absolute;
-    top: 12px;
-    right: 12px;
+    top: 8px;
+    right: 8px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -93,11 +92,13 @@
     box-shadow: 0 0 16px 0 hsla(0, 0%, 100%, .35);
   }
   &__name {
+    font-family: sans-serif;
     position: absolute;
     bottom: 0;
     left: 0;
     margin: 0;
-    padding: 0 4px 8px 4px;
+    padding: 0;
+    padding-left: 8px;
     width: 100%;
     box-sizing: border-box;
     font-size: 24px;
@@ -159,20 +160,39 @@
       color: #efbcbc;
     }
   }
+  &__additional {
+    display: flex;
+  }
+  &__year {
+    margin: 0;
+    position: relative;
+    top: 8px;
+    left: 8px;
+    padding: 3px 4px;
+    border-radius: 4px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    line-height: 14px;
+    font-weight: 400;
+    background-color: rgba(0, 0, 0, .6);
+    color: #fff9c6;
+    z-index: 1;
+  }
   &__genres-list {
-    height: 48px;
+    height: 38px;
     list-style: none;
-    margin-top: 12px;
+    margin-top: auto;
     padding: 0;
     display: flex;
+    align-items: flex-end;
     flex-wrap: wrap;
-    gap: 2px;
+    column-gap: 2px;
   }
   &__genres-item {
-    height: 20px;
-    padding: 2px 8px;
+    height: 18px;
+    padding: 0 8px;
     box-sizing: border-box;
-    font-size: 12px;
+    font-size: 11px;
     line-height: 14px;
     background-color: #232526;
     color: #FFFFFF;
@@ -181,11 +201,12 @@
   }
   &__length {
     margin: 0;
-    margin-top: auto;
+    margin-top: 6px;
     color: #fff9c6;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 16px;
     font-weight: 400;
+    text-align: right;
   }
   &__rating {
     font-family: inherit;

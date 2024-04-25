@@ -6,31 +6,30 @@ import './search.scss';
 import { useSearchFilmsQuery } from '../../store/films/api.kinopoisk';
 import { IFilm } from "../../models/models";
 import Loader from "../../Components/Loader/Loader";
+import { useParams } from "react-router-dom";
 
 export default function SearchPage(): ReactElement {
-  const [filmsData, setFilmsData] = useState<IFilm[]>([]);
 
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState<string>(localStorage.getItem('JSONFilmsQuery') || '');
   const [testQuery, setTestQuery] = useState<string>(searchQuery);
-  const [storageFilmsData, setStorageFilmsData] = useState<string>(localStorage.getItem('JSONFilmsData') || initialSearchPageFilms);
 
   const {isSuccess, isLoading, data: fetchedFilmsData} = useSearchFilmsQuery(testQuery, {
     skip: testQuery.length < 1
   });
-
 
   function searchMovie(event: React.FormEvent): void {
     event.preventDefault();
     setTestQuery(searchQuery);
   }
   
-  let currentData = fetchedFilmsData || JSON.parse(storageFilmsData);
-
   useEffect(() => {
     if (!isSuccess) return;
-    setStorageFilmsData(JSON.stringify(fetchedFilmsData));
-    localStorage.setItem('JSONFilmsData', JSON.stringify(fetchedFilmsData))
+    localStorage.setItem('JSONFilmsQuery', searchQuery)
   }, [isSuccess]);
+
+  useEffect(() => {
+    setTestQuery(searchQuery);
+  }, [])
 
   return (
     <div className="search">
@@ -42,10 +41,11 @@ export default function SearchPage(): ReactElement {
         isLoading ? <Loader /> :
         <ul className="film-items">
           { 
-            currentData.map((film: IFilm) => {
+            fetchedFilmsData?.map((film: IFilm) => {
               return <FilmItem 
                       name={film.name} 
-                      description={film.description} 
+                      // description={film.shortDescription}
+                      year={film.year}
                       genres={film.genres} 
                       movieLength={film.movieLength || film.seriesLength} 
                       rating={film.rating.kp > 0 ? film.rating.kp : film.rating.imdb}

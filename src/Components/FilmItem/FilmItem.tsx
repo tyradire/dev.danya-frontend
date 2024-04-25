@@ -6,9 +6,9 @@ import defaultMoviePreview from '../../assets/images/default-movie-preview-image
 import likeIconActive from '../../assets/images/like-icon-active.svg';
 import likeIcon from '../../assets/images/like-icon-disabled.svg';
 
-export default function FilmItem({ name, description, genres, movieLength, rating, poster, top, id, isSeries }: 
-  { name: string, 
-    description: string,
+export default function FilmItem({ name, year, genres, movieLength, rating, poster, top, id, isSeries }: 
+  { name: string,
+    year: number,
     genres: FilmGenresType[], 
     movieLength?: number,
     rating: number,
@@ -30,7 +30,7 @@ export default function FilmItem({ name, description, genres, movieLength, ratin
     <li className="film-item">
       <Link to={`/search/${id}`}>
         <div className="film-item__heading">
-          <img src={poster || defaultMoviePreview} className="film-item__image" />
+          <img src={poster || defaultMoviePreview} className="film-item__image" alt={name} loading="lazy" />
           {
             rating > 0 &&
             <div className="film-item__ranks">
@@ -44,19 +44,17 @@ export default function FilmItem({ name, description, genres, movieLength, ratin
             </div>
           }
           <p className="film-item__name">{name}</p>
+          <p className="film-item__year">{year}</p>
         </div>
       </Link>
-      <div className="film-item__discription-container">
-        {
-          description ? <p className="film-item__description film-item__description_expand">{description}</p> 
-          : <p className="film-item__description film-item__description_disabled">Описание отсутствует</p>
-        }
-      </div>
       {
-        movieLength ? <p className="film-item__length">{
-          isSeries ? `Серия ~ ${setFilmLength(movieLength)}` :
-          setFilmLength(movieLength)
-        }</p>
+        movieLength ? 
+        <p className="film-item__length">
+          {
+            isSeries ? `Серия ~ ${setFilmLength(movieLength)}` :
+            setFilmLength(movieLength)
+          }
+        </p>
         : ''
       }
       <ul className="film-item__genres-list">
