@@ -1,29 +1,18 @@
-import { ReactElement } from "react";
-import FilmItem from "../../Components/FilmItem/FilmItem";
-import { IFilm } from "../../models/models";
+import { ReactElement, useEffect, useState } from "react";
+import FilmItems from "../../Components/FilmItems/FilmItems";
+import { StorageFilmItem } from "../../models/models";
+import { useGetFilmsByIdQuery } from "../../store/films/api.kinopoisk";
 
 export default function CollectionPage(): ReactElement {
+
+  const [likedFilms, setLikedFilms] = useState<StorageFilmItem[]>(JSON.parse(localStorage.getItem('likedFilms') || '[]'));
+  const [testQuery, setTestQuery] = useState<string>('&id=' + likedFilms.map(elem => elem.filmId).join('&id='));
+
+  const {data: likedFIlmsData} = useGetFilmsByIdQuery(testQuery);
+
   return (
     <div className="search">
-      {/* <ul className="film-items">
-        { 
-          [].map((film: IFilm) => {
-            return <FilmItem 
-                    name={film.name}
-                    year={film.year}
-                    genres={film.genres} 
-                    movieLength={film.movieLength || film.seriesLength} 
-                    rating={film.rating.kp > 0 ? film.rating.kp : film.rating.imdb}
-                    poster={film.poster?.previewUrl}
-                    top={film.top250}
-                    key={film.id}
-                    id={film.id}
-                    isSeries={(film.seriesLength||0) > film.movieLength}
-                    isLiked=
-                    />
-          })
-        }
-      </ul> */}
+      <FilmItems data={likedFIlmsData || []} />
     </div>
   )
 } 

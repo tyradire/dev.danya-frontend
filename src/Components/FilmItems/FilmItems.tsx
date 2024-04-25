@@ -16,8 +16,6 @@ export default function FilmItems({data}: {data: IFilm[]}): ReactElement {
     localStorage.setItem('likedFilms', JSON.stringify(likedFilms))
   }, [likedFilms])
 
-  console.log('123 ', localStorage.getItem('likedFilms'))
-
   return (
     <ul className="film-items">
       { 

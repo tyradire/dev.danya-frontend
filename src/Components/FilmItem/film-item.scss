@@ -235,3 +235,18 @@
     color: #cec99d;
   }
 }
+
+@media (max-width: 600px) {
+  .film-items {
+    grid-template-columns: repeat(auto-fit, 80%);
+  }
+  .film-item__heading {
+    width: 100%;
+    height: auto;
+    left: unset;
+  }
+  .film-item__image {
+    width: 100%;
+    height: auto;
+  }
+}
