@@ -10,11 +10,192 @@ const options = {
   headers: {accept: 'application/json', 'X-API-KEY': API_KEY}
 };
 
-const MOBILE_DEVICE_SIZE = 768;
+const MOBILE_DEVICE_SIZE = 600;
 
 const SERIES_LENGTH = 'Серия ~ ';
 
-const initialSearchPageFilms = `[{"internalNames":["1","1","1: One Life on the Limit","1: One - Leben am Limit","1: Life on the Limit","伝説のレーサーたち 命をかけた戦い","伝説のレーサーたち－命をかけた戦い－"],"name":"1","alternativeName":"1","enName":"","year":2013,"genres":[{"name":"документальный"},{"name":"спорт"},{"name":"история"}],"countries":[{"name":"США"}],"releaseYears":[],"id":794704,"externalId":{"imdb":"tt2518788","tmdb":217316},"names":[{"name":"1"},{"name":"1"},{"name":"1: One Life on the Limit","language":"US","type":null},{"name":"1: One - Leben am Limit","language":"DE","type":null},{"name":"1: Life on the Limit","language":"GB","type":null},{"name":"伝説のレーサーたち 命をかけた戦い","language":"JP","type":null},{"name":"伝説のレーサーたち－命をかけた戦い－","language":"JP","type":null}],"type":"movie","description":"Документальный фильм, который показывает очарование, скорость, опасность и волнение гонок гран-при Формулы 1. Фильм показывает историю Золотого века Формулы 1, когда спорт был ужасающе опасным. В конце 1960-х, на болидах Формулы 1 удвоился объем двигателя и выросли крылья, что сделало их не только невероятно быстрыми, но и еще более опасными. С приходом больших денег от спонсоров и новой международной телевизионной аудиторией, родились звёздные пилоты, брошенные как гладиаторы на ринг. Фильм следует за историей гонщиков, которые боролись на грани, и тех, кто восстал, чтобы изменить спорт навсегда.","shortDescription":"","logo":{"url":null},"poster":{"url":"https://image.openmoviedb.com/kinopoisk-images/1599028/265ce17b-30d0-40e9-b146-3445e6d32c35/orig","previewUrl":"https://image.openmoviedb.com/kinopoisk-images/1599028/265ce17b-30d0-40e9-b146-3445e6d32c35/x1000"},"backdrop":{"url":"https://image.openmoviedb.com/tmdb-images/original/nPqDbXYaMhR2XKQ9IU8bkX7YgO7.jpg","previewUrl":"https://image.openmoviedb.com/tmdb-images/w500/nPqDbXYaMhR2XKQ9IU8bkX7YgO7.jpg"},"rating":{"kp":8.358,"imdb":7.9,"filmCritics":0,"russianFilmCritics":0,"await":null},"votes":{"kp":2638,"imdb":4445,"filmCritics":0,"russianFilmCritics":0,"await":6},"movieLength":112,"internalRating":8.358,"internalVotes":2638,"isSeries":false,"ticketsOnSale":false,"totalSeriesLength":null,"seriesLength":null,"ratingMpaa":null,"ageRating":null,"top10":null,"top250":null,"typeNumber":1,"status":null}]`
+const initialSearchPageFilms = [
+  {
+    name: 'Фильм 1',
+    year: 2000,
+    genres: [{
+      name: 'комедия'
+    },
+    {
+      name: 'драма'
+    }], 
+    movieLength: 129,
+    rating: 8,
+    poster: 'https://upload.wikimedia.org/wikipedia/ru/6/6f/%D0%9F%D0%BE%D1%81%D1%82%D0%B5%D1%80_%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D0%B0_%C2%AB%D0%81%D0%BB%D0%BA%D0%B8_%D0%9F%D0%BE%D1%81%D0%BB%D0%B5%D0%B4%D0%BD%D0%B8%D0%B5%C2%BB.jpg',
+    top: 1,
+    key: 1,
+    id: 1,
+    isSeries: false,
+    isLiked: false
+  },
+  {
+    name: 'Фильм 2',
+    year: 2002,
+    genres: [{
+      name: 'комедия'
+    },
+    {
+      name: 'драма'
+    }], 
+    movieLength: 62,
+    rating: 8.321,
+    poster: 'https://upload.wikimedia.org/wikipedia/ru/6/6f/%D0%9F%D0%BE%D1%81%D1%82%D0%B5%D1%80_%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D0%B0_%C2%AB%D0%81%D0%BB%D0%BA%D0%B8_%D0%9F%D0%BE%D1%81%D0%BB%D0%B5%D0%B4%D0%BD%D0%B8%D0%B5%C2%BB.jpg',
+    top: 2,
+    key: 2,
+    id: 2,
+    isSeries: false,
+    isLiked: false
+  },
+  {
+    name: 'Фильм 3',
+    year: 2003,
+    genres: [{
+      name: 'комедия'
+    },
+    {
+      name: 'драма'
+    }], 
+    movieLength: 123,
+    rating: 8,
+    poster: 'https://upload.wikimedia.org/wikipedia/ru/6/6f/%D0%9F%D0%BE%D1%81%D1%82%D0%B5%D1%80_%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D0%B0_%C2%AB%D0%81%D0%BB%D0%BA%D0%B8_%D0%9F%D0%BE%D1%81%D0%BB%D0%B5%D0%B4%D0%BD%D0%B8%D0%B5%C2%BB.jpg',
+    top: 3,
+    key: 3,
+    id: 3,
+    isSeries: false,
+    isLiked: false
+  },
+  {
+    name: 'Фильм 4',
+    year: 2004,
+    genres: [{
+      name: 'комедия'
+    },
+    {
+      name: 'драма'
+    }], 
+    movieLength: 78,
+    rating: 8,
+    poster: 'https://upload.wikimedia.org/wikipedia/ru/6/6f/%D0%9F%D0%BE%D1%81%D1%82%D0%B5%D1%80_%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D0%B0_%C2%AB%D0%81%D0%BB%D0%BA%D0%B8_%D0%9F%D0%BE%D1%81%D0%BB%D0%B5%D0%B4%D0%BD%D0%B8%D0%B5%C2%BB.jpg',
+    top: 4,
+    key: 4,
+    id: 4,
+    isSeries: false,
+    isLiked: false
+  },
+  {
+    name: 'Фильм 5',
+    year: 2005,
+    genres: [{
+      name: 'комедия'
+    },
+    {
+      name: 'драма'
+    }], 
+    movieLength: 111,
+    rating: 8,
+    poster: 'https://upload.wikimedia.org/wikipedia/ru/6/6f/%D0%9F%D0%BE%D1%81%D1%82%D0%B5%D1%80_%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D0%B0_%C2%AB%D0%81%D0%BB%D0%BA%D0%B8_%D0%9F%D0%BE%D1%81%D0%BB%D0%B5%D0%B4%D0%BD%D0%B8%D0%B5%C2%BB.jpg',
+    top: 5,
+    key: 5,
+    id: 5,
+    isSeries: false,
+    isLiked: false
+  },
+  {
+    name: 'Фильм 6',
+    year: 2006,
+    genres: [{
+      name: 'комедия'
+    },
+    {
+      name: 'драма'
+    }], 
+    movieLength: 129,
+    rating: 8,
+    poster: 'https://upload.wikimedia.org/wikipedia/ru/6/6f/%D0%9F%D0%BE%D1%81%D1%82%D0%B5%D1%80_%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D0%B0_%C2%AB%D0%81%D0%BB%D0%BA%D0%B8_%D0%9F%D0%BE%D1%81%D0%BB%D0%B5%D0%B4%D0%BD%D0%B8%D0%B5%C2%BB.jpg',
+    top: 6,
+    key: 6,
+    id: 6,
+    isSeries: false,
+    isLiked: false
+  },
+  {
+    name: 'Фильм 7',
+    year: 2007,
+    genres: [{
+      name: 'комедия'
+    },
+    {
+      name: 'драма'
+    }], 
+    movieLength: 221,
+    rating: 8,
+    poster: 'https://upload.wikimedia.org/wikipedia/ru/6/6f/%D0%9F%D0%BE%D1%81%D1%82%D0%B5%D1%80_%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D0%B0_%C2%AB%D0%81%D0%BB%D0%BA%D0%B8_%D0%9F%D0%BE%D1%81%D0%BB%D0%B5%D0%B4%D0%BD%D0%B8%D0%B5%C2%BB.jpg',
+    top: 7,
+    key: 7,
+    id: 7,
+    isSeries: false,
+    isLiked: false
+  },
+  {
+    name: 'Фильм 8',
+    year: 2008,
+    genres: [{
+      name: 'комедия'
+    },
+    {
+      name: 'драма'
+    }], 
+    movieLength: 324,
+    rating: 9,
+    poster: 'https://upload.wikimedia.org/wikipedia/ru/6/6f/%D0%9F%D0%BE%D1%81%D1%82%D0%B5%D1%80_%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D0%B0_%C2%AB%D0%81%D0%BB%D0%BA%D0%B8_%D0%9F%D0%BE%D1%81%D0%BB%D0%B5%D0%B4%D0%BD%D0%B8%D0%B5%C2%BB.jpg',
+    top: 8,
+    key: 8,
+    id: 8,
+    isSeries: false,
+    isLiked: false
+  },
+  {
+    name: 'Фильм 9',
+    year: 2009,
+    genres: [{
+      name: 'комедия'
+    },
+    {
+      name: 'драма'
+    }], 
+    movieLength: 129,
+    rating: 8,
+    poster: 'https://upload.wikimedia.org/wikipedia/ru/6/6f/%D0%9F%D0%BE%D1%81%D1%82%D0%B5%D1%80_%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D0%B0_%C2%AB%D0%81%D0%BB%D0%BA%D0%B8_%D0%9F%D0%BE%D1%81%D0%BB%D0%B5%D0%B4%D0%BD%D0%B8%D0%B5%C2%BB.jpg',
+    top: 9,
+    key: 9,
+    id: 9,
+    isSeries: false,
+    isLiked: false
+  },
+  {
+    name: 'Фильм 10',
+    year: 2010,
+    genres: [{
+      name: 'комедия'
+    },
+    {
+      name: 'драма'
+    }], 
+    movieLength: 37,
+    rating: 9,
+    poster: 'https://upload.wikimedia.org/wikipedia/ru/6/6f/%D0%9F%D0%BE%D1%81%D1%82%D0%B5%D1%80_%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D0%B0_%C2%AB%D0%81%D0%BB%D0%BA%D0%B8_%D0%9F%D0%BE%D1%81%D0%BB%D0%B5%D0%B4%D0%BD%D0%B8%D0%B5%C2%BB.jpg',
+    top: 10,
+    key: 10,
+    id: 10,
+    isSeries: false,
+    isLiked: false
+  }
+]
 
 export {
   API_KEY, 

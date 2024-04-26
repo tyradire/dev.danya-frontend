@@ -3,7 +3,7 @@ import FilmItems from "../../Components/FilmItems/FilmItems";
 import { StorageFilmItem } from "../../models/models";
 import { useGetFilmsByIdQuery } from "../../store/films/api.kinopoisk";
 
-export default function CollectionPage(): ReactElement {
+export default function CollectionPage({isMobileDevice}: {isMobileDevice: boolean}): ReactElement {
 
   const [likedFilms, setLikedFilms] = useState<StorageFilmItem[]>(JSON.parse(localStorage.getItem('likedFilms') || '[]'));
   const [testQuery, setTestQuery] = useState<string>('&id=' + likedFilms.map(elem => elem.filmId).join('&id='));
@@ -12,7 +12,8 @@ export default function CollectionPage(): ReactElement {
 
   return (
     <div className="search">
-      <FilmItems data={likedFIlmsData || []} />
+      <FilmItems data={likedFIlmsData || []} isMobileDevice={isMobileDevice} />
+      {/* <FilmItems isMobileDevice={isMobileDevice} /> */}
     </div>
   )
 } 

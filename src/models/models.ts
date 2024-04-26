@@ -144,10 +144,6 @@ export interface Votes {
   await: number
 }
 
-export interface Genre {
-  name: string
-}
-
 export interface Country {
   name: string
 }

@@ -26,10 +26,10 @@ export default function App(): ReactElement {
       <Header isMobileDevice={isMobile} />
       <main className="page">
         <Routes>
-          <Route path="/" element={<MainPage/>}/>
-          <Route path="/search" element={<SearchPage/>}/>
+          <Route path="/" element={<MainPage isMobileDevice={isMobile}/>}/>
+          <Route path="/search" element={<SearchPage isMobileDevice={isMobile}/>}/>
           <Route path="/search/:id" element={<FilmPage />}/>
-          <Route path="/collection" element={<CollectionPage/>}/>
+          <Route path="/collection" element={<CollectionPage isMobileDevice={isMobile}/>}/>
           <Route path="/profile" element={<ProfilePage/>}/>
         </Routes>
       </main>

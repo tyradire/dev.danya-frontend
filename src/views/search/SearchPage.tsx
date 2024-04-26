@@ -9,7 +9,7 @@ import Loader from "../../Components/Loader/Loader";
 import { useParams } from "react-router-dom";
 import FilmItems from "../../Components/FilmItems/FilmItems";
 
-export default function SearchPage(): ReactElement {
+export default function SearchPage({isMobileDevice}: {isMobileDevice: boolean}): ReactElement {
 
   const [searchQuery, setSearchQuery] = useState<string>(localStorage.getItem('JSONFilmsQuery') || '');
   const [testQuery, setTestQuery] = useState<string>(searchQuery);
@@ -27,6 +27,9 @@ export default function SearchPage(): ReactElement {
     if (!isSuccess) return;
     localStorage.setItem('JSONFilmsQuery', searchQuery)
   }, [isSuccess]);
+  //   useEffect(() => {
+  //   localStorage.setItem('JSONFilmsQuery', searchQuery)
+  // }, []);
 
   useEffect(() => {
     setTestQuery(searchQuery);
@@ -39,8 +42,10 @@ export default function SearchPage(): ReactElement {
         <button className="search__submit-btn" type="submit"></button>
       </form>
       {
-        isLoading ? <Loader /> : <FilmItems data={fetchedFilmsData || []} />
+        isLoading ? <Loader /> : <FilmItems data={fetchedFilmsData || []} isMobileDevice={isMobileDevice} />
       }
+      {/* <FilmItems data={initialSearchPageFilms || [] isMobileDevice={isMobileDevice}} /> */}
+      {/* <FilmItems isMobileDevice={isMobileDevice} /> */}
     </div>
   )
 }

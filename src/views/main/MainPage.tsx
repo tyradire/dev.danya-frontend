@@ -2,7 +2,7 @@ import { ReactElement, useEffect, useState } from "react";
 import FilmItems from "../../Components/FilmItems/FilmItems";
 import { useGetTopRatingFilmsQuery } from "../../store/films/api.kinopoisk";
 
-export default function MainPage(): ReactElement {
+export default function MainPage({isMobileDevice}: {isMobileDevice: boolean}): ReactElement {
 
   const qqwrwr = "rating.kp=8-10";
 
@@ -10,7 +10,8 @@ export default function MainPage(): ReactElement {
 
   return (
     <div className="main">
-      <FilmItems data={likedFIlmsData || []} />
+      <FilmItems data={likedFIlmsData || []} isMobileDevice={isMobileDevice} />
+      {/* <FilmItems isMobileDevice={isMobileDevice} /> */}
     </div>
   )
 } 
