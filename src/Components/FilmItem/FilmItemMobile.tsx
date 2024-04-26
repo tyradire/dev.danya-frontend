@@ -43,47 +43,47 @@ export default function FilmItemMobile({ name, year, genres, movieLength, rating
     <li className="film-item-mobile" style={{backgroundImage: `url(${poster || defaultMoviePreview})`}}>
       <Link to={`/search/${id}`}>
         <p className="film-item-mobile__name">{name}</p>
-          <div className="film-item__heading">
-            {
-              rating > 0 &&
-              <div className="film-item__ranks">
-                {
-                  // rating ? <p className={`${rating > 8 ? 'film-item__rating film-item__rating_good' : rating > 6 ? 'film-item__rating film-item__rating_average' : 'film-item__rating film-item__rating_bad'}`}>{(rating.toString().slice(0,3))}</p>
-                  rating ? <p className={`${rating >= 8 ? 'film-item__rating film-item__rating_good' : rating > 6 ? 'film-item__rating film-item__rating_average' : 'film-item__rating film-item__rating_bad'}`}>{(rating.toFixed(1))}</p>
-                  : ''
-                }
-                {
-                  top && <p className="film-item__top">Топ {top}</p>
-                }
-              </div>
-            }
-            <p className="film-item__year">{year}</p>
-          </div>
-          <div className="film-item-mobile__bottom">
-            {
-              movieLength ? 
-              <p className="film-item__length">
-                {
-                  isSeries ? `Серия ~ ${setFilmLength(movieLength)}` :
-                  setFilmLength(movieLength)
-                }
-              </p>
-              : ''
-            }
-            <ul className="film-item__genres-list">
+        <div className="film-item__heading">
+          {
+            rating > 0 &&
+            <div className="film-item__ranks">
               {
-                genres.map((genre, index) => {
-                  if (index < 3) {
-                    return <li className="film-item__genres-item" key={index}>{genre.name}</li>
-                  } else return;
-                })
+                // rating ? <p className={`${rating > 8 ? 'film-item__rating film-item__rating_good' : rating > 6 ? 'film-item__rating film-item__rating_average' : 'film-item__rating film-item__rating_bad'}`}>{(rating.toString().slice(0,3))}</p>
+                rating ? <p className={`${rating >= 8 ? 'film-item__rating film-item__rating_good' : rating > 6 ? 'film-item__rating film-item__rating_average' : 'film-item__rating film-item__rating_bad'}`}>{(rating.toFixed(1))}</p>
+                : ''
               }
-            </ul>
-          </div>
-        <button className="film-item__fav-btn" onClick={handleLikeFilm}>
-          <img src={liked ? likeIconActive : likeIcon} width="22px" height="22px"/>
-        </button>
+              {
+                top && <p className="film-item__top">Топ {top}</p>
+              }
+            </div>
+          }
+          <p className="film-item__year">{year}</p>
+        </div>
+        <div className="film-item-mobile__bottom">
+          {
+            movieLength ? 
+            <p className="film-item__length">
+              {
+                isSeries ? `Серия ~ ${setFilmLength(movieLength)}` :
+                setFilmLength(movieLength)
+              }
+            </p>
+            : ''
+          }
+          <ul className="film-item__genres-list">
+            {
+              genres.map((genre, index) => {
+                if (index < 3) {
+                  return <li className="film-item__genres-item" key={index}>{genre.name}</li>
+                } else return;
+              })
+            }
+          </ul>
+        </div>
       </Link>
+      <button className="film-item__fav-btn" onClick={handleLikeFilm}>
+        <img src={liked ? likeIconActive : likeIcon} width="22px" height="22px"/>
+      </button>
     </li>
   )
 }
