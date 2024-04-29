@@ -1,12 +1,7 @@
 import { ReactElement, useEffect, useState } from "react";
-import FilmItem from "../../Components/FilmItem/FilmItem";
-import {API_KEY, SEARCH_TOP_MOVIES_QUERY, SEARCH_WITH_ID, SEARCH_WITH_NAME, options, initialSearchPageFilms} from '../../data/constants';
-import type { FilmItemType } from "../../types/FilmTypes";
 import './search.scss';
 import { useSearchFilmsQuery } from '../../store/films/api.kinopoisk';
-import { IFilm } from "../../models/models";
 import Loader from "../../Components/Loader/Loader";
-import { useParams } from "react-router-dom";
 import FilmItems from "../../Components/FilmItems/FilmItems";
 
 export default function SearchPage({isMobileDevice}: {isMobileDevice: boolean}): ReactElement {

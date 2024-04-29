@@ -7,8 +7,8 @@ export default function ProfilePage(): ReactElement {
   const [userId, setUserId] = useState<number>(0);
 
   return (
-    <div className="profile">
-      <h1 className="page__title">{userName}</h1>
+    <div className="profile-page">
+      <h1 className="page__title">Профиль</h1>
       <Profile id={userId} name={userName} />
     </div>
   )

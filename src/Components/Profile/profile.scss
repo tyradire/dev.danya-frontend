@@ -14,10 +14,34 @@
       width: 100%;
     }
   }
-  &__id {
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  &__field {
+    cursor: default;
     margin: 0;
+    padding: 0;
     color: #FFFFFF;
-    font-size: 20px;
-    line-height: 22px;
+    background-color: transparent;
+    font-size: 14px;
+    line-height: 16px;
+    width: 100%;
+    border: none;
+
+    &:focus {
+      outline: none;
+    }
+
+    &_editable {
+      font-size: 16px;
+      cursor: text;
+      border-bottom: 1px solid #6b6b6b;
+      width: max-content;
+      &:focus {
+        border-color: #FFFFFF;
+      }
+    }
   }
 }
