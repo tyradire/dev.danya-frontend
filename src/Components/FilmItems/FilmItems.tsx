@@ -24,36 +24,36 @@ export default function FilmItems({data, isMobileDevice}: {data: IFilm[], isMobi
       { 
         data.map((film) => {
           if (isMobileDevice) {
-            return <FilmItem 
-                  name={film.name}
-                  year={film.year}
-                  genres={film.genres} 
-                  movieLength={film.movieLength || film.seriesLength} 
-                  rating={film.rating.kp > 0 ? film.rating.kp : film.rating.imdb}
-                  poster={film.poster?.previewUrl}
-                  top={film.top250}
-                  key={film.id}
-                  id={film.id}
-                  isSeries={(film.seriesLength||0) > film.movieLength}
-                  isLiked={likedFilms.some(storageId => storageId.filmId === film.id)}
-                  likedFilms={likedFilms}
-                  setLikedFilms={setLikedFilms}
-                  />
+            return <FilmItem
+              name={film.name}
+              year={film.year}
+              genres={film.genres} 
+              movieLength={film.movieLength || film.seriesLength} 
+              rating={film.rating.kp > 0 ? film.rating.kp : film.rating.imdb}
+              poster={film.poster?.previewUrl}
+              top={film.top250}
+              key={film.id}
+              id={film.id}
+              isSeries={(film.seriesLength||0) > film.movieLength}
+              isLiked={likedFilms.some(storageId => storageId.filmId === film.id)}
+              likedFilms={likedFilms}
+              setLikedFilms={setLikedFilms}
+            />
           } else {
-            return <FilmItemMobile 
-            name={film.name}
-            year={film.year}
-            genres={film.genres} 
-            movieLength={film.movieLength} 
-            rating={film.rating.kp > 0 ? film.rating.kp : film.rating.imdb}
-            poster={film.poster?.previewUrl}
-            top={film.top250}
-            key={film.id}
-            id={film.id}
-            isSeries={film.isSeries}
-            isLiked={likedFilms.some(storageId => storageId.filmId === film.id)}
-            likedFilms={likedFilms}
-            setLikedFilms={setLikedFilms}
+            return <FilmItemMobile
+              name={film.name}
+              year={film.year}
+              genres={film.genres} 
+              movieLength={film.movieLength || film.seriesLength} 
+              rating={film.rating.kp > 0 ? film.rating.kp : film.rating.imdb}
+              poster={film.poster?.previewUrl}
+              top={film.top250}
+              key={film.id}
+              id={film.id}
+              isSeries={(film.seriesLength||0) > film.movieLength}
+              isLiked={likedFilms.some(storageId => storageId.filmId === film.id)}
+              likedFilms={likedFilms}
+              setLikedFilms={setLikedFilms}
             />
           }
         })

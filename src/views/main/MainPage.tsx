@@ -11,7 +11,6 @@ export default function MainPage({isMobileDevice}: {isMobileDevice: boolean}): R
   return (
     <div className="main">
       <FilmItems data={likedFIlmsData || []} isMobileDevice={isMobileDevice} />
-      {/* <FilmItems isMobileDevice={isMobileDevice} /> */}
     </div>
   )
 } 

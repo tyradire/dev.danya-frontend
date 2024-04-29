@@ -6,6 +6,7 @@ import defaultMoviePreview from '../../assets/images/default-movie-preview-image
 import likeIconActive from '../../assets/images/like-icon-active.svg';
 import likeIcon from '../../assets/images/like-icon-disabled.svg';
 import { StorageFilmItem } from "../../models/models";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 export default function FilmItem({ name, year, genres, movieLength, rating, poster, top, id, isSeries, isLiked, likedFilms, setLikedFilms }: 
   { name: string,
@@ -43,7 +44,16 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
     <li className="film-item">
       <Link to={`/search/${id}`}>
         <div className="film-item__heading">
-          <img src={poster || defaultMoviePreview} className="film-item__image" alt={name} loading="lazy" />
+          <LazyLoadImage
+            key={id}
+            src={poster}
+            alt={name}
+            className="film-item__image" 
+            width={260}
+            height={390}
+            placeholderSrc={defaultMoviePreview}
+            effect='blur'
+          />
           {
             rating > 0 &&
             <div className="film-item__ranks">
