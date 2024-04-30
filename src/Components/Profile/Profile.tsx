@@ -4,7 +4,7 @@ import './profile.scss';
 
 export default function Profile({id, name}: {id: number; name: string}): ReactElement {
 
-  const [likedFilmsCounter, setLikedFilmsCounter] = useState<number>(JSON.parse(localStorage.getItem('likedFilms') || '').length);
+  const [likedFilmsCounter, setLikedFilmsCounter] = useState<number>(JSON.parse(localStorage.getItem('likedFilms') || '[]').length);
   const [userName, setUserName] = useState<string>(name)
 
   const changeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {

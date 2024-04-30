@@ -5,7 +5,7 @@ import './Header.scss';
 
 export default function Header({isMobileDevice}: {isMobileDevice: boolean}): ReactElement {
 
-  const [movieCounter, setMovieCounter] = useState<number>(JSON.parse(localStorage.getItem('likedFilms') || '').length);
+  const [movieCounter, setMovieCounter] = useState<number>(JSON.parse(localStorage.getItem('likedFilms') || '[]').length);
 
   return (
     <header className="header">

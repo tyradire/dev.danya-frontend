@@ -1,10 +1,12 @@
 const HTMLWebpackPlugins = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack'); //подключаем webpack для использования встроенного плагина EnvironmentPlugin
 const Dotenv = require('dotenv-webpack');
+const { basename } = require('path');
 
 //в зависимости от того, какой скрипт мы запустили
 // переменная production получит либо false, либо true
@@ -31,7 +33,7 @@ module.exports = {
                 exclude: /node_modules/,
             },
             {
-                test: /\.(png|jpg|gif|webp)$/,
+                test: /\.(ico|png|jpg|gif|webp)$/,
                 type: 'asset/resource',
                 generator: {
                     filename: 'static/images/[hash][ext][query]',
@@ -83,7 +85,17 @@ module.exports = {
         new HTMLWebpackPlugins({
             template: path.resolve(__dirname, '..', './public/index.html'), //путь до папки public изменился
         }),
-        new CleanWebpackPlugin(),
+        new FaviconsWebpackPlugin({
+            logo: './public/logo.svg',
+            mode: 'webapp',
+            devMode: 'webapp',
+            prefix: 'assets/favicons/',
+            cache: true,
+            inject: true
+        }),
+        new CleanWebpackPlugin({
+            cleanAfterEveryBuildPatterns: ['!**/favicon.ico'],
+        }),
         new MiniCssExtractPlugin({
             filename: 'static/styles/[name].[contenthash].css'
         }),
