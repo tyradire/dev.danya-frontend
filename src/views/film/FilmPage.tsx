@@ -4,6 +4,7 @@ import Loader from "../../Components/Loader/Loader";
 import { useGetFilmQuery } from "../../store/films/api.kinopoisk";
 import './film.scss';
 import defaultMovieImage from '../../assets/images/default-movie-image.svg';
+import PersonItem from "../../Components/PersonItem/PersonItem";
 
 export default function FilmPage(): ReactElement {
   const filmId = useParams().id;
@@ -40,6 +41,15 @@ export default function FilmPage(): ReactElement {
             : ''
           }
         </div>
+      </div>
+      <div className="film__additional">
+          <ul className="film__persons">
+            {
+              film?.persons.map((person, index) => {
+                if (index < 5) return <PersonItem person={person.name} role={person.description} profession={person.profession} photo={person.photo} />
+              })
+            }
+          </ul>
       </div>
     </div>
   )

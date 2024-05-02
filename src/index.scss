@@ -96,11 +96,6 @@ body {
     line-height: 26px;
     position: relative;
 
-    a {
-      color: #FFFFFF;
-      text-decoration: none;
-    }
-
     span {
       display: flex;
       justify-content: center;
@@ -110,12 +105,18 @@ body {
       top: -8px;
       font-size: 12px;
       line-height: 12px;
+      font-weight: 600;
       padding: 6px;
       background-color: #ff7676;
+      color: #FFFFFF;
       border-radius: 50%;
       width: 12px;
       height: 12px;
     }
+  }
+  &__link {
+    color: #c1c1c1;
+    text-decoration: none;
   }
   &__profile {
     margin-left: auto;
@@ -140,6 +141,13 @@ body {
       height: 30px;
       padding: 5px;
       border-radius: 50%;
+    }
+  }
+
+  &__status {
+    &_active {
+      color: #FFFFFF;
+      text-decoration: underline;
     }
   }
 }

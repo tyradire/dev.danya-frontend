@@ -1,0 +1,34 @@
+.person {
+  max-width: 186px;
+  width: 100%;
+  height: 192px;
+  display: flex;
+  flex-direction: column;
+
+  &__name {
+    margin: 0;
+    font-size: 14px;
+    line-height: 120%;
+    font-weight: 600;
+    color: #ffffff;
+  }
+  &__role {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1;
+    color: #858585;
+  }
+  &__profession {
+    margin: 0;
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 1;
+    color: #858585;
+  }
+  &__photo {
+    object-fit: contain;
+    width: 80px;
+    height: 126px;
+    margin-top: auto;
+  }
+}
