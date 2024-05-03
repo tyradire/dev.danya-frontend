@@ -1,5 +1,4 @@
 import { ReactElement, useEffect, useState } from "react";
-import { initialSearchPageFilms } from "../../data/constants";
 import { IFilm, StorageFilmItem } from "../../models/models";
 import FilmItem from "../FilmItem/FilmItem";
 import FilmItemMobile from "../FilmItem/FilmItemMobile";

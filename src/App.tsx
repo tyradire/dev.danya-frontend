@@ -1,7 +1,8 @@
 import { ReactElement, useEffect, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Header from "./Components/Header/Header";
-import { MOBILE_DEVICE_SIZE } from "./data/constants";
+import { COLLECTION_ROUTE, HOME_ROUTE, LOGIN_ROUTE, MOBILE_DEVICE_SIZE, MOVIE_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE, SEARCH_ROUTE } from "./data/constants";
+import AuthPage from "./views/auth/AuthPage";
 
 import CollectionPage from "./views/collection/CollectionPage";
 import FilmPage from "./views/film/FilmPage";
@@ -12,6 +13,7 @@ import SearchPage from "./views/search/SearchPage";
 export default function App(): ReactElement {
 
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+  const [isAuth, setIsAuth] = useState<boolean>(true);
 
   useEffect(() => {
     const getWindowSize = () => setWindowWidth(window.innerWidth);
@@ -23,14 +25,24 @@ export default function App(): ReactElement {
 
   return (
     <div className="app">
-      <Header isMobileDevice={isMobile} />
+      <Header isMobileDevice={isMobile} isAuth={isAuth} />
       <main className="page">
         <Routes>
-          <Route path="/" element={<MainPage isMobileDevice={isMobile}/>}/>
-          <Route path="/search" element={<SearchPage isMobileDevice={isMobile}/>}/>
-          <Route path="/search/:id" element={<FilmPage />}/>
-          <Route path="/collection" element={<CollectionPage isMobileDevice={isMobile}/>}/>
-          <Route path="/profile" element={<ProfilePage/>}/>
+
+          <Route path={HOME_ROUTE} element={<MainPage isMobileDevice={isMobile}/>}/>
+          <Route path={SEARCH_ROUTE} element={<SearchPage isMobileDevice={isMobile}/>}/>
+          <Route path={MOVIE_ROUTE} element={<FilmPage />}/>
+
+            {
+              isAuth &&
+              <>
+                <Route path={LOGIN_ROUTE} element={<AuthPage />}/>
+                <Route path={REGISTRATION_ROUTE} element={<AuthPage />}/>
+                <Route path={COLLECTION_ROUTE} element={<CollectionPage isMobileDevice={isMobile}/>}/>
+                <Route path={PROFILE_ROUTE} element={<ProfilePage/>}/>
+              </>
+            }
+
         </Routes>
       </main>
     </div>
