@@ -32,12 +32,12 @@ export default function App(): ReactElement {
           <Route path={HOME_ROUTE} element={<MainPage isMobileDevice={isMobile}/>}/>
           <Route path={SEARCH_ROUTE} element={<SearchPage isMobileDevice={isMobile}/>}/>
           <Route path={MOVIE_ROUTE} element={<FilmPage />}/>
-
+          <Route path={LOGIN_ROUTE} element={<AuthPage />}/>
+          <Route path={REGISTRATION_ROUTE} element={<AuthPage />}/>
+          
             {
               isAuth &&
               <>
-                <Route path={LOGIN_ROUTE} element={<AuthPage />}/>
-                <Route path={REGISTRATION_ROUTE} element={<AuthPage />}/>
                 <Route path={COLLECTION_ROUTE} element={<CollectionPage isMobileDevice={isMobile}/>}/>
                 <Route path={PROFILE_ROUTE} element={<ProfilePage/>}/>
               </>
