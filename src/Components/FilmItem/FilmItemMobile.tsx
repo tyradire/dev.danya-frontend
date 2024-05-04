@@ -2,7 +2,6 @@ import { Dispatch, ReactElement, SetStateAction, useState } from "react";
 import { Link } from "react-router-dom";
 import { FilmGenresType } from "../../types/FilmTypes";
 import './film-item.scss';
-import defaultMoviePreview from '../../assets/images/default-movie-preview-image.svg';
 import likeIconActive from '../../assets/images/like-icon-active.svg';
 import likeIcon from '../../assets/images/like-icon-disabled.svg';
 import { StorageFilmItem } from "../../models/models";
@@ -48,7 +47,6 @@ export default function FilmItemMobile({ name, year, genres, movieLength, rating
             src={poster}
             alt={name}
             height={480}
-            placeholderSrc={defaultMoviePreview}
             className="film-item-mobile__image"
             effect='blur'
           />

@@ -2,7 +2,6 @@ import { Dispatch, ReactElement, SetStateAction, useEffect, useState } from "rea
 import { Link } from "react-router-dom";
 import { FilmGenresType } from "../../types/FilmTypes";
 import './film-item.scss';
-import defaultMoviePreview from '../../assets/images/default-movie-preview-image.svg';
 import likeIconActive from '../../assets/images/like-icon-active.svg';
 import likeIcon from '../../assets/images/like-icon-disabled.svg';
 import { StorageFilmItem } from "../../models/models";
@@ -51,7 +50,6 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
             className="film-item__image" 
             width={260}
             height={390}
-            placeholderSrc={defaultMoviePreview}
             effect='blur'
           />
           {

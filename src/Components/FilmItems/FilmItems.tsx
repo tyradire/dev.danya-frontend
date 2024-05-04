@@ -2,6 +2,7 @@ import { ReactElement, useEffect, useState } from "react";
 import { IFilm, StorageFilmItem } from "../../models/models";
 import FilmItem from "../FilmItem/FilmItem";
 import FilmItemMobile from "../FilmItem/FilmItemMobile";
+import defaultMoviePreview from '../../assets/images/default-movie-preview-image.svg';
 
 export default function FilmItems({data, isMobileDevice}: {data: IFilm[], isMobileDevice: boolean}): ReactElement {
 // export default function FilmItems({isMobileDevice}: {isMobileDevice: boolean}): ReactElement {
@@ -29,7 +30,7 @@ export default function FilmItems({data, isMobileDevice}: {data: IFilm[], isMobi
               genres={film.genres} 
               movieLength={film.movieLength || film.seriesLength} 
               rating={film.rating.kp > 0 ? film.rating.kp : film.rating.imdb}
-              poster={film.poster?.previewUrl}
+              poster={film.poster?.previewUrl || defaultMoviePreview}
               top={film.top250}
               key={film.id}
               id={film.id}
