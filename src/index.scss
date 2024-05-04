@@ -1,3 +1,4 @@
+
 @font-face {
   font-family: 'OpenSans';
   font-style: normal;
@@ -40,6 +41,13 @@
   src: url("./assets/fonts/Montserrat-SemiBold.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: 'Geologica';
+  font-style: normal;
+  font-weight: 600;
+  src: url("./assets/fonts/Geologica-SemiBold.ttf") format("truetype");
+}
+
 :root {
   --main-bg-color: #2e2e2e;
   --accent-bg-color: #232526;
@@ -69,7 +77,7 @@ body {
 
   &__title {
     margin: 0;
-    padding-top: 24px;
+    margin-top: 24px;
     font-size: 36px;
     line-height: 40px;
     font-weight: 600;
@@ -90,6 +98,7 @@ body {
     list-style: none;
   }
   &__item {
+    font-family: 'Geologica', sans-serif;
     cursor: pointer;
     user-select: none;
     font-size: 22px;
@@ -119,6 +128,7 @@ body {
     text-decoration: none;
   }
   &__profile {
+    font-family: 'Geologica', sans-serif;
     margin-left: auto;
     color: #FFFFFF;
     text-decoration: none;
