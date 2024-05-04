@@ -1,12 +1,12 @@
 import { ReactElement, useEffect, useState } from "react";
 import FilmItems from "../../Components/FilmItems/FilmItems";
-import { useGetTopRatingFilmsQuery } from "../../store/films/api.kinopoisk";
+import { useGetTopRatingFilmsQuery, useSearchFilmsQuery } from "../../store/films/api.kinopoisk";
 
 export default function MainPage({isMobileDevice}: {isMobileDevice: boolean}): ReactElement {
 
-  const qqwrwr = "rating.kp=8-10";
+  const qqwrwr = "rating.kp=8-10&";
 
-  const {data: likedFIlmsData} = useGetTopRatingFilmsQuery(qqwrwr);
+  const {data: likedFIlmsData} = useSearchFilmsQuery('');
 
   return (
     <div className="main">

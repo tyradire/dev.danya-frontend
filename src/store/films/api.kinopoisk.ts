@@ -15,7 +15,7 @@ export const kinopoiskApi = createApi({
   endpoints: build => ({
     searchFilms: build.query<IFilm[], string>({
       query: (search: string) => ({
-        url: `movie/search?page=1&limit=20&query=${search}`,
+        url: `movie/search?page=1&limit=100&query=${search}`,
         params: {
           per_page: 20
         }

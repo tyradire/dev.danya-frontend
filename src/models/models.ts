@@ -9,7 +9,7 @@ export interface ServerResponse<T> {
 export interface IFilm {
   internalNames: string[]
   name: string
-  alternativeName: string
+  alternativeName?: string
   enName: string
   year: number
   genres: Genre[]
@@ -19,11 +19,11 @@ export interface IFilm {
   externalId: ExternalId
   names: Name[]
   type: string
-  description: string
+  description?: string
   shortDescription: string
   logo?: Logo
   poster?: Poster
-  backdrop: Backdrop
+  backdrop?: Backdrop
   rating: Rating
   votes: Votes
   movieLength: number
@@ -102,13 +102,13 @@ export interface IFilmSingle {
   id: number
   externalId: ExternalId
   name: string
-  alternativeName: any
+  alternativeName?: any
   enName: any
   names: Name[]
   type: string
   typeNumber: number
   year: number
-  description: string
+  description?: string
   shortDescription: string
   slogan: any
   status: any
@@ -120,7 +120,7 @@ export interface IFilmSingle {
   ratingMpaa: any
   ageRating: number
   poster: Poster
-  backdrop: Backdrop
+  backdrop?: Backdrop
   genres: Genre[]
   countries: Country[]
   persons: Person[]
