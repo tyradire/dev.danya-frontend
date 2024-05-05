@@ -182,3 +182,42 @@ export interface StorageFilmItem {
   filmId?: number,
   userRating?: number
 }
+
+export interface IPersonSingle {
+  id: number
+  name: string
+  enName: string
+  photo: string
+  sex: string
+  growth: number
+  birthday: string
+  death: any
+  age: number
+  birthPlace: BirthPlace[]
+  deathPlace: any[]
+  spouses: any[]
+  countAwards: any
+  profession: any[]
+  facts: Fact[]
+  movies: PersonMovie[]
+  createdAt: string
+  updatedAt: string
+}
+
+export interface BirthPlace {
+  value: string
+}
+
+export interface Fact {
+  value: string
+}
+
+export interface PersonMovie {
+  id: number
+  name?: string
+  alternativeName?: string
+  rating?: number
+  general: boolean
+  description?: string
+  enProfession: string
+}

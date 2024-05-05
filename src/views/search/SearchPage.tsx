@@ -22,9 +22,6 @@ export default function SearchPage({isMobileDevice}: {isMobileDevice: boolean}):
     if (!isSuccess) return;
     localStorage.setItem('JSONFilmsQuery', searchQuery)
   }, [isSuccess]);
-  //   useEffect(() => {
-  //   localStorage.setItem('JSONFilmsQuery', searchQuery)
-  // }, []);
 
   useEffect(() => {
     setTestQuery(searchQuery);
@@ -39,8 +36,6 @@ export default function SearchPage({isMobileDevice}: {isMobileDevice: boolean}):
       {
         isLoading ? <Loader /> : <FilmItems data={fetchedFilmsData || []} isMobileDevice={isMobileDevice} />
       }
-      {/* <FilmItems data={initialSearchPageFilms || [] isMobileDevice={isMobileDevice}} /> */}
-      {/* <FilmItems isMobileDevice={isMobileDevice} /> */}
     </div>
   )
 }

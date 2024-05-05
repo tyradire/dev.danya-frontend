@@ -1,4 +1,4 @@
-import { IFilm, IFilmSingle, ServerResponse } from './../../models/models';
+import { IFilm, IFilmSingle, IPersonSingle, ServerResponse } from './../../models/models';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_KEY } from '../../data/constants';
 
@@ -39,7 +39,12 @@ export const kinopoiskApi = createApi({
       }),
       transformResponse: (response: ServerResponse<IFilm>) => response.docs
     }),
+    getPersonById: build.query<IPersonSingle, number>({
+      query: (id: number) => ({
+        url: `person/${id}`
+      })
+    })
   })
 })
 
-export const {useSearchFilmsQuery, useGetFilmQuery, useGetFilmsByIdQuery, useGetTopRatingFilmsQuery} = kinopoiskApi
+export const {useSearchFilmsQuery, useGetFilmQuery, useGetFilmsByIdQuery, useGetTopRatingFilmsQuery, useGetPersonByIdQuery} = kinopoiskApi

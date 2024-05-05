@@ -19,6 +19,7 @@ const COLLECTION_ROUTE = '/collection';
 const SEARCH_ROUTE = '/search';
 const MOVIE_ROUTE = '/search/:id';
 const PROFILE_ROUTE = '/profile';
+const PERSON_ROUTE = '/person/:id';
 
 
 export {
@@ -36,5 +37,6 @@ export {
   COLLECTION_ROUTE,
   SEARCH_ROUTE,
   MOVIE_ROUTE,
-  PROFILE_ROUTE
+  PROFILE_ROUTE,
+  PERSON_ROUTE
 }

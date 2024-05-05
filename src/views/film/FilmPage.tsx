@@ -46,7 +46,7 @@ export default function FilmPage(): ReactElement {
           <ul className="film__persons">
             {
               film?.persons.map((person, index) => {
-                if (index < 5) return <PersonItem person={person.name} role={person.description} profession={person.profession} photo={person.photo} />
+                if (index < 5) return <PersonItem person={person.name} role={person.description} profession={person.profession} photo={person.photo} id={person.id} key={person.id} />
               })
             }
           </ul>
