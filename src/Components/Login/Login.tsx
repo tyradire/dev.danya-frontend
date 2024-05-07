@@ -1,10 +1,17 @@
 import { ReactElement, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { login } from "../../api/userAPI";
-import { REGISTRATION_ROUTE } from "../../data/constants";
+import { jwtDecode } from "jwt-decode";
+import { HOME_ROUTE, REGISTRATION_ROUTE } from "../../data/constants";
 import '../../ui.scss';
+import { useDispatch } from "react-redux";
+
+import {setUserData} from '../../store/user/userReducer';
+import { FetchedUserState } from "../../models/models";
 
 export default function Login(): ReactElement {
+  const dispatch = useDispatch()
+  const navigate = useNavigate();
 
   const [emailInput, setEmailInput] = useState<string>('');
   const [passwordInput, setPasswordInput] = useState<string>('');
@@ -13,11 +20,12 @@ export default function Login(): ReactElement {
 
   const submitLogin = (e: any) => {
     e.preventDefault();
-    console.log('сабмит')
     login(emailInput, passwordInput)
     .then(res =>
       { if (res.success) {
-          console.log('успех', res)
+          let data: FetchedUserState = jwtDecode(res.result);
+          dispatch(setUserData({id: data.id, email: data.email, name: data.name, role: data.role, isAuth: res.success}));
+          navigate(HOME_ROUTE);
         } else {
           console.log('ошибка', res)
         }

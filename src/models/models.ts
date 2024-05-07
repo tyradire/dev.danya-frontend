@@ -221,3 +221,10 @@ export interface PersonMovie {
   description?: string
   enProfession: string
 }
+
+export interface FetchedUserState {
+  id: number
+  email: string
+  name: string
+  role: string
+}

@@ -1,6 +1,7 @@
 import { ReactElement, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import mobileProfileIcon from '../../assets/images/default-user-icon.svg';
+import { LOGIN_ROUTE } from "../../data/constants";
 import './Header.scss';
 
 export default function Header({isMobileDevice, isAuth}: {isMobileDevice: boolean, isAuth: boolean}): ReactElement {
@@ -42,7 +43,7 @@ export default function Header({isMobileDevice, isAuth}: {isMobileDevice: boolea
       </nav>
       {
         !isAuth 
-        ? <NavLink to="auth" className="nav__profile">Войти</NavLink>
+        ? <NavLink to={LOGIN_ROUTE} className="nav__profile">Войти</NavLink>
         : !isMobileDevice
         ? <NavLink to="profile" className="nav__mobile-profile">
             <img src={mobileProfileIcon}/>

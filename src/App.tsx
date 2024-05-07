@@ -1,7 +1,9 @@
 import { ReactElement, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Header from "./Components/Header/Header";
 import { COLLECTION_ROUTE, HOME_ROUTE, LOGIN_ROUTE, MOBILE_DEVICE_SIZE, MOVIE_ROUTE, PERSON_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE, SEARCH_ROUTE } from "./data/constants";
+import { RootState, store } from "./store/store";
 import AuthPage from "./views/auth/AuthPage";
 
 import CollectionPage from "./views/collection/CollectionPage";
@@ -13,8 +15,9 @@ import SearchPage from "./views/search/SearchPage";
 
 export default function App(): ReactElement {
 
+  const userData = useSelector((state: RootState) => state.user)
+
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
-  const [isAuth, setIsAuth] = useState<boolean>(true);
 
   useEffect(() => {
     const getWindowSize = () => setWindowWidth(window.innerWidth);
@@ -24,9 +27,11 @@ export default function App(): ReactElement {
 
   const isMobile = MOBILE_DEVICE_SIZE <= windowWidth;
 
+  console.log(userData.isAuth)
+
   return (
     <div className="app">
-      <Header isMobileDevice={isMobile} isAuth={isAuth} />
+      <Header isMobileDevice={isMobile} isAuth={userData.isAuth} />
       <main className="page">
         <Routes>
 
@@ -39,10 +44,10 @@ export default function App(): ReactElement {
           <Route path={REGISTRATION_ROUTE} element={<AuthPage />}/>
           
             {
-              isAuth &&
+              userData.isAuth &&
               <>
                 <Route path={COLLECTION_ROUTE} element={<CollectionPage isMobileDevice={isMobile}/>}/>
-                <Route path={PROFILE_ROUTE} element={<ProfilePage/>}/>
+                <Route path={PROFILE_ROUTE} element={<ProfilePage userData={userData} />} />
               </>
             }
 

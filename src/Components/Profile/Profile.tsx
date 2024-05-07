@@ -9,6 +9,7 @@ export default function Profile({id, name}: {id: number; name: string}): ReactEl
 
   const changeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserName(e.target.value)
+    console.log('id ',id)
   }
 
   const test = (e: React.KeyboardEvent<HTMLInputElement>) => {

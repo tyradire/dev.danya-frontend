@@ -1,12 +1,15 @@
-import { configureStore } from "@reduxjs/toolkit";
-import createSagaMiddleware from "@redux-saga/core";
-import filmsReducer from '../filmsState';
-import filmSaga from "../filmsSaga";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { userReducer } from './user/userReducer';
 import { kinopoiskApi } from "./films/api.kinopoisk";
+ 
+const reducers = combineReducers({
+  [kinopoiskApi.reducerPath]: kinopoiskApi.reducer,
+  user: userReducer
+})
 
 export const store = configureStore({
-  reducer: {
-    [kinopoiskApi.reducerPath]: kinopoiskApi.reducer
-  },
+  reducer: reducers,
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(kinopoiskApi.middleware)
 });
+
+export type RootState = ReturnType<typeof store.getState>
