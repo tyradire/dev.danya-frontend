@@ -70,7 +70,6 @@ body {
 
 .page {
   min-height: calc(100vh - 98px);
-  // background-color: var(--main-bg-color);
   max-width: 1440px;
   width: 100%;
   margin: 0 auto;
@@ -87,12 +86,19 @@ body {
   &__heading {
     display: flex;
     justify-content: space-between;
+    margin-top: 60px;
   }
   &__button {
-    max-width: fit-content;
+    cursor: pointer;
     width: 100%;
+    max-width: fit-content;
+    height: 20px;
     margin: 0;
-    padding: 0;
+    transition: opacity .3s;
+
+    &:hover {
+      opacity: .65;
+    }
   }
 }
 

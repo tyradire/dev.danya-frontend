@@ -70,7 +70,22 @@
   }
 }
 
-.button__type_logout {
+.button {
+  background-color: transparent;
   border: none;
-  background-color: red;
+  max-height: 42px;
+  font-size: 14px;
+  line-height: 14px;
+  font-weight: 600;
+
+  &__type {
+    &_logout {
+      background-image: url("./assets/images/logout-user-icon.svg");
+      background-position: left;
+      background-repeat: no-repeat;
+      background-size: contain;
+      padding-left: 24px;
+      color: #ff7676;
+    }
+  }
 }

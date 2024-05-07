@@ -1,6 +1,7 @@
 import { ReactElement, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
+import { getLikedMovies } from "./api/collectionAPI";
 import Header from "./Components/Header/Header";
 import { COLLECTION_ROUTE, HOME_ROUTE, LOGIN_ROUTE, MOBILE_DEVICE_SIZE, MOVIE_ROUTE, PERSON_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE, SEARCH_ROUTE } from "./data/constants";
 import { RootState, store } from "./store/store";
@@ -16,6 +17,7 @@ import SearchPage from "./views/search/SearchPage";
 export default function App(): ReactElement {
 
   const userData = useSelector((state: RootState) => state.user)
+  //const likedData = useSelector((state: RootState) => state.liked)
 
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
 
@@ -27,7 +29,9 @@ export default function App(): ReactElement {
 
   const isMobile = MOBILE_DEVICE_SIZE <= windowWidth;
 
-  console.log(userData.isAuth)
+  useEffect(() => {
+    getLikedMovies(userData.id)
+  }, [])
 
   return (
     <div className="app">
