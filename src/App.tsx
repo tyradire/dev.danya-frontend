@@ -31,7 +31,7 @@ export default function App(): ReactElement {
 
   useEffect(() => {
     getLikedMovies(userData.id)
-  }, [])
+  }, [userData.isAuth])
 
   return (
     <div className="app">
