@@ -178,11 +178,6 @@ export interface WatchabilityItem {
   url: string
 }
 
-export interface StorageFilmItem {
-  filmId?: number,
-  userRating?: number
-}
-
 export interface IPersonSingle {
   id: number
   name: string

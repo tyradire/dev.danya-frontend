@@ -1,5 +1,5 @@
 import { ReactElement, useEffect, useState } from "react";
-import { IFilm, StorageFilmItem } from "../../models/models";
+import { IFilm } from "../../models/models";
 import FilmItem from "../FilmItem/FilmItem";
 import FilmItemMobile from "../FilmItem/FilmItemMobile";
 import defaultMoviePreview from '../../assets/images/default-movie-preview-image.svg';
@@ -7,7 +7,7 @@ import defaultMoviePreview from '../../assets/images/default-movie-preview-image
 export default function FilmItems({data, isMobileDevice}: {data: IFilm[], isMobileDevice: boolean}): ReactElement {
 // export default function FilmItems({isMobileDevice}: {isMobileDevice: boolean}): ReactElement {
 
-  const [likedFilms, setLikedFilms] = useState<StorageFilmItem[]>(JSON.parse(localStorage.getItem('likedFilms') || '[]'));
+  const [likedFilms, setLikedFilms] = useState<number[]>([]);
 
   useEffect(() => {
     if (!localStorage.getItem('likedFilms')) {
@@ -35,7 +35,7 @@ export default function FilmItems({data, isMobileDevice}: {data: IFilm[], isMobi
               key={film.id}
               id={film.id}
               isSeries={(film.seriesLength||0) > film.movieLength}
-              isLiked={likedFilms.some(storageId => storageId.filmId === film.id)}
+              isLiked={likedFilms.some(storageId => storageId === film.id)}
               likedFilms={likedFilms}
               setLikedFilms={setLikedFilms}
             />
@@ -51,7 +51,7 @@ export default function FilmItems({data, isMobileDevice}: {data: IFilm[], isMobi
               key={film.id}
               id={film.id}
               isSeries={(film.seriesLength||0) > film.movieLength}
-              isLiked={likedFilms.some(storageId => storageId.filmId === film.id)}
+              isLiked={likedFilms.some(storageId => storageId === film.id)}
               likedFilms={likedFilms}
               setLikedFilms={setLikedFilms}
             />

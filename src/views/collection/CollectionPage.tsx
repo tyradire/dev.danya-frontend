@@ -1,14 +1,14 @@
 import { ReactElement, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import FilmItems from "../../Components/FilmItems/FilmItems";
-import { StorageFilmItem } from "../../models/models";
 import { useGetFilmsByIdQuery } from "../../store/films/api.kinopoisk";
+import { RootState } from "../../store/store";
 
 export default function CollectionPage({isMobileDevice}: {isMobileDevice: boolean}): ReactElement {
 
-  const [likedFilms, setLikedFilms] = useState<StorageFilmItem[]>(JSON.parse(localStorage.getItem('likedFilms') || '[]'));
-  const [testQuery, setTestQuery] = useState<string>('&id=' + likedFilms.map(elem => elem.filmId).join('&id='));
+  const likedData = useSelector((state: RootState) => state.liked)
 
-  const {data: likedFIlmsData} = useGetFilmsByIdQuery(testQuery);
+  const {data: likedFIlmsData} = useGetFilmsByIdQuery('&id=' + likedData.liked.map(elem => elem).join('&id='));
 
   return (
     <div className="search">

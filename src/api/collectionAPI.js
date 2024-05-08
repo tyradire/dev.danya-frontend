@@ -3,9 +3,9 @@ import axios from 'axios';
 export const getLikedMovies = (id) => {
   return axios.get(process.env.API_URL + `/api/collection/getcollection`, { params: {id: id}})
   .then(res => {
-    console.log('res ',res)
+    return res.data.liked;
   })
   .catch(err => {
-    console.log('err ',err)
+    console.error(err)
   })
 }

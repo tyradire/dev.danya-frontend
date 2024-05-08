@@ -1,14 +1,20 @@
 import { ReactElement, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import mobileProfileIcon from '../../assets/images/default-user-icon.svg';
 import { LOGIN_ROUTE } from "../../data/constants";
+import { RootState } from "../../store/store";
 import './Header.scss';
 
 export default function Header({isMobileDevice, isAuth}: {isMobileDevice: boolean, isAuth: boolean}): ReactElement {
 
+  const likedData = useSelector((state: RootState) => state.liked)
 
+  const [movieCounter, setMovieCounter] = useState<number>(0);
 
-  const [movieCounter, setMovieCounter] = useState<number>(JSON.parse(localStorage.getItem('likedFilms') || '[]').length);
+  useEffect(() => {
+    setMovieCounter(likedData.liked.length);
+  }, [likedData])
 
   return (
     <header className="header">

@@ -9,11 +9,11 @@ const initialState: likedFilmsState = {
 }
 
 export const likedSlice = createSlice({
-  name: 'liked',
+  name: 'films',
   initialState,
   reducers: {
-    setLikedFilms(state, action: PayloadAction<likedFilmsState>) {
-      state.liked = action.payload.liked
+    setLikedFilms(state, action: PayloadAction<any>) {
+      state.liked = action.payload;
     },
   }
 })

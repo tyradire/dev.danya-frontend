@@ -5,8 +5,9 @@ import { getLikedMovies } from "./api/collectionAPI";
 import Header from "./Components/Header/Header";
 import { COLLECTION_ROUTE, HOME_ROUTE, LOGIN_ROUTE, MOBILE_DEVICE_SIZE, MOVIE_ROUTE, PERSON_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE, SEARCH_ROUTE } from "./data/constants";
 import { RootState, store } from "./store/store";
-import AuthPage from "./views/auth/AuthPage";
+import { jwtDecode } from "jwt-decode";
 
+import AuthPage from "./views/auth/AuthPage";
 import CollectionPage from "./views/collection/CollectionPage";
 import FilmPage from "./views/film/FilmPage";
 import MainPage from "./views/main/MainPage";
@@ -14,12 +15,18 @@ import PersonPage from "./views/person/PersonPage";
 import ProfilePage from "./views/profile/ProfilePage";
 import SearchPage from "./views/search/SearchPage";
 
+import { setUserData, UserState } from "./store/user/userReducer";
+import { FetchedUserState } from "./models/models";
+import { useDispatch } from "react-redux";
+import { setLikedFilms } from "./store/user/likedReducer";
+
 export default function App(): ReactElement {
+  const dispatch = useDispatch();
 
   const userData = useSelector((state: RootState) => state.user)
-  //const likedData = useSelector((state: RootState) => state.liked)
 
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+  const [localUserData, setLocalUserData] = useState<string>(localStorage.getItem('token') || '')
 
   useEffect(() => {
     const getWindowSize = () => setWindowWidth(window.innerWidth);
@@ -30,8 +37,17 @@ export default function App(): ReactElement {
   const isMobile = MOBILE_DEVICE_SIZE <= windowWidth;
 
   useEffect(() => {
+    if (!userData.isAuth) return;
     getLikedMovies(userData.id)
+    .then(res => dispatch(setLikedFilms(res)))
+    .catch(err => console.error(err))
   }, [userData.isAuth])
+
+  useEffect(() => {
+    if (!localUserData.length) return;
+    let data: FetchedUserState = jwtDecode(localUserData);
+    dispatch(setUserData({id: data.id, email: data.email, name: data.name, role: data.role, isAuth: true}));
+  }, [localUserData])
 
   return (
     <div className="app">

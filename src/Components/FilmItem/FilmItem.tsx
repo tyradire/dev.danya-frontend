@@ -4,7 +4,6 @@ import { FilmGenresType } from "../../types/FilmTypes";
 import './film-item.scss';
 import likeIconActive from '../../assets/images/like-icon-active.svg';
 import likeIcon from '../../assets/images/like-icon-disabled.svg';
-import { StorageFilmItem } from "../../models/models";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 export default function FilmItem({ name, year, genres, movieLength, rating, poster, top, id, isSeries, isLiked, likedFilms, setLikedFilms }: 
@@ -18,8 +17,8 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
     id: number,
     isSeries: boolean,
     isLiked: boolean,
-    likedFilms: StorageFilmItem[]
-    setLikedFilms: Dispatch<SetStateAction<StorageFilmItem[]>>,
+    likedFilms: number[]
+    setLikedFilms: Dispatch<SetStateAction<number[]>>,
   }): ReactElement {
 
   const [liked, setLiked] = useState<boolean>(isLiked);
@@ -30,14 +29,14 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
     } else return length + ' мин';
   }
 
-  const handleLikeFilm = () => {
-    setLiked(!liked)
-    if (liked) {
-      setLikedFilms([...likedFilms].filter(film => film.filmId !== id))
-  } else {
-    setLikedFilms([...likedFilms, {filmId: id, userRating: 0}])
-  }
-  }
+  // const handleLikeFilm = () => {
+  //   setLiked(!liked)
+  //   if (liked) {
+  //     setLikedFilms([...likedFilms].filter(film => film !== id))
+  // } else {
+  //   setLikedFilms([...likedFilms, {filmId: id, userRating: 0}])
+  // }
+  // }
 
   return (
     <li className="film-item">
@@ -88,7 +87,8 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
           })
         }
       </ul>
-      <button className="film-item__fav-btn" onClick={handleLikeFilm}>
+      {/* onClick={handleLikeFilm} */}
+      <button className="film-item__fav-btn" >
         <img src={liked ? likeIconActive : likeIcon} width="22px" height="22px"/>
       </button>
     </li>
