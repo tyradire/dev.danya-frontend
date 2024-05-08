@@ -5,6 +5,11 @@ import './film-item.scss';
 import likeIconActive from '../../assets/images/like-icon-active.svg';
 import likeIcon from '../../assets/images/like-icon-disabled.svg';
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { addToLikedMovies, removeFromLikedMovies } from "../../api/collectionAPI";
+import { useDispatch } from "react-redux";
+import { addFilmToLiked, removeFilmFromLiked } from "../../store/user/likedReducer";
 
 export default function FilmItem({ name, year, genres, movieLength, rating, poster, top, id, isSeries, isLiked, likedFilms, setLikedFilms }: 
   { name: string,
@@ -20,8 +25,11 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
     likedFilms: number[]
     setLikedFilms: Dispatch<SetStateAction<number[]>>,
   }): ReactElement {
+  const dispatch = useDispatch();
 
-  const [liked, setLiked] = useState<boolean>(isLiked);
+  const likedData = useSelector((state: RootState) => state.liked)
+
+  const [liked, setLiked] = useState<boolean>(likedData.liked.includes(id));
 
   function setFilmLength(length: number): string {
     if (length > 60) {
@@ -29,14 +37,16 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
     } else return length + ' мин';
   }
 
-  // const handleLikeFilm = () => {
-  //   setLiked(!liked)
-  //   if (liked) {
-  //     setLikedFilms([...likedFilms].filter(film => film !== id))
-  // } else {
-  //   setLikedFilms([...likedFilms, {filmId: id, userRating: 0}])
-  // }
-  // }
+  const handleLikeFilm = () => {
+    setLiked(!liked)
+      if (liked) {
+        dispatch(removeFilmFromLiked(id))
+        removeFromLikedMovies(id)
+    } else {
+      dispatch(addFilmToLiked(id))
+      addToLikedMovies(id)
+    }
+  }
 
   return (
     <li className="film-item">
@@ -87,8 +97,7 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
           })
         }
       </ul>
-      {/* onClick={handleLikeFilm} */}
-      <button className="film-item__fav-btn" >
+      <button className="film-item__fav-btn" onClick={handleLikeFilm} >
         <img src={liked ? likeIconActive : likeIcon} width="22px" height="22px"/>
       </button>
     </li>

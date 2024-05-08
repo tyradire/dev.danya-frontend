@@ -3,9 +3,10 @@ import { IFilm } from "../../models/models";
 import FilmItem from "../FilmItem/FilmItem";
 import FilmItemMobile from "../FilmItem/FilmItemMobile";
 import defaultMoviePreview from '../../assets/images/default-movie-preview-image.svg';
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 export default function FilmItems({data, isMobileDevice}: {data: IFilm[], isMobileDevice: boolean}): ReactElement {
-// export default function FilmItems({isMobileDevice}: {isMobileDevice: boolean}): ReactElement {
 
   const [likedFilms, setLikedFilms] = useState<number[]>([]);
 

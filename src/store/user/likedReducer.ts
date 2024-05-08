@@ -15,8 +15,14 @@ export const likedSlice = createSlice({
     setLikedFilms(state, action: PayloadAction<any>) {
       state.liked = action.payload;
     },
+    addFilmToLiked(state, action: PayloadAction<any>) {
+      state.liked.push(action.payload);
+    },
+    removeFilmFromLiked(state, action: PayloadAction<any>) {
+      state.liked.filter((movie) => movie !== action.payload);
+    }
   }
 })
 
-export const { setLikedFilms } = likedSlice.actions
+export const { setLikedFilms, addFilmToLiked, removeFilmFromLiked } = likedSlice.actions
 export const likedReducer = likedSlice.reducer
