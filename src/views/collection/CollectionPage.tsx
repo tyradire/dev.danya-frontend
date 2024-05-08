@@ -7,8 +7,13 @@ import { RootState } from "../../store/store";
 export default function CollectionPage({isMobileDevice}: {isMobileDevice: boolean}): ReactElement {
 
   const likedData = useSelector((state: RootState) => state.liked)
+  const [queryToApi, setQueryToApi] = useState<string>('&id=' + likedData.liked.map(elem => elem).join('&id='));
 
-  const {data: likedFIlmsData} = useGetFilmsByIdQuery('&id=' + likedData.liked.map(elem => elem).join('&id='));
+  const {data: likedFIlmsData} = useGetFilmsByIdQuery(queryToApi);
+
+  useEffect(() => {
+    setQueryToApi('&id=' + likedData.liked.map(elem => elem).join('&id='));
+  }, [likedData])
 
   return (
     <div className="search">

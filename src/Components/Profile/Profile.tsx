@@ -1,37 +1,46 @@
-import { KeyboardEventHandler, ReactElement, useState } from "react";
+import { KeyboardEventHandler, ReactElement, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import defaultUserIcon from '../../assets/images/default-user-icon.svg';
 import './profile.scss';
 
-import {setUserData} from '../../store/user/userReducer';
+import {renameUser, setUserData} from '../../store/user/userReducer';
 import { HOME_ROUTE } from "../../data/constants";
 import { useNavigate } from "react-router-dom";
 import { setLikedFilms } from "../../store/user/likedReducer";
 import { RootState } from "../../store/store";
 import { useSelector } from "react-redux";
+import { rename } from "../../api/userAPI";
 
-export default function Profile({id, name}: {id: number; name: string}): ReactElement {
+export default function Profile(): ReactElement {
 
+  const userData = useSelector((state: RootState) => state.user)
   const likedData = useSelector((state: RootState) => state.liked)
 
   const dispatch = useDispatch()
   const navigate = useNavigate();
 
-  const [userName, setUserName] = useState<string>(name)
+  const [userName, setUserName] = useState<string>(userData.name)
 
   const changeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserName(e.target.value)
-    console.log('id ',id)
   }
 
   const test = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.keyCode === 13) {
       e.currentTarget.blur();
+      rename(userName)
+      .then(res => dispatch(renameUser(res.data.user.name)))
+      .catch(err => console.error(err))
+      
     }
     if (e.keyCode === 32) {
       e.preventDefault();
     }
   }
+
+  useEffect(() => {
+    setUserName(userData.name);
+  }, [userData])
 
   const handleLogout = () => {
     dispatch(setUserData({id: 0, email: '', name: '', role: '', isAuth: false}));
@@ -48,7 +57,7 @@ export default function Profile({id, name}: {id: number; name: string}): ReactEl
       <div>
         <form className="profile__form">
           <input value={userName} className="profile__field profile__field_editable" type="text" onChange={changeUserName} onKeyDown={test} />
-          <input value={`id ${id}`} className="profile__field" type="text" readOnly />
+          <input value={`id ${userData.id}`} className="profile__field" type="text" readOnly />
           <input value={`Просмотрено: ${likedData.liked.length}`} className="profile__field" type="text" readOnly />
         </form>
       </div>

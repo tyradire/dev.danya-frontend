@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { authHost } from './index';
 
 export const registration = (email, password) => {
   return axios.post(process.env.API_URL + '/api/user/registration', {email, password})
@@ -22,6 +23,10 @@ export const login = async (email, password) => {
     console.log(err)
     return {result: err.response.data.message, success: false};
   })
+}
+
+export const rename = async (name) => {
+  return authHost.put(process.env.API_URL + '/api/user/rename', { name: name})
 }
 
 // export const check = async () => {

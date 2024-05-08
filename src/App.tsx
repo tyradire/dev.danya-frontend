@@ -67,7 +67,7 @@ export default function App(): ReactElement {
               userData.isAuth &&
               <>
                 <Route path={COLLECTION_ROUTE} element={<CollectionPage isMobileDevice={isMobile}/>}/>
-                <Route path={PROFILE_ROUTE} element={<ProfilePage userData={userData} />} />
+                <Route path={PROFILE_ROUTE} element={<ProfilePage />} />
               </>
             }
 

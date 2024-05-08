@@ -29,9 +29,12 @@ export const userSlice = createSlice({
     },
     logoutUser(state) {
       state = initialState;
+    },
+    renameUser(state, action: PayloadAction<string>) {
+      state.name = action.payload
     }
   }
 })
 
-export const { setUserData, logoutUser } = userSlice.actions
+export const { setUserData, logoutUser, renameUser } = userSlice.actions
 export const userReducer = userSlice.reducer
