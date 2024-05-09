@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { authHost } from './index';
 
-export const getLikedMovies = (id) => {
-  return axios.get(process.env.API_URL + `/api/collection/getcollection`, { params: {id: id}})
+export const getLikedMovies = () => {
+  return authHost.get(process.env.API_URL + `/api/collection/getcollection`)
   .then(res => {
     return res.data.liked;
   })

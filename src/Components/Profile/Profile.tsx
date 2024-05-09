@@ -21,6 +21,10 @@ export default function Profile(): ReactElement {
 
   const [userName, setUserName] = useState<string>(userData.name)
 
+  useEffect(() => {
+    setUserName(userData.name)
+  }, [userData])
+
   const changeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserName(e.target.value)
   }
@@ -38,14 +42,10 @@ export default function Profile(): ReactElement {
     }
   }
 
-  useEffect(() => {
-    setUserName(userData.name);
-  }, [userData])
-
   const handleLogout = () => {
-    dispatch(setUserData({id: 0, email: '', name: '', role: '', isAuth: false}));
+    dispatch(setUserData({id: 0, email: '', isAuth: false}));
     dispatch(setLikedFilms([]));
-    localStorage.removeItem('token');
+    localStorage.setItem('token', '');
     navigate(HOME_ROUTE);
   }
 

@@ -16,10 +16,11 @@ export const likedSlice = createSlice({
       state.liked = action.payload;
     },
     addFilmToLiked(state, action: PayloadAction<any>) {
-      state.liked.push(action.payload);
+      console.log(action.payload)
+      state.liked.push(Number(action.payload));
     },
     removeFilmFromLiked(state, action: PayloadAction<any>) {
-      state.liked.filter((movie) => movie !== action.payload);
+      state.liked = state.liked.filter((movie) => movie != action.payload);
     }
   }
 })

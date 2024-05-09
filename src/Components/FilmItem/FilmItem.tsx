@@ -7,11 +7,11 @@ import likeIcon from '../../assets/images/like-icon-disabled.svg';
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { addToLikedMovies, removeFromLikedMovies } from "../../api/collectionAPI";
+import { addToLikedMovies, getLikedMovies, removeFromLikedMovies } from "../../api/collectionAPI";
 import { useDispatch } from "react-redux";
-import { addFilmToLiked, removeFilmFromLiked } from "../../store/user/likedReducer";
+import { addFilmToLiked, removeFilmFromLiked, setLikedFilms } from "../../store/user/likedReducer";
 
-export default function FilmItem({ name, year, genres, movieLength, rating, poster, top, id, isSeries, isLiked, likedFilms, setLikedFilms }: 
+export default function FilmItem({ name, year, genres, movieLength, rating, poster, top, id, isSeries }: 
   { name: string,
     year: number,
     genres: FilmGenresType[], 
@@ -21,12 +21,10 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
     top?: number,
     id: number,
     isSeries: boolean,
-    isLiked: boolean,
-    likedFilms: number[]
-    setLikedFilms: Dispatch<SetStateAction<number[]>>,
   }): ReactElement {
   const dispatch = useDispatch();
-
+  
+  const userData = useSelector((state: RootState) => state.user)
   const likedData = useSelector((state: RootState) => state.liked)
 
   const [liked, setLiked] = useState<boolean>(likedData.liked.includes(id));
@@ -38,14 +36,17 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
   }
 
   const handleLikeFilm = () => {
+    if (!userData.isAuth) return;
     setLiked(!liked)
       if (liked) {
-        dispatch(removeFilmFromLiked(id))
         removeFromLikedMovies(id)
+          .then(res => dispatch(removeFilmFromLiked(res?.data.movieId)))
+          .catch(err => console.log(err))
     } else {
-      dispatch(addFilmToLiked(id))
       addToLikedMovies(id)
-    }
+        .then(res => dispatch(addFilmToLiked(res?.data.movieId)))
+        .catch(err => console.log(err))
+    } 
   }
 
   return (
@@ -98,7 +99,7 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
         }
       </ul>
       <button className="film-item__fav-btn" onClick={handleLikeFilm} >
-        <img src={liked ? likeIconActive : likeIcon} width="22px" height="22px"/>
+        <img src={likedData.liked.includes(id) ? likeIconActive : likeIcon} width="22px" height="22px"/>
       </button>
     </li>
   )

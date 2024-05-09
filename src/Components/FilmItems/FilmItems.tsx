@@ -8,17 +8,9 @@ import { RootState } from "../../store/store";
 
 export default function FilmItems({data, isMobileDevice}: {data: IFilm[], isMobileDevice: boolean}): ReactElement {
 
-  const [likedFilms, setLikedFilms] = useState<number[]>([]);
+  // const likedData = useSelector((state: RootState) => state.liked)
 
-  useEffect(() => {
-    if (!localStorage.getItem('likedFilms')) {
-      localStorage.setItem('likedFilms', JSON.stringify(likedFilms))
-    }
-  }, [])
-
-  useEffect(() => {
-    localStorage.setItem('likedFilms', JSON.stringify(likedFilms))
-  }, [likedFilms])
+  // const [likedFilms, setLikedFilms] = useState<number[]>(likedData.liked);
 
   return (
     <ul className="film-items">
@@ -36,9 +28,6 @@ export default function FilmItems({data, isMobileDevice}: {data: IFilm[], isMobi
               key={film.id}
               id={film.id}
               isSeries={(film.seriesLength||0) > film.movieLength}
-              isLiked={likedFilms.some(storageId => storageId === film.id)}
-              likedFilms={likedFilms}
-              setLikedFilms={setLikedFilms}
             />
           } else {
             return <FilmItemMobile
@@ -52,9 +41,6 @@ export default function FilmItems({data, isMobileDevice}: {data: IFilm[], isMobi
               key={film.id}
               id={film.id}
               isSeries={(film.seriesLength||0) > film.movieLength}
-              isLiked={likedFilms.some(storageId => storageId === film.id)}
-              likedFilms={likedFilms}
-              setLikedFilms={setLikedFilms}
             />
           }
         })

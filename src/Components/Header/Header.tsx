@@ -10,11 +10,11 @@ export default function Header({isMobileDevice, isAuth}: {isMobileDevice: boolea
 
   const likedData = useSelector((state: RootState) => state.liked)
 
-  const [movieCounter, setMovieCounter] = useState<number>(0);
+  //const [movieCounter, setMovieCounter] = useState<number>(0);
 
-  useEffect(() => {
-    setMovieCounter(likedData.liked.length);
-  }, [likedData])
+  // useEffect(() => {
+  //   setMovieCounter(likedData.liked.length);
+  // }, [likedData])
 
   return (
     <header className="header">
@@ -40,9 +40,9 @@ export default function Header({isMobileDevice, isAuth}: {isMobileDevice: boolea
             isActive ? "nav__link nav__status_active" : "nav__link"
           }
             >Моя коллекция 
-              { movieCounter > 0 &&
+              {/* { movieCounter > 0 &&
                 <span>{movieCounter}</span>
-              }
+              } */}
             </NavLink>
           </li>
         </ul>

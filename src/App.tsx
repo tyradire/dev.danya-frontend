@@ -15,10 +15,11 @@ import PersonPage from "./views/person/PersonPage";
 import ProfilePage from "./views/profile/ProfilePage";
 import SearchPage from "./views/search/SearchPage";
 
-import { setUserData, UserState } from "./store/user/userReducer";
+import { getAllUserData, setUserData, UserState } from "./store/user/userReducer";
 import { FetchedUserState } from "./models/models";
 import { useDispatch } from "react-redux";
 import { setLikedFilms } from "./store/user/likedReducer";
+import { getUserData } from "./api/userAPI";
 
 export default function App(): ReactElement {
   const dispatch = useDispatch();
@@ -38,15 +39,19 @@ export default function App(): ReactElement {
 
   useEffect(() => {
     if (!userData.isAuth) return;
-    getLikedMovies(userData.id)
+    getLikedMovies()
     .then(res => dispatch(setLikedFilms(res)))
     .catch(err => console.error(err))
+
+    getUserData()
+    .then(res => dispatch(getAllUserData(res)))
+    .catch(err => console.log(err))
   }, [userData.isAuth])
 
   useEffect(() => {
     if (!localUserData.length) return;
     let data: FetchedUserState = jwtDecode(localUserData);
-    dispatch(setUserData({id: data.id, email: data.email, name: data.name, role: data.role, isAuth: true}));
+    dispatch(setUserData({id: data.id, email: data.email, isAuth: true}));
   }, [localUserData])
 
   return (

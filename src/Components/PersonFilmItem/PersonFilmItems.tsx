@@ -9,7 +9,8 @@ export default function PersonFilmItems({movies}: {movies: PersonMovie[]}): Reac
 
   useEffect(() => {
     setFilteredMovies(movies);
-    movies.length && setFilteredMovies([...movies].sort((movieA, movieB) => (movieA['rating'] || 0) > (movieB['rating'] || 0) ? -1 : 1));
+    //movies.length && setFilteredMovies([...movies].sort((movieA, movieB) => (movieA['rating'] || 0) > (movieB['rating'] || 0) ? -1 : 1));
+    movies.length && setFilteredMovies(movies);
   }, [movies])
 
   return (

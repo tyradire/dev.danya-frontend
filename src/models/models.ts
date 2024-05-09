@@ -220,6 +220,4 @@ export interface PersonMovie {
 export interface FetchedUserState {
   id: number
   email: string
-  name: string
-  role: string
 }

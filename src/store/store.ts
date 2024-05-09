@@ -11,7 +11,8 @@ const reducers = combineReducers({
 
 export const store = configureStore({
   reducer: reducers,
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(kinopoiskApi.middleware)
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: false}).concat(kinopoiskApi.middleware)
+  //middleware: getDefaultMiddleware => getDefaultMiddleware().concat(kinopoiskApi.middleware)
 });
 
 export type RootState = ReturnType<typeof store.getState>

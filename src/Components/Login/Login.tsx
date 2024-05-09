@@ -24,7 +24,7 @@ export default function Login(): ReactElement {
     .then(res =>
       { if (res.success) {
           let data: FetchedUserState = jwtDecode(res.result);
-          dispatch(setUserData({id: data.id, email: data.email, name: data.name, role: data.role, isAuth: res.success}));
+          dispatch(setUserData({id: data.id, email: data.email, isAuth: res.success}));
           navigate(HOME_ROUTE);
         } else {
           console.log('ошибка', res)

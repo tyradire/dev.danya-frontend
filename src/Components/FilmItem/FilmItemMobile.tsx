@@ -5,8 +5,13 @@ import './film-item.scss';
 import likeIconActive from '../../assets/images/like-icon-active.svg';
 import likeIcon from '../../assets/images/like-icon-disabled.svg';
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { addFilmToLiked, removeFilmFromLiked } from "../../store/user/likedReducer";
+import { addToLikedMovies, getLikedMovies, removeFromLikedMovies } from "../../api/collectionAPI";
 
-export default function FilmItemMobile({ name, year, genres, movieLength, rating, poster, top, id, isSeries, isLiked, likedFilms, setLikedFilms }: 
+export default function FilmItemMobile({ name, year, genres, movieLength, rating, poster, top, id, isSeries }: 
   { name: string,
     year: number,
     genres: FilmGenresType[], 
@@ -16,12 +21,13 @@ export default function FilmItemMobile({ name, year, genres, movieLength, rating
     top?: number,
     id: number,
     isSeries: boolean,
-    isLiked: boolean,
-    likedFilms: number[]
-    setLikedFilms: Dispatch<SetStateAction<number[]>>,
   }): ReactElement {
+  const dispatch = useDispatch();
+  
+  const userData = useSelector((state: RootState) => state.user)
+  const likedData = useSelector((state: RootState) => state.liked)
 
-  const [liked, setLiked] = useState<boolean>(isLiked);
+  const [liked, setLiked] = useState<boolean>(likedData.liked.includes(id));
 
   function setFilmLength(length: number): string {
     if (length > 60) {
@@ -29,14 +35,19 @@ export default function FilmItemMobile({ name, year, genres, movieLength, rating
     } else return length + ' мин';
   }
 
-  // const handleLikeFilm = () => {
-  //   setLiked(!liked)
-  //   if (liked) {
-  //     setLikedFilms([...likedFilms].filter(film => film !== id))
-  // } else {
-  //   setLikedFilms([...likedFilms, {filmId: id, userRating: 0}])
-  // }
-  // }
+  const handleLikeFilm = () => {
+    if (!userData.isAuth) return;
+    setLiked(!liked)
+      if (liked) {
+        dispatch(removeFilmFromLiked(id))
+        removeFromLikedMovies(id)
+        getLikedMovies()
+    } else {
+      dispatch(addFilmToLiked(id))
+      addToLikedMovies(id)
+      getLikedMovies()
+    }
+  }
 
   return (
     <li className="film-item-mobile">
@@ -88,8 +99,7 @@ export default function FilmItemMobile({ name, year, genres, movieLength, rating
             </ul>
           </div>
       </Link>
-      {/* onClick={handleLikeFilm} */}
-      <button className="film-item__fav-btn" >
+      <button className="film-item__fav-btn" onClick={handleLikeFilm}>
         <img src={liked ? likeIconActive : likeIcon} width="22px" height="22px"/>
       </button>
     </li>

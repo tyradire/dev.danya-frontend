@@ -15,7 +15,6 @@ export const registration = (email, password) => {
 export const login = async (email, password) => {
   return axios.post(process.env.API_URL + '/api/user/login', {email, password})
   .then(res => {
-    //console.log(res)
     localStorage.setItem('token', res.data.token)
     return {result: res.data.token, success: true};
   })
@@ -27,6 +26,14 @@ export const login = async (email, password) => {
 
 export const rename = async (name) => {
   return authHost.put(process.env.API_URL + '/api/user/rename', { name: name})
+}
+
+export const getUserData = async () => {
+  return authHost.get(process.env.API_URL + '/api/user/userdata')
+  .then(res => {  
+    return res;
+  })
+  .catch(err => console.error(err))
 }
 
 // export const check = async () => {
