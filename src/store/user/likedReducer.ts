@@ -16,7 +16,6 @@ export const likedSlice = createSlice({
       state.liked = action.payload;
     },
     addFilmToLiked(state, action: PayloadAction<any>) {
-      console.log(action.payload)
       state.liked.push(Number(action.payload));
     },
     removeFilmFromLiked(state, action: PayloadAction<any>) {

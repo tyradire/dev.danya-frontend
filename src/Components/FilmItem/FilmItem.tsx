@@ -27,7 +27,7 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
   const userData = useSelector((state: RootState) => state.user)
   const likedData = useSelector((state: RootState) => state.liked)
 
-  const [liked, setLiked] = useState<boolean>(likedData.liked.includes(id));
+  const [liked, setLiked] = useState<boolean>(likedData.liked.includes(id)||false);
 
   function setFilmLength(length: number): string {
     if (length > 60) {
@@ -66,7 +66,6 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
             rating > 0 &&
             <div className="film-item__ranks">
               {
-                // rating ? <p className={`${rating > 8 ? 'film-item__rating film-item__rating_good' : rating > 6 ? 'film-item__rating film-item__rating_average' : 'film-item__rating film-item__rating_bad'}`}>{(rating.toString().slice(0,3))}</p>
                 rating ? <p className={`${rating >= 8 ? 'film-item__rating film-item__rating_good' : rating > 6 ? 'film-item__rating film-item__rating_average' : 'film-item__rating film-item__rating_bad'}`}>{(rating.toFixed(1))}</p>
                 : ''
               }
@@ -99,7 +98,7 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
         }
       </ul>
       <button className="film-item__fav-btn" onClick={handleLikeFilm} >
-        <img src={likedData.liked.includes(id) ? likeIconActive : likeIcon} width="22px" height="22px"/>
+        <img src={liked ? likeIconActive : likeIcon} width="22px" height="22px"/>
       </button>
     </li>
   )
