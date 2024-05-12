@@ -15,8 +15,8 @@ export const registration = (email, password) => {
 export const login = async (email, password) => {
   return axios.post(process.env.API_URL + '/api/user/login', {email, password})
   .then(res => {
-    localStorage.setItem('token', res.data.token)
-    return {result: res.data.token, success: true};
+    localStorage.setItem('token', res.data.accessToken)
+    return {result: res.data.accessToken, success: true};
   })
   .catch(err => {
     console.log(err)
