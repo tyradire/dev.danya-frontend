@@ -7,7 +7,8 @@ export const getLikedMovies = () => {
     return res.data.liked;
   })
   .catch(err => {
-    console.error(err)
+    console.log(err.config.baseURL + ' не отвечает:', err.message);
+    return [];
   })
 }
 

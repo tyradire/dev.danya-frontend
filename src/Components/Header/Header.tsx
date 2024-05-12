@@ -8,7 +8,9 @@ import './Header.scss';
 
 export default function Header({isMobileDevice, isAuth}: {isMobileDevice: boolean, isAuth: boolean}): ReactElement {
 
+  const userData = useSelector((state: RootState) => state.user)
   const likedData = useSelector((state: RootState) => state.liked)
+  const likedCounter = likedData.liked.length
 
   return (
     <header className="header">
@@ -28,17 +30,20 @@ export default function Header({isMobileDevice, isAuth}: {isMobileDevice: boolea
           }
             >Поиск</NavLink>
           </li>
-          <li className="nav__item">
-            <NavLink to="collection"
-            className={({ isActive }) =>
-            isActive ? "nav__link nav__status_active" : "nav__link"
+          {
+            userData.isAuth &&
+            <li className="nav__item">
+              <NavLink to="collection"
+              className={({ isActive }) =>
+              isActive ? "nav__link nav__status_active" : "nav__link"
+            }>
+              Моя коллекция 
+                { likedCounter > 0 &&
+                  <span>{likedCounter || 0 }</span>
+                }
+              </NavLink>
+            </li>
           }
-            >Моя коллекция 
-              { likedData.liked.length > 0 &&
-                <span>{likedData.liked.length}</span>
-              }
-            </NavLink>
-          </li>
         </ul>
       </nav>
       {
