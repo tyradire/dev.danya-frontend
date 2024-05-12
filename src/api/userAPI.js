@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { authHost } from './index';
+import { authHost, host } from './index';
 
 export const registration = (email, password) => {
-  return axios.post(process.env.API_URL + '/api/user/registration', {email, password})
+  return host.post(process.env.API_URL + '/api/user/registration', {email, password})
   .then(res => {
-    localStorage.setItem('token', res.data.token)
+    localStorage.setItem('token', res.data.accessToken)
     return {result: res.data.token, success: true};
   })
   .catch(err => {

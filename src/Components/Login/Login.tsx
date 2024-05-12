@@ -42,7 +42,7 @@ export default function Login(): ReactElement {
       <input type="password" id="login-password" value={passwordInput} onChange={(e) => setPasswordInput(e.target.value)}/>
       <div className="form__controls">
         <span className="form__error">{errorMessage}</span>
-        <button type="submit">Войти</button>
+        <button className="form__button" type="submit">Войти</button>
       </div>
       <div className="form__additional">
         <p>Нет аккаунта?</p>
