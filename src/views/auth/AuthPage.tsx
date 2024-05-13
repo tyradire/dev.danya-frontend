@@ -3,6 +3,10 @@ import './auth.scss';
 import { useLocation } from "react-router-dom";
 import Login from "../../Components/Login/Login";
 import Registration from "../../Components/Registration/Registration";
+import Modal from "../../Components/UI/Modal";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 export default function AuthPage(): ReactElement {
 
@@ -16,6 +20,7 @@ export default function AuthPage(): ReactElement {
         ? <Login />
         : <Registration />
       }
+      <Modal />
     </div>
   )
 } 

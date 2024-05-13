@@ -1,0 +1,48 @@
+.modal {
+  position: absolute;
+  bottom: 0;
+  left: calc(50% - 164px);
+  height: 14px;
+  max-width: 312px;
+  padding: 12px;
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 0 12px 1px rgba(0, 0, 0, .28);
+  transform: translateY(52px);
+  animation-fill-mode: forwards;
+
+  &_opened {
+    animation: 3s modalOpen;
+  }
+
+  &__message {
+    margin: 0;
+    color: #ffffff;
+    text-align: center;
+    font-size: 14px;
+    line-height: 100%;
+    font-weight: 500;
+
+    &_success {
+      color: #4f9b5f;
+    }
+    &_error {
+      color: #ff7676;
+    }
+  }
+}
+
+@keyframes modalOpen {
+  0% {
+    transform: translateY(52px);
+  }
+  20% {
+    transform: translateY(-10px);
+  }
+  80% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(52px);
+  }
+}

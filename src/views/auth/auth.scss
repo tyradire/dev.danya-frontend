@@ -1,8 +1,10 @@
 .auth {
+  position: relative;
   min-height: calc(100vh - 98px);
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-y: hidden;
 
   &__form {
     box-shadow: 0px 0px 24px 1px rgba(0, 0, 0, 0.28);

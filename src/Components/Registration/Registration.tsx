@@ -1,10 +1,13 @@
 import { ReactElement, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { NavLink, useLocation } from "react-router-dom";
 import { registration } from "../../api/userAPI";
 import { LOGIN_ROUTE } from "../../data/constants";
+import { setSuccessStatus } from "../../store/interface/interfaceReducer";
 import '../../ui.scss';
 
 export default function Registration(): ReactElement {
+  const dispatch = useDispatch();
 
   const [emailInput, setEmailInput] = useState<string>('');
   const [passwordInput, setPasswordInput] = useState<string>('');
@@ -19,7 +22,7 @@ export default function Registration(): ReactElement {
     registration(emailInput, passwordInput)
     .then(res =>
       { if (res.success) {
-          setErrorMessage('Профиль создан!');
+          setErrorMessage('');
           setEmailInput('');
           setPasswordInput('');
           setPasswordConfirmInput('');
@@ -30,6 +33,7 @@ export default function Registration(): ReactElement {
         }
       }
     )
+    dispatch(setSuccessStatus({status: 'success'}))
   }
 
   useEffect(() => {
