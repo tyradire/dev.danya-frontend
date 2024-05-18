@@ -45,7 +45,7 @@ export default function Registration(): ReactElement {
     <form className="form" onSubmit={submitRegistration}>
       <h3 className="form__title">Регистрация</h3>
       <label htmlFor="registration-email">Почта</label>
-      <input type="text" id="registration-email" value={emailInput} onChange={(e) => setEmailInput(e.target.value)}/>
+      <input type="email" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" id="registration-email" value={emailInput} onChange={(e) => setEmailInput(e.target.value)}/>
       <label htmlFor="registration-password">Пароль</label>
       <input type="password" id="registration-password" value={passwordInput} onChange={(e) => setPasswordInput(e.target.value)}/>
       <label htmlFor="registration-password-confirm">Подтверждение пароля</label>

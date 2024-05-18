@@ -15,11 +15,11 @@ import PersonPage from "./views/person/PersonPage";
 import ProfilePage from "./views/profile/ProfilePage";
 import SearchPage from "./views/search/SearchPage";
 
-import { getAllUserData, setUserData, UserState } from "./store/user/userReducer";
+import { getAllUserData, setAccessToken, setUserData, UserState } from "./store/user/userReducer";
 import { FetchedUserState } from "./models/models";
 import { useDispatch } from "react-redux";
 import { setLikedFilms } from "./store/user/likedReducer";
-import { getUserData } from "./api/userAPI";
+import { getUserData, refresh } from "./api/userAPI";
 
 export default function App(): ReactElement {
   const dispatch = useDispatch();
@@ -29,6 +29,11 @@ export default function App(): ReactElement {
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
   const [localUserData, setLocalUserData] = useState<string>(localStorage.getItem('token') || '')
 
+  // useEffect(() => {
+  //   refresh();
+  //   console.log(userData.isAuth)
+  // }, [userData.isAuth])
+
   useEffect(() => {
     const getWindowSize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", getWindowSize);
@@ -37,22 +42,42 @@ export default function App(): ReactElement {
 
   const isMobile = MOBILE_DEVICE_SIZE <= windowWidth;
 
-  useEffect(() => {
-    if (!userData.isAuth) return;
-    getLikedMovies()
-    .then(res => dispatch(setLikedFilms(res)))
-    .catch(err => console.error(err))
-
+  useEffect(() => { console.log('accessToken ', userData.accessToken )
+    if (!userData.isAuth && !userData.accessToken) return;
+    
     getUserData()
-    .then(res => dispatch(getAllUserData(res)))
-    .catch(err => console.log(err))
-  }, [userData.isAuth])
+    .then(res => {//console.log('res ',res);
+    dispatch(getAllUserData(res))})
+    .catch(err => { console.log('err ',err)
+      if (err.response.status === 401) { //console.log('401')
+        refresh();
+      } else {
+        return console.log('getuserdata rej: ',err)
+      }
+    })
 
-  useEffect(() => {
+    getLikedMovies()
+    .then(res => dispatch(setLikedFilms(res.data.liked)))
+    .catch(err => {
+      if (err.response.status === 401) { console.log('401')
+        refresh().then(res => {console.log('HAHA ',res); dispatch(setAccessToken())})
+      } else {
+        console.log(err)
+      }
+    })
+    // .then(res => dispatch(setLikedFilms(res)))
+    // .catch(err => console.error(err))
+
+  }, [userData.isAuth, userData.accessToken])
+
+  useEffect(() => {//console.log('localUserData ',localUserData)
     if (!localUserData.length) return;
+
     let data: FetchedUserState = jwtDecode(localUserData);
-    dispatch(setUserData({id: data.id, email: data.email, isAuth: true}));
+    dispatch(setUserData({id: data.id, email: data.email, isAuth: true})); //console.log('userData.isAuth ',userData.isAuth)
   }, [localUserData])
+
+  //console.log('app user: ', userData.isAuth)
 
   return (
     <div className="app">

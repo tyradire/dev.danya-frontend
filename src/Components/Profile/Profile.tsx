@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { setLikedFilms } from "../../store/user/likedReducer";
 import { RootState } from "../../store/store";
 import { useSelector } from "react-redux";
-import { rename } from "../../api/userAPI";
+import { logout, rename } from "../../api/userAPI";
 
 export default function Profile(): ReactElement {
 
@@ -43,6 +43,7 @@ export default function Profile(): ReactElement {
   }
 
   const handleLogout = () => {
+    logout(userData.id);
     dispatch(setUserData({id: 0, email: '', isAuth: false}));
     dispatch(setLikedFilms([]));
     localStorage.setItem('token', '');
@@ -58,7 +59,7 @@ export default function Profile(): ReactElement {
         <form className="profile__form">
           <input value={userName} className="profile__field profile__field_editable" type="text" onChange={changeUserName} onKeyDown={test} />
           <input value={`id ${userData.id}`} className="profile__field" type="text" readOnly />
-          <input value={`Просмотрено: ${likedData.liked.length}`} className="profile__field" type="text" readOnly />
+          <input value={`Просмотрено: ${likedData?.liked?.length}`} className="profile__field" type="text" readOnly />
         </form>
       </div>
       <button className="page__button button button__type_logout" onClick={handleLogout}>Выйти</button>

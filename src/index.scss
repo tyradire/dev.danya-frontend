@@ -100,6 +100,16 @@ body {
       opacity: .65;
     }
   }
+
+  &__notice {
+    margin: 0;
+    margin-top: 180px;
+    text-align: center;
+    font-size: 20px;
+    line-height: 100%;
+    font-weight: 500;
+    color: #585858;
+  }
 }
 
 .nav {
@@ -183,10 +193,15 @@ body {
   }
 }
 
+@media (max-width: 1400px) {
+  .page {
+    padding: 0 80px;
+    width: unset;
+  }
+}
 @media (max-width: 1280px) {
   .page {
     padding: 0 60px;
-    width: unset;
   }
 }
 @media (max-width: 992px) {

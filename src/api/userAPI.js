@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { authHost, host } from './index';
 
+
 export const registration = (email, password) => {
   return host.post(process.env.API_URL + '/api/user/registration', {email, password})
   .then(res => {
@@ -13,7 +14,7 @@ export const registration = (email, password) => {
 }
 
 export const login = async (email, password) => {
-  return axios.post(process.env.API_URL + '/api/user/login', {email, password})
+  return host.post(process.env.API_URL + '/api/user/login', {email, password})
   .then(res => {
     localStorage.setItem('token', res.data.accessToken)
     return {result: res.data.accessToken, success: true};
@@ -24,16 +25,48 @@ export const login = async (email, password) => {
   })
 }
 
+export const refresh = async () => { console.log('refresh start')
+  return host.get(process.env.API_URL + '/api/user/refresh')
+  .then(res => {  
+    localStorage.setItem('token', res.data.accessToken)
+    //dispatch(setAccessToken({data:true}));
+    console.log('refresh done')
+    return {result: res.data.accessToken, success: true};
+  })
+  .catch(err => {
+    console.log('refresh REJECT: ',err)
+  })
+}
+
+export const logout = async (id) => {
+  return authHost.post(process.env.API_URL + '/api/user/logout')
+  .then(res => {  
+    return res
+  })
+  .catch(err => {
+    console.log('logout REJECT: ',err)
+  })
+}
+
 export const rename = async (name) => {
-  return authHost.put(process.env.API_URL + '/api/user/rename', { name: name})
+  return authHost.put(process.env.API_URL + '/api/user/rename', { name: name })
 }
 
 export const getUserData = async () => {
-  return authHost.get(process.env.API_URL + '/api/user/userdata')
-  .then(res => {  
-    return res;
-  })
-  .catch(err => console.error(err))
+  return host.get(process.env.API_URL + '/api/user/userdata')
+  // .then(res => 
+  //   {
+  //     //console.log('getuserdata res: ',res)
+  //     return res
+  //   }
+  // )
+  // .catch(err => {
+  //   if (err.response.status === 401) {
+  //     refresh();
+  //   } else {
+  //     return console.log('getuserdata rej: ',err)
+  //   }
+  // })
 }
 
 // export const check = async () => {

@@ -22,7 +22,7 @@
     line-height: 24px;
     font-weight: 600;
     background-color: transparent;
-    border: none;
+    border: 1px solid transparent;
     border-bottom: 1px solid #4a4a4a;
     margin-top: 4px;
     caret-color: #FFFFFF;
@@ -31,6 +31,10 @@
 
     &:focus {
       outline: none;
+    }
+
+    &:invalid {
+      border-bottom: 1px solid #ff7676;
     }
   }
 }

@@ -10,7 +10,7 @@ export default function Header({isMobileDevice, isAuth}: {isMobileDevice: boolea
 
   const userData = useSelector((state: RootState) => state.user)
   const likedData = useSelector((state: RootState) => state.liked)
-  const likedCounter = likedData.liked.length
+  const likedCounter = likedData?.liked?.length || 0
 
   return (
     <header className="header">
