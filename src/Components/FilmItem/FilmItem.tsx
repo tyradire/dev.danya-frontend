@@ -10,7 +10,6 @@ import { RootState } from "../../store/store";
 import { addToLikedMovies, getLikedMovies, removeFromLikedMovies } from "../../api/collectionAPI";
 import { useDispatch } from "react-redux";
 import { addFilmToLiked, removeFilmFromLiked, setLikedFilms } from "../../store/user/likedReducer";
-import { refresh } from "../../api/userAPI";
 
 export default function FilmItem({ name, year, genres, movieLength, rating, poster, top, id, isSeries }: 
   { name: string,
@@ -45,15 +44,8 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
           .catch(err => console.log(err))
     } else {
       addToLikedMovies(id)
-        .then(res => {console.log(228,res?.data.movieId);dispatch(addFilmToLiked(res?.data.movieId))})
-        .catch(err => {
-          if (err.response.status === 401) {
-            refresh();
-          } else {
-            console.error(err)
-          }
-        })
-        // .catch(err => console.log(err))
+      .then(res => dispatch(addFilmToLiked(res?.data.movieId)))
+      .catch(err => console.log(err))
     } 
   }
 

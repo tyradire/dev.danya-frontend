@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useState } from "react";
+import { isValidElement, ReactElement, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink, useLocation } from "react-router-dom";
 import { registration } from "../../api/userAPI";
@@ -40,6 +40,10 @@ export default function Registration(): ReactElement {
     if (!passwordInput) return;
     setSubmitDisabled(passwordInput !== passwordConfirmInput);
   }, [passwordInput, passwordConfirmInput])
+
+  useEffect(() => {
+    console.log(isValidElement(emailInput))
+  }, [emailInput])
 
   return (
     <form className="form" onSubmit={submitRegistration}>

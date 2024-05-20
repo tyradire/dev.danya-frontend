@@ -25,19 +25,6 @@ export const login = async (email, password) => {
   })
 }
 
-export const refresh = async () => { console.log('refresh start')
-  return host.get(process.env.API_URL + '/api/user/refresh')
-  .then(res => {  
-    localStorage.setItem('token', res.data.accessToken)
-    //dispatch(setAccessToken({data:true}));
-    console.log('refresh done')
-    return {result: res.data.accessToken, success: true};
-  })
-  .catch(err => {
-    console.log('refresh REJECT: ',err)
-  })
-}
-
 export const logout = async (id) => {
   return authHost.post(process.env.API_URL + '/api/user/logout')
   .then(res => {  

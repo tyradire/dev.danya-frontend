@@ -6,11 +6,11 @@ export default function MainPage({isMobileDevice}: {isMobileDevice: boolean}): R
 
   const qqwrwr = "rating.kp=8-10&";
 
-  const {data: likedFIlmsData} = useSearchFilmsQuery('');
+  const {data: fetchedFilms} = useSearchFilmsQuery('');
 
   return (
     <div className="main">
-      <FilmItems data={likedFIlmsData || []} isMobileDevice={isMobileDevice} />
+      <FilmItems data={fetchedFilms || []} isMobileDevice={isMobileDevice} />
     </div>
   )
 } 
