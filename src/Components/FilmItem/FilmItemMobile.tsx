@@ -2,14 +2,14 @@ import { Dispatch, ReactElement, SetStateAction, useState } from "react";
 import { Link } from "react-router-dom";
 import { FilmGenresType } from "../../types/FilmTypes";
 import './film-item.scss';
-import likeIconActive from '../../assets/images/like-icon-active.svg';
-import likeIcon from '../../assets/images/like-icon-disabled.svg';
+import viewedIcon from '../../assets/images/viewed-icon-disabled.svg';
+import viewedIconActive from '../../assets/images/viewed-icon-active.svg';
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { addFilmToLiked, removeFilmFromLiked } from "../../store/user/likedReducer";
-import { addToLikedMovies, getLikedMovies, removeFromLikedMovies } from "../../api/collectionAPI";
+import { addFilmToCollection, removeFilmFromCollection, setCollectionFilms } from "../../store/user/collectionReducer";
+import { addToCollectionMovies, removeFromCollectionMovies, getCollectionMovies } from "../../api/collectionAPI";
 
 export default function FilmItemMobile({ name, year, genres, movieLength, rating, poster, top, id, isSeries }: 
   { name: string,
@@ -25,9 +25,9 @@ export default function FilmItemMobile({ name, year, genres, movieLength, rating
   const dispatch = useDispatch();
   
   const userData = useSelector((state: RootState) => state.user)
-  const likedData = useSelector((state: RootState) => state.liked)
+  const collectionData = useSelector((state: RootState) => state.collection)
 
-  const [liked, setLiked] = useState<boolean>(likedData.liked.includes(id));
+  const [collection, setCollection] = useState<boolean>(collectionData.collection.includes(id));
 
   function setFilmLength(length: number): string {
     if (length > 60) {
@@ -35,17 +35,17 @@ export default function FilmItemMobile({ name, year, genres, movieLength, rating
     } else return length + ' мин';
   }
 
-  const handleLikeFilm = () => {
+  const handleCollectionFilm = () => {
     if (!userData.isAuth) return;
-    setLiked(!liked)
-      if (liked) {
-        dispatch(removeFilmFromLiked(id))
-        removeFromLikedMovies(id)
-        getLikedMovies()
+    setCollection(!collection)
+      if (collection) {
+        dispatch(removeFilmFromCollection(id))
+        removeFromCollectionMovies(id)
+        getCollectionMovies()
     } else {
-      dispatch(addFilmToLiked(id))
-      addToLikedMovies(id)
-      getLikedMovies()
+      dispatch(addFilmToCollection(id))
+      addToCollectionMovies(id)
+      getCollectionMovies()
     }
   }
 
@@ -66,7 +66,6 @@ export default function FilmItemMobile({ name, year, genres, movieLength, rating
               rating > 0 &&
               <div className="film-item__ranks">
                 {
-                  // rating ? <p className={`${rating > 8 ? 'film-item__rating film-item__rating_good' : rating > 6 ? 'film-item__rating film-item__rating_average' : 'film-item__rating film-item__rating_bad'}`}>{(rating.toString().slice(0,3))}</p>
                   rating ? <p className={`${rating >= 8 ? 'film-item__rating film-item__rating_good' : rating > 6 ? 'film-item__rating film-item__rating_average' : 'film-item__rating film-item__rating_bad'}`}>{(rating.toFixed(1))}</p>
                   : ''
                 }
@@ -99,8 +98,8 @@ export default function FilmItemMobile({ name, year, genres, movieLength, rating
             </ul>
           </div>
       </Link>
-      <button className="film-item__fav-btn" onClick={handleLikeFilm}>
-        <img src={liked ? likeIconActive : likeIcon} width="22px" height="22px"/>
+      <button className="film-item__fav-btn" onClick={handleCollectionFilm}>
+        <img src={collection ? viewedIconActive : viewedIcon} width="22px" height="22px"/>
       </button>
     </li>
   )

@@ -40,7 +40,7 @@ export const rename = async (name) => {
 }
 
 export const getUserData = async () => {
-  return host.get(process.env.API_URL + '/api/user/userdata')
+  return authHost.get(process.env.API_URL + '/api/user/userdata')
   // .then(res => 
   //   {
   //     //console.log('getuserdata res: ',res)

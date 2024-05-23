@@ -6,20 +6,20 @@ import { RootState } from "../../store/store";
 
 export default function CollectionPage({isMobileDevice}: {isMobileDevice: boolean}): ReactElement {
 
-  const likedData = useSelector((state: RootState) => state.liked)
-  const [queryToApi, setQueryToApi] = useState<string>('&id=' + likedData?.liked?.join('&id=') || '');
+  const collectionData = useSelector((state: RootState) => state.collection)
+  const [queryToApi, setQueryToApi] = useState<string>('&id=' + collectionData?.collection?.join('&id=') || '');
 
-  const {data: likedFIlmsData} = useGetFilmsByIdQuery(queryToApi);
+  const {data: collectionFIlmsData} = useGetFilmsByIdQuery(queryToApi);
 
   useEffect(() => {
-    setQueryToApi('&id=' + likedData?.liked?.join('&id='));
-  }, [likedData])
+    setQueryToApi('&id=' + collectionData?.collection?.join('&id='));
+  }, [collectionData])
 
   return (
     <div className="collection">
       {
-        likedFIlmsData?.length
-        ? <FilmItems data={likedFIlmsData || []} isMobileDevice={isMobileDevice} />
+        collectionFIlmsData?.length
+        ? <FilmItems data={collectionFIlmsData || []} isMobileDevice={isMobileDevice} />
         : <p className="page__notice">Коллекция пуста.</p>
       }
     </div>

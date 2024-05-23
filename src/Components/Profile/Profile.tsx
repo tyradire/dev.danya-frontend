@@ -6,7 +6,7 @@ import './profile.scss';
 import {renameUser, setUserData} from '../../store/user/userReducer';
 import { HOME_ROUTE } from "../../data/constants";
 import { useNavigate } from "react-router-dom";
-import { setLikedFilms } from "../../store/user/likedReducer";
+import { setCollectionFilms } from "../../store/user/collectionReducer";
 import { RootState } from "../../store/store";
 import { useSelector } from "react-redux";
 import { logout, rename } from "../../api/userAPI";
@@ -14,7 +14,7 @@ import { logout, rename } from "../../api/userAPI";
 export default function Profile(): ReactElement {
 
   const userData = useSelector((state: RootState) => state.user)
-  const likedData = useSelector((state: RootState) => state.liked)
+  const collectionData = useSelector((state: RootState) => state.collection)
 
   const dispatch = useDispatch()
   const navigate = useNavigate();
@@ -45,7 +45,7 @@ export default function Profile(): ReactElement {
   const handleLogout = () => {
     logout(userData.id);
     dispatch(setUserData({id: 0, email: '', isAuth: false}));
-    dispatch(setLikedFilms([]));
+    dispatch(setCollectionFilms([]));
     localStorage.setItem('token', '');
     navigate(HOME_ROUTE);
   }
@@ -59,7 +59,7 @@ export default function Profile(): ReactElement {
         <form className="profile__form">
           <input value={userName} className="profile__field profile__field_editable" type="text" onChange={changeUserName} onKeyDown={test} />
           <input value={`id ${userData.id}`} className="profile__field" type="text" readOnly />
-          <input value={`Просмотрено: ${likedData?.liked?.length}`} className="profile__field" type="text" readOnly />
+          <input value={`Просмотрено: ${collectionData?.collection?.length}`} className="profile__field" type="text" readOnly />
         </form>
       </div>
       <button className="page__button button button__type_logout" onClick={handleLogout}>Выйти</button>

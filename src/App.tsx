@@ -1,7 +1,7 @@
 import { ReactElement, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { getLikedMovies } from "./api/collectionAPI";
+import { getCollectionMovies } from "./api/collectionAPI";
 import Header from "./Components/Header/Header";
 import { COLLECTION_ROUTE, HOME_ROUTE, LOGIN_ROUTE, MOBILE_DEVICE_SIZE, MOVIE_ROUTE, PERSON_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE, SEARCH_ROUTE } from "./data/constants";
 import { RootState, store } from "./store/store";
@@ -18,7 +18,7 @@ import SearchPage from "./views/search/SearchPage";
 import { getAllUserData, setAccessToken, setUserData, UserState } from "./store/user/userReducer";
 import { FetchedUserState } from "./models/models";
 import { useDispatch } from "react-redux";
-import { setLikedFilms } from "./store/user/likedReducer";
+import { setCollectionFilms } from "./store/user/collectionReducer";
 import { getUserData } from "./api/userAPI";
 
 export default function App(): ReactElement {
@@ -47,9 +47,9 @@ export default function App(): ReactElement {
     .catch(err => { console.log('err ',err)
     })
 
-    getLikedMovies()
+    getCollectionMovies()
     .then(res => {
-      dispatch(setLikedFilms(res.data.liked))
+      dispatch(setCollectionFilms(res.data.watched))
       console.log('RES S SERVERA ',res)
       if (res.data.accessToken) {
         localStorage.setItem('token', res.data.accessToken)

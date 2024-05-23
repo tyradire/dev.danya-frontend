@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --config webpack/webpack.config.js --env env=prod",
-    "start": "webpack serve --config webpack/webpack.config.js --env env=dev"
+    "start": "webpack serve --config webpack/webpack.config.js --env env=dev",
+    "server": "scp -r ./dist/* tyradire@80.90.178.201:/frontend"
   },
   "keywords": [],
   "author": "",

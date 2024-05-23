@@ -8,10 +8,6 @@ import { RootState } from "../../store/store";
 
 export default function FilmItems({data, isMobileDevice}: {data: IFilm[], isMobileDevice: boolean}): ReactElement {
 
-  // const likedData = useSelector((state: RootState) => state.liked)
-
-  // const [likedFilms, setLikedFilms] = useState<number[]>(likedData.liked);
-
   return (
     <ul className="film-items">
       { 
