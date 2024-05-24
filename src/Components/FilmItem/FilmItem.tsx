@@ -2,8 +2,8 @@ import { Dispatch, ReactElement, SetStateAction, useEffect, useState } from "rea
 import { Link } from "react-router-dom";
 import { FilmGenresType } from "../../types/FilmTypes";
 import './film-item.scss';
-import viewedIcon from '../../assets/images/viewed-icon-disabled.svg';
-import viewedIconActive from '../../assets/images/viewed-icon-active.svg';
+import likedIcon from '../../assets/images/like-icon-disabled.svg';
+import likedIconActive from '../../assets/images/like-icon-active.svg';
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
@@ -78,16 +78,19 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
           <p className="film-item__year">{year}</p>
         </div>
       </Link>
-      {
-        movieLength ? 
-        <p className="film-item__length">
-          {
-            isSeries ? `Серия ~ ${setFilmLength(movieLength)}` :
-            setFilmLength(movieLength)
-          }
-        </p>
-        : ''
-      }
+      <div className="film-item__row">
+        <button className={collection ? "film-item__viewed film-item__viewed_active" : "film-item__viewed"} onClick={handleCollectionFilm}>Просмотрен</button>
+        {
+          movieLength ? 
+          <p className="film-item__length">
+            {
+              isSeries ? `Серия ~ ${setFilmLength(movieLength)}` :
+              setFilmLength(movieLength)
+            }
+          </p>
+          : ''
+        }
+      </div>
       <ul className="film-item__genres-list">
         {
           genres.map((genre, index) => {
@@ -97,8 +100,8 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
           })
         }
       </ul>
-      <button className={collection ? "film-item__fav-btn film-item__fav-btn_active" : "film-item__fav-btn"} onClick={handleCollectionFilm} >
-        <img src={collection ? viewedIconActive : viewedIcon} width="22px" height="22px"/>
+      <button className={collection ? "film-item__fav-btn film-item__fav-btn_active" : "film-item__fav-btn"}>
+        <img src={collection ? likedIconActive : likedIcon} width="22px" height="22px"/>
       </button>
     </li>
   )
