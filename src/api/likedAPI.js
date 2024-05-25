@@ -2,11 +2,11 @@ import axios from 'axios';
 import { authHost } from './index';
 
 export const getLikedMovies = () => {
-  return authHost.get(process.env.API_URL + `/api/liked/getcollection`)
+  return authHost.get(process.env.API_URL + `/api/like/getcollection`)
 }
 
 export const addToLikedMovies = (id) => {
-  return authHost.patch(process.env.API_URL + `/api/liked/add/${id}`)
+  return authHost.patch(process.env.API_URL + `/api/like/add/${id}`)
   .then(res => {
     localStorage.setItem('token', res.data.accessToken)
     return res
@@ -17,7 +17,7 @@ export const addToLikedMovies = (id) => {
 }
 
 export const removeFromLikedMovies = (id) => {
-  return authHost.patch(process.env.API_URL + `/api/liked/delete/${id}`)
+  return authHost.patch(process.env.API_URL + `/api/like/delete/${id}`)
   .then(res => {
     localStorage.setItem('token', res.data.accessToken)
     return res

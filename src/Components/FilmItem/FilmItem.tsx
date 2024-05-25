@@ -8,8 +8,10 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { addToCollectionMovies, removeFromCollectionMovies } from "../../api/collectionAPI";
+import { addToLikedMovies, removeFromLikedMovies } from "../../api/likedAPI";
 import { useDispatch } from "react-redux";
 import { addFilmToCollection, removeFilmFromCollection, setCollectionFilms } from "../../store/user/collectionReducer";
+import { addFilmToLiked, removeFilmFromLiked } from "../../store/user/likedReducer";
 
 export default function FilmItem({ name, year, genres, movieLength, rating, poster, top, id, isSeries }: 
   { name: string,
@@ -26,8 +28,10 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
   
   const userData = useSelector((state: RootState) => state.user)
   const collectionData = useSelector((state: RootState) => state.collection)
+  const likedData = useSelector((state: RootState) => state.liked)
 
   const [collection, setCollection] = useState<boolean>(collectionData.collection?.includes(id)||false);
+  const [liked, setLiked] = useState<boolean>(likedData.liked?.includes(id)||false);
 
   function setFilmLength(length: number): string {
     if (length > 60) {
@@ -38,15 +42,29 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
   const handleCollectionFilm = () => {
     if (!userData.isAuth) return;
     setCollection(!collection)
-      if (collection) {
-        removeFromCollectionMovies(id)
-          .then(res => dispatch(removeFilmFromCollection(res?.data.movieId)))
-          .catch(err => console.log(err))
+    if (collection) {
+      removeFromCollectionMovies(id)
+        .then(res => dispatch(removeFilmFromCollection(res?.data.movieId)))
+        .catch(err => console.log(err))
     } else {
       addToCollectionMovies(id)
-      .then(res => dispatch(addFilmToCollection(res?.data.movieId)))
-      .catch(err => console.log(err))
+        .then(res => dispatch(addFilmToCollection(res?.data.movieId)))
+        .catch(err => console.log(err))
     } 
+  }
+
+  const handleLikedFilm = () => {
+    if (!userData.isAuth) return;
+    setLiked(!liked)
+    if (liked) {
+      removeFromLikedMovies(id)
+        .then(res => dispatch(removeFilmFromLiked(res?.data.movieId)))
+        .catch(err => console.log(err))
+    } else {
+      addToLikedMovies(id)
+        .then(res => dispatch(addFilmToLiked(res?.data.movieId)))
+        .catch(err => console.log(err))
+    }
   }
 
   return (
@@ -107,8 +125,8 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
           })
         }
       </ul>
-      <button className={collection ? "film-item__fav-btn film-item__fav-btn_active" : "film-item__fav-btn"}>
-        <img src={collection ? likedIconActive : likedIcon} width="22px" height="22px"/>
+      <button className={liked ? "film-item__fav-btn film-item__fav-btn_active" : "film-item__fav-btn"} onClick={handleLikedFilm}>
+        <img src={liked ? likedIconActive : likedIcon} width="22px" height="22px"/>
       </button>
     </li>
   )

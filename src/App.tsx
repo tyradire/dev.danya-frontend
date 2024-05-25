@@ -2,6 +2,7 @@ import { ReactElement, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { getCollectionMovies } from "./api/collectionAPI";
+import { getLikedMovies } from "./api/likedAPI";
 import Header from "./Components/Header/Header";
 import { COLLECTION_ROUTE, HOME_ROUTE, LOGIN_ROUTE, MOBILE_DEVICE_SIZE, MOVIE_ROUTE, PERSON_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE, SEARCH_ROUTE } from "./data/constants";
 import { RootState, store } from "./store/store";
@@ -20,6 +21,7 @@ import { FetchedUserState } from "./models/models";
 import { useDispatch } from "react-redux";
 import { setCollectionFilms } from "./store/user/collectionReducer";
 import { getUserData } from "./api/userAPI";
+import { setLikedFilms } from "./store/user/likedReducer";
 
 export default function App(): ReactElement {
   const dispatch = useDispatch();
@@ -50,7 +52,6 @@ export default function App(): ReactElement {
     getCollectionMovies()
     .then(res => {
       dispatch(setCollectionFilms(res.data.watched))
-      console.log('RES S SERVERA ',res)
       if (res.data.accessToken) {
         localStorage.setItem('token', res.data.accessToken)
       }
@@ -58,6 +59,18 @@ export default function App(): ReactElement {
     .catch(err => {
         console.log(err)
     })
+
+    getLikedMovies()
+    .then(res => {
+      dispatch(setLikedFilms(res.data.liked))
+      if (res.data.accessToken) {
+        localStorage.setItem('token', res.data.accessToken)
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    })
+    
   }, [userData.isAuth])
 
   useEffect(() => {
