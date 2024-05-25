@@ -79,7 +79,14 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
         </div>
       </Link>
       <div className="film-item__row">
-        <button className={collection ? "film-item__viewed film-item__viewed_active" : "film-item__viewed"} onClick={handleCollectionFilm}>Просмотрен</button>
+        <button 
+          className={collection ? "film-item__viewed film-item__viewed_active" : "film-item__viewed"} 
+          onClick={handleCollectionFilm}
+        >
+        {
+          collection ? 'Просмотрен' : 'Уже просмотрено?'
+        }
+        </button>
         {
           movieLength ? 
           <p className="film-item__length">
