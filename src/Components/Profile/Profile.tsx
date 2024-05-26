@@ -14,7 +14,6 @@ import { logout, rename } from "../../api/userAPI";
 export default function Profile(): ReactElement {
 
   const userData = useSelector((state: RootState) => state.user)
-  const collectionData = useSelector((state: RootState) => state.collection)
 
   const dispatch = useDispatch()
   const navigate = useNavigate();
@@ -59,7 +58,6 @@ export default function Profile(): ReactElement {
         <form className="profile__form">
           <input value={userName} className="profile__field profile__field_editable" type="text" onChange={changeUserName} onKeyDown={test} />
           <input value={`id ${userData.id}`} className="profile__field" type="text" readOnly />
-          <input value={`Просмотрено: ${collectionData?.collection?.length}`} className="profile__field" type="text" readOnly />
         </form>
       </div>
       <button className="page__button button button__type_logout" onClick={handleLogout}>Выйти</button>

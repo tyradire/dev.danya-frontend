@@ -15,6 +15,10 @@ export default function CollectionPage({isMobileDevice}: {isMobileDevice: boolea
     setQueryToApi('&id=' + collectionData?.collection?.join('&id='));
   }, [collectionData])
 
+  const collectionGenresA: Array<any[]> = [];
+  collectionFIlmsData?.forEach(filmGenres => collectionGenresA.push(filmGenres.genres))
+  console.log(collectionGenresA[0][0].name)
+
   return (
     <div className="collection">
       {
