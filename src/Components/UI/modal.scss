@@ -1,25 +1,26 @@
 .modal {
-  position: absolute;
-  bottom: 0;
-  left: calc(50% - 164px);
-  height: 14px;
-  max-width: 312px;
+  position: fixed;
+  bottom: 16px;
+  left: calc(50% - 14vw);
+  max-width: 28vw;
   padding: 12px;
   width: 100%;
   border-radius: 12px;
+  background-color: rgba(35, 37, 38, 0.9);
   box-shadow: 0 0 12px 1px rgba(0, 0, 0, .28);
-  transform: translateY(52px);
+  z-index: 999;
+  transform: translateY(75px);
   animation-fill-mode: forwards;
 
   &_opened {
-    animation: 3s modalOpen;
+    animation: 5s modalOpen;
   }
 
   &__message {
     margin: 0;
     color: #ffffff;
     text-align: center;
-    font-size: 14px;
+    font-size:calc(12px + 6 * (100vw - 320px) / 880);
     line-height: 100%;
     font-weight: 500;
 
@@ -34,15 +35,21 @@
 
 @keyframes modalOpen {
   0% {
-    transform: translateY(52px);
+    transform: translateY(75px);
   }
   20% {
     transform: translateY(-10px);
   }
   80% {
-    transform: translateY(-10px);
+    transform: translateY(10px);
   }
   100% {
-    transform: translateY(52px);
+    transform: translateY(80px);
+  }
+}
+
+@media (max-width: 1600px) {
+  .modal__message {
+    font-size: 14px;
   }
 }

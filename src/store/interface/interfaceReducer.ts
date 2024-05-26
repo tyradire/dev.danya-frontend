@@ -21,8 +21,18 @@ export const interfaceSlice = createSlice({
       state.isOpened = true;
       state.status = action.payload.status;
     },
+    setUnauthorizedStatus(state, action: PayloadAction<any>) {
+      state.modalMessage = 'Вы не авторизованы';
+      state.isOpened = true;
+      state.status = action.payload.status;
+    },
+    setDefaultStatus(state) {
+      state.modalMessage = '';
+      state.isOpened = false;
+      state.status = '';
+    }
   }
 })
 
-export const { setSuccessStatus } = interfaceSlice.actions
+export const { setSuccessStatus, setUnauthorizedStatus, setDefaultStatus } = interfaceSlice.actions
 export const interfaceReducer = interfaceSlice.reducer

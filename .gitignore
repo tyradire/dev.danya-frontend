@@ -3,3 +3,5 @@ dist
 build
 
 .env
+
+// API_URL=https://dev.danya-frontend.ru

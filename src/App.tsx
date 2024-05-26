@@ -22,6 +22,7 @@ import { useDispatch } from "react-redux";
 import { setCollectionFilms } from "./store/user/collectionReducer";
 import { getUserData } from "./api/userAPI";
 import { setLikedFilms } from "./store/user/likedReducer";
+import Modal from "./Components/UI/Modal";
 
 export default function App(): ReactElement {
   const dispatch = useDispatch();
@@ -104,6 +105,7 @@ export default function App(): ReactElement {
 
         </Routes>
       </main>
+      <Modal />
     </div>
   )
 } 

@@ -12,6 +12,7 @@ import { addToLikedMovies, removeFromLikedMovies } from "../../api/likedAPI";
 import { useDispatch } from "react-redux";
 import { addFilmToCollection, removeFilmFromCollection, setCollectionFilms } from "../../store/user/collectionReducer";
 import { addFilmToLiked, removeFilmFromLiked } from "../../store/user/likedReducer";
+import { setDefaultStatus, setUnauthorizedStatus } from "../../store/interface/interfaceReducer";
 
 export default function FilmItem({ name, year, genres, movieLength, rating, poster, top, id, isSeries }: 
   { name: string,
@@ -29,6 +30,7 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
   const userData = useSelector((state: RootState) => state.user)
   const collectionData = useSelector((state: RootState) => state.collection)
   const likedData = useSelector((state: RootState) => state.liked)
+  const interfaceData = useSelector((state: RootState) => state.interface)
 
   const [collection, setCollection] = useState<boolean>(collectionData.collection?.includes(id)||false);
   const [liked, setLiked] = useState<boolean>(likedData.liked?.includes(id)||false);
@@ -40,7 +42,15 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
   }
 
   const handleCollectionFilm = () => {
-    if (!userData.isAuth) return;
+    if (!userData.isAuth) {
+      if (interfaceData.isOpened) {
+        return;
+      } else {
+        dispatch(setUnauthorizedStatus({status: 'error'}))
+        setTimeout(() => dispatch(setDefaultStatus()), 5000);
+        return;
+      }
+    };
     setCollection(!collection)
     if (collection) {
       removeFromCollectionMovies(id)
@@ -54,7 +64,15 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
   }
 
   const handleLikedFilm = () => {
-    if (!userData.isAuth) return;
+    if (!userData.isAuth) {
+      if (interfaceData.isOpened) {
+        return;
+      } else {
+        dispatch(setUnauthorizedStatus({status: 'error'}))
+        setTimeout(() => dispatch(setDefaultStatus()), 5000);
+        return;
+      }
+    };
     setLiked(!liked)
     if (liked) {
       removeFromLikedMovies(id)

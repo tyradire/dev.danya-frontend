@@ -93,7 +93,12 @@
       box-shadow: none;
       color: #000000;
     }
-
+  }
+  &__error {
+    color: #ff7676;
+    font-size: 12px;
+    line-height: 120%;
+    font-weight: 500;
   }
 }
 
