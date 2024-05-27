@@ -1,5 +1,6 @@
 import { ReactElement, useEffect, useState } from "react";
 import FilmItems from "../../Components/FilmItems/FilmItems";
+import Tags from "../../Components/Tags/Tags";
 import { useGetTopRatingFilmsQuery, useSearchFilmsQuery } from "../../store/films/api.kinopoisk";
 
 export default function MainPage({isMobileDevice}: {isMobileDevice: boolean}): ReactElement {
@@ -10,6 +11,7 @@ export default function MainPage({isMobileDevice}: {isMobileDevice: boolean}): R
 
   return (
     <div className="main">
+      <Tags />
       <FilmItems data={fetchedFilms || []} isMobileDevice={isMobileDevice} />
     </div>
   )
