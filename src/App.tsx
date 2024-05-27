@@ -21,22 +21,38 @@ import { FetchedUserState } from "./models/models";
 import { useDispatch } from "react-redux";
 import { setCollectionFilms } from "./store/user/collectionReducer";
 import { getUserData } from "./api/userAPI";
-import { setLikedFilms } from "./store/user/likedReducer";
+import { setLikedFilms, setLikedGenres } from "./store/user/likedReducer";
 import Modal from "./Components/UI/Modal";
+import { useGetFilmsByIdQuery } from "./store/films/api.kinopoisk";
 
 export default function App(): ReactElement {
   const dispatch = useDispatch();
 
   const userData = useSelector((state: RootState) => state.user)
+  const likedData = useSelector((state: RootState) => state.liked)
 
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
-  const [localUserData, setLocalUserData] = useState<string>(localStorage.getItem('token') || '')
+  const [localUserData, setLocalUserData] = useState<string>(localStorage.getItem('token') || '');
+  const [queryToApi, setQueryToApi] = useState<string>('&id=' + likedData?.liked?.join('&id=') || '');
+  const [likedFilmsIds, setLikedFilmsIds] = useState<string[]>([])
+
+  const {data: likedFIlmsData, isSuccess} = useGetFilmsByIdQuery(queryToApi);
 
   useEffect(() => {
     const getWindowSize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", getWindowSize);
     return () => window.removeEventListener("resize", getWindowSize);
   }, [])
+
+  useEffect(() => {
+    setQueryToApi('&id=' + likedData?.liked?.join('&id='));
+  }, [likedData])
+
+  useEffect(() => {
+    if (likedFilmsIds.length < 1) return;
+    dispatch(setLikedGenres(likedFilmsIds))
+    console.log(likedFilmsIds)
+  }, [likedFilmsIds])
 
   const isMobile = MOBILE_DEVICE_SIZE <= windowWidth;
 
@@ -80,6 +96,32 @@ export default function App(): ReactElement {
     let data: FetchedUserState = jwtDecode(localUserData);
     dispatch(setUserData({id: data.id, email: data.email, isAuth: true}));
   }, [localUserData])
+
+  if (isSuccess && likedFilmsIds.length < 1) {
+    const collectionGenres: Array<any[]> = [];
+    const genresCollection: any = {};
+    const genresArray: any = [];
+
+    likedFIlmsData?.forEach(filmGenres => collectionGenres.push(filmGenres.genres))
+    collectionGenres.forEach(genres => {
+      genres.forEach(genre => {
+        if (!genresCollection[genre.name]) {
+          genresCollection[genre.name] = 1;
+        } else {
+          genresCollection[genre.name]++
+        }
+      })
+    })
+
+    for (let i = 0; i < Object.keys(genresCollection).length; i++) {
+      genresArray.push({genre: Object.keys(genresCollection)[i], count: Object.values(genresCollection)[i]})
+    }
+
+    genresArray.sort((a: any, b: any) => a.count < b.count ? 1 : -1);
+    setLikedFilmsIds([genresArray[0].genre, genresArray[1].genre, genresArray[2].genre])
+
+    console.log(likedFilmsIds)
+  }
 
   return (
     <div className="app">

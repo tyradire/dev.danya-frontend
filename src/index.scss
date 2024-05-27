@@ -105,8 +105,7 @@ body {
   &__stat-value {
     text-align: end;
     margin: 0;
-    margin-top: 4px;
-    font-size: 36px;
+    font-size: 24px;
     line-height: 100%;
     font-weight: 500;
     color: #9f9f9f;
@@ -114,8 +113,8 @@ body {
     img {
       position: relative;
       bottom: -2px;
-      width: 32px;
-      height: 32px;
+      width: 24px;
+      height: 24px;
       margin-left: 8px;
     }
   }
@@ -130,6 +129,11 @@ body {
     &:hover {
       opacity: .65;
     }
+  }
+  &__row {
+    display: flex;
+    column-gap: 12px;
+    margin-bottom: 12px;
   }
   &__list {
     margin: 0;

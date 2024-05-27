@@ -1,11 +1,13 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 export interface likedFilmsState {
-  liked: number[]
+  liked: number[],
+  likedGenres: string[]
 }
 
 const initialState: likedFilmsState = {
-  liked: []
+  liked: [],
+  likedGenres: ['']
 }
 
 export const likedSlice = createSlice({
@@ -20,9 +22,13 @@ export const likedSlice = createSlice({
     },
     removeFilmFromLiked(state, action: PayloadAction<any>) {
       state.liked = state.liked.filter((movie) => movie != action.payload);
+    },
+
+    setLikedGenres(state, action: PayloadAction<any>) {
+      state.likedGenres = action.payload;
     }
   }
 })
 
-export const { setLikedFilms, addFilmToLiked, removeFilmFromLiked } = likedSlice.actions
+export const { setLikedFilms, addFilmToLiked, removeFilmFromLiked, setLikedGenres } = likedSlice.actions
 export const likedReducer = likedSlice.reducer
