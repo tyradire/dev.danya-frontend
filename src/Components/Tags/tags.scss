@@ -27,6 +27,16 @@
         border-color: #fff5a1;
         color: #fff5a1;
       }
+
+      &:focus {
+        border-color: #fff5a1;
+        color: #fff5a1;
+      }
+    }
+
+    &_active button {
+      border-color: #fff5a1;
+      color: #fff5a1;
     }
   }
 }
