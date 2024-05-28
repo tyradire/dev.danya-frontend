@@ -22,6 +22,12 @@ export const kinopoiskApi = createApi({
       }),
       transformResponse: (response: ServerResponse<IFilm>) => response.docs
     }),
+    searchFilmsForMainPage: build.query<IFilm[], string>({
+      query: (search: string) => ({
+        url: `movie?limit=250&rating.kp=8-10&genres.name=${search}`
+      }),
+      transformResponse: (response: ServerResponse<IFilm>) => response.docs
+    }),
     getFilm: build.query<IFilmSingle, number>({
       query: (id: number) => ({
         url: `movie/${id}`
@@ -47,4 +53,11 @@ export const kinopoiskApi = createApi({
   })
 })
 
-export const {useSearchFilmsQuery, useGetFilmQuery, useGetFilmsByIdQuery, useGetTopRatingFilmsQuery, useGetPersonByIdQuery} = kinopoiskApi
+export const {
+  useSearchFilmsQuery, 
+  useGetFilmQuery, 
+  useGetFilmsByIdQuery, 
+  useGetTopRatingFilmsQuery, 
+  useGetPersonByIdQuery,
+  useLazySearchFilmsForMainPageQuery
+} = kinopoiskApi

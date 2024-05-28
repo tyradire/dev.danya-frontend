@@ -8,7 +8,6 @@ export interface UserState {
   avatar: string
   role: string
   isAuth: boolean
-  accessToken: boolean
 }
 
 const initialState: UserState = {
@@ -18,7 +17,6 @@ const initialState: UserState = {
   avatar: '',
   role: 'USER',
   isAuth: false,
-  accessToken: false
 }
 
 export const userSlice = createSlice({
@@ -44,15 +42,9 @@ export const userSlice = createSlice({
       state.avatar = action.payload.data.user.avatar;
       state.role = action.payload.data.user.role;
       state.isAuth = true;
-    },
-    setAccessToken(state) {
-      console.log('redux ',state.accessToken)
-      state.accessToken = true;
-      //state.accessToken = action.payload.data;
-      console.log('redux ',state.accessToken)
     }
   }
 })
 
-export const { setUserData, logoutUser, renameUser, getAllUserData, setAccessToken } = userSlice.actions
+export const { setUserData, logoutUser, renameUser, getAllUserData } = userSlice.actions
 export const userReducer = userSlice.reducer

@@ -1,5 +1,4 @@
 import { ReactElement, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import FilmItems from "../../Components/FilmItems/FilmItems";
 import { useGetFilmsByIdQuery } from "../../store/films/api.kinopoisk";
@@ -7,7 +6,6 @@ import { RootState } from "../../store/store";
 import { setLikedGenres } from "../../store/user/likedReducer";
 
 export default function CollectionPage({isMobileDevice}: {isMobileDevice: boolean}): ReactElement {
-  const dispatch = useDispatch();
 
   const collectionData = useSelector((state: RootState) => state.collection)
 

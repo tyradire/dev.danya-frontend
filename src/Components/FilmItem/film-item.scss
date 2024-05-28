@@ -222,6 +222,7 @@
     line-height: 16px;
     font-weight: 400;
     text-align: right;
+    align-self: center;
   }
   &__rating {
     font-family: inherit;
@@ -250,6 +251,8 @@
     color: #cec99d;
   }
   &__viewed {
+    width: 120px;
+    height: 30px;
     background-color: transparent;
     border: none;
     font-size: 13px;

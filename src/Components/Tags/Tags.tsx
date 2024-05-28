@@ -3,18 +3,21 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import './tags.scss';
 
-export default function Tags(): ReactElement {
+export default function Tags({setMainQuery, likedGenres}: {setMainQuery: any, likedGenres: string[]}): ReactElement {
 
-  const likedData = useSelector((state: RootState) => state.liked)
-
-  console.log(likedData.likedGenres[0])
+  function setGenre(genre: string) {
+    setMainQuery(genre)
+  }
 
   return (
     <ul className="tags">
-      <li className="tags__item">не просмотренные</li>
       {
-        likedData.likedGenres.map(genre => 
-          <li className="tags__item">{genre}</li>
+        likedGenres.map((genre, i) => 
+          <li className="tags__item" key={i}>
+            <button onClick={() => setGenre(genre)}>
+              {genre}
+            </button>
+          </li>
         )
       }
     </ul>

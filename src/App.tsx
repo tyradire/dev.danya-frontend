@@ -16,7 +16,7 @@ import PersonPage from "./views/person/PersonPage";
 import ProfilePage from "./views/profile/ProfilePage";
 import SearchPage from "./views/search/SearchPage";
 
-import { getAllUserData, setAccessToken, setUserData, UserState } from "./store/user/userReducer";
+import { getAllUserData, setUserData, UserState } from "./store/user/userReducer";
 import { FetchedUserState } from "./models/models";
 import { useDispatch } from "react-redux";
 import { setCollectionFilms } from "./store/user/collectionReducer";
@@ -51,13 +51,11 @@ export default function App(): ReactElement {
   useEffect(() => {
     if (likedFilmsIds.length < 1) return;
     dispatch(setLikedGenres(likedFilmsIds))
-    console.log(likedFilmsIds)
   }, [likedFilmsIds])
 
   const isMobile = MOBILE_DEVICE_SIZE <= windowWidth;
 
-  useEffect(() => { console.log('accessToken ', userData.accessToken )
-
+  useEffect(() => {
     if (!userData.isAuth) return;
     
     getUserData()
@@ -119,8 +117,6 @@ export default function App(): ReactElement {
 
     genresArray.sort((a: any, b: any) => a.count < b.count ? 1 : -1);
     setLikedFilmsIds([genresArray[0].genre, genresArray[1].genre, genresArray[2].genre])
-
-    console.log(likedFilmsIds)
   }
 
   return (
