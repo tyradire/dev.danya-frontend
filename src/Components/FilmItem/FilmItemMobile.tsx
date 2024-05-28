@@ -2,6 +2,8 @@ import { Dispatch, ReactElement, SetStateAction, useState } from "react";
 import { Link } from "react-router-dom";
 import { FilmGenresType } from "../../types/FilmTypes";
 import './film-item.scss';
+import likedIcon from '../../assets/images/like-icon-disabled.svg';
+import likedIconActive from '../../assets/images/like-icon-active.svg';
 import viewedIcon from '../../assets/images/viewed-icon-disabled.svg';
 import viewedIconActive from '../../assets/images/viewed-icon-active.svg';
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -10,6 +12,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { addFilmToCollection, removeFilmFromCollection, setCollectionFilms } from "../../store/user/collectionReducer";
 import { addToCollectionMovies, removeFromCollectionMovies, getCollectionMovies } from "../../api/collectionAPI";
+import { setDefaultStatus, setUnauthorizedStatus } from "../../store/interface/interfaceReducer";
+import { addToLikedMovies, removeFromLikedMovies } from "../../api/likedAPI";
+import { addFilmToLiked, removeFilmFromLiked } from "../../store/user/likedReducer";
 
 export default function FilmItemMobile({ name, year, genres, movieLength, rating, poster, top, id, isSeries }: 
   { name: string,
@@ -26,8 +31,11 @@ export default function FilmItemMobile({ name, year, genres, movieLength, rating
   
   const userData = useSelector((state: RootState) => state.user)
   const collectionData = useSelector((state: RootState) => state.collection)
+  const likedData = useSelector((state: RootState) => state.liked)
+  const interfaceData = useSelector((state: RootState) => state.interface)
 
   const [collection, setCollection] = useState<boolean>(collectionData.collection.includes(id));
+  const [liked, setLiked] = useState<boolean>(likedData.liked?.includes(id)||false);
 
   function setFilmLength(length: number): string {
     if (length > 60) {
@@ -36,16 +44,46 @@ export default function FilmItemMobile({ name, year, genres, movieLength, rating
   }
 
   const handleCollectionFilm = () => {
-    if (!userData.isAuth) return;
+    if (!userData.isAuth) {
+      if (interfaceData.isOpened) {
+        return;
+      } else {
+        dispatch(setUnauthorizedStatus({status: 'error'}))
+        setTimeout(() => dispatch(setDefaultStatus()), 5000);
+        return;
+      }
+    };
     setCollection(!collection)
-      if (collection) {
-        dispatch(removeFilmFromCollection(id))
-        removeFromCollectionMovies(id)
-        getCollectionMovies()
+    if (collection) {
+      removeFromCollectionMovies(id)
+        .then(res => dispatch(removeFilmFromCollection(res?.data.movieId)))
+        .catch(err => console.log(err))
     } else {
-      dispatch(addFilmToCollection(id))
       addToCollectionMovies(id)
-      getCollectionMovies()
+        .then(res => dispatch(addFilmToCollection(res?.data.movieId)))
+        .catch(err => console.log(err))
+    } 
+  }
+
+  const handleLikedFilm = () => {
+    if (!userData.isAuth) {
+      if (interfaceData.isOpened) {
+        return;
+      } else {
+        dispatch(setUnauthorizedStatus({status: 'error'}))
+        setTimeout(() => dispatch(setDefaultStatus()), 5000);
+        return;
+      }
+    };
+    setLiked(!liked)
+    if (liked) {
+      removeFromLikedMovies(id)
+        .then(res => dispatch(removeFilmFromLiked(res?.data.movieId)))
+        .catch(err => console.log(err))
+    } else {
+      addToLikedMovies(id)
+        .then(res => dispatch(addFilmToLiked(res?.data.movieId)))
+        .catch(err => console.log(err))
     }
   }
 
@@ -98,8 +136,11 @@ export default function FilmItemMobile({ name, year, genres, movieLength, rating
             </ul>
           </div>
       </Link>
-      <button className="film-item__fav-btn" onClick={handleCollectionFilm}>
+      <button className={collection ? "film-item__viewed-btn film-item__viewed-btn_active" : "film-item__viewed-btn"} onClick={handleCollectionFilm}>
         <img src={collection ? viewedIconActive : viewedIcon} width="22px" height="22px"/>
+      </button>
+      <button className={liked ? "film-item__fav-btn film-item__fav-btn_active" : "film-item__fav-btn"} onClick={handleLikedFilm}>
+        <img src={liked ? likedIconActive : likedIcon} width="22px" height="22px"/>
       </button>
     </li>
   )
