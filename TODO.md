@@ -4,11 +4,23 @@
 
 ## TODO
 - [ ] Расширения страницы профиля
-- [ ] Улучшение мобильной версии
 - [ ] Улучшение детальной страницы
 - [ ] Вход при регистрации нового юзера
 - [ ] Светлая тема
 ## DONE
+
+[5c45bce](https://github.com/tyradire/dev.danya-frontend/commit/5c45bcecdf0bf0f7df89870c11ea00665c4ca897)
+[6758b01](https://github.com/tyradire/dev.danya-frontend/commit/6758b01ffbf92871eafd906aa68c7a5981d2057b)
+- [x] Обновление мобильной версии карточек фильмов
+- [x] Обновление адаптива карточек + страницы профиля
+
+[9a0ba2c](https://github.com/tyradire/dev.danya-frontend/commit/9a0ba2c212d2a6542207d9eb620d7eafd64ed98e)
+- [x] Обновления хедера
+
+[4f83cdf](https://github.com/tyradire/dev.danya-frontend/commit/4f83cdf0f9495adf12eecdd94aa0d9b22aa28e1c)
+[597c3a6](https://github.com/tyradire/dev.danya-frontend/commit/597c3a68fed47cb4255b6780eda50b2a7091c2ee)
+- [x] Стили и компоненты тегов любимых жанров
+- [x] Добавление запросов к апи для тегов
 
 [248d2a4](https://github.com/tyradire/dev.danya-frontend/commit/248d2a493a64dc623ec10ca50ae93c3f7345213d)
 - [x] Оповещение о невозможности поставить лайк без входа
