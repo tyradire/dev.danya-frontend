@@ -49,7 +49,7 @@ export default function Header({isMobileDevice, isAuth}: {isMobileDevice: boolea
         ? <NavLink to={LOGIN_ROUTE} className="nav__profile nav__profile_button">Войти</NavLink>
         : !isMobileDevice
         ? <NavLink to="profile" className="nav__mobile-profile">
-            <img src={mobileProfileIcon}/>
+            <img src={userData.avatar}/>
           </NavLink>
         : <NavLink to="profile" className="nav__profile">
             <img className="nav__avatar" src={userData.avatar} />

@@ -361,3 +361,48 @@ body {
     line-height: 18px;
   }
 }
+@media (max-width: 600px) {
+  .nav__link {
+    font-size: 14px;
+    line-height: 16px;
+  }
+  .nav__item span {
+    font-size: 10px;
+    padding: 2px;
+    top: -2px;
+    right: -12px;
+  }
+  .page__heading {
+    margin-top: 0;
+    padding-top: 36px;
+    flex-direction: column;
+  }
+  .page__container {
+    padding: 24px;
+  }
+  .page__subtitle {
+    font-size: 16px;
+    line-height: 18px;
+    align-self: end;
+
+    &:last-of-type {
+      align-self: baseline;
+      margin-top: 12px;
+    }
+  }
+  .page__stat-value {
+    font-size: 16px;
+    line-height: 18px;
+    align-self: baseline;
+  }
+  .page__row {
+    margin-bottom: 0;
+  }
+  .page__list {
+    margin-top: 12px;
+  }
+  .profile {
+    gap: 0 12px;
+    padding: 24px;
+  }
+}

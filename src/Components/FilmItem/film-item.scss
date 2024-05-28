@@ -367,7 +367,7 @@
     }
   }
   &__image {
-    width: calc(100% + 32px);
+    width: 340px;
     border-radius: 8px;
     position: relative;
     left: -16px;
@@ -376,7 +376,7 @@
 
 @media (max-width: 600px) {
   .film-items {
-    grid-template-columns: repeat(auto-fit, minmax(90%, 340px));
+    grid-template-columns: 340px;
   }
   .film-item__heading {
     width: calc(100% + 32px);
