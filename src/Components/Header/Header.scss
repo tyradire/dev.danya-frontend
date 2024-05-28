@@ -7,12 +7,15 @@
   align-items: center;
   background-color: #232323;
   box-shadow: 0px 0px 24px 1px rgba(0, 0, 0, 0.28);
+  border-bottom: 1px solid rgba(255, 246, 163, 0.06);
 
   &_scroll-fix {
     padding-right: 52px;
   }
 
   &__logo {
+    font-family: 'Mulish', sans-serif;
+    font-weight: 800;
     display: flex;
     align-items: center;
     column-gap: 12px;
@@ -20,7 +23,6 @@
     color: #ffffff;
     font-size: 20px;
     line-height: 100%;
-    font-weight: 600;
     transition: color .5s;
 
     svg {

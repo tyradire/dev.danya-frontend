@@ -11,12 +11,12 @@ export default function Tags({setMainQuery, likedGenres}: {setMainQuery: any, li
   }
 
   return (
-    <ul className="tags">
-      {
-        likedGenres.map((genre, i) => 
-          <Tag content={genre} key={i} id={i} activeId={activeTag} setActiveTag={setActiveTag} trigger={setGenre} />
-        )
-      }
-    </ul>
+      <ul className="tags">
+        {
+          likedGenres.map((genre, i) => 
+            <Tag content={genre} key={i} id={i} activeId={activeTag} setActiveTag={setActiveTag} trigger={setGenre} />
+          )
+        }
+      </ul>
   )
 } 

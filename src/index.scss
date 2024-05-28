@@ -48,6 +48,48 @@
   src: url("./assets/fonts/Geologica-SemiBold.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: 'Mulish';
+  font-style: normal;
+  font-weight: 300;
+  src: url("./assets/fonts/Mulish-Light.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'Mulish';
+  font-style: normal;
+  font-weight: 400;
+  src: url("./assets/fonts/Mulish-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'Mulish';
+  font-style: normal;
+  font-weight: 500;
+  src: url("./assets/fonts/Mulish-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'Mulish';
+  font-style: normal;
+  font-weight: 600;
+  src: url("./assets/fonts/Mulish-SemiBold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'Mulish';
+  font-style: normal;
+  font-weight: 700;
+  src: url("./assets/fonts/Mulish-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'Mulish';
+  font-style: normal;
+  font-weight: 800;
+  src: url("./assets/fonts/Mulish-ExtraBold.ttf") format("truetype");
+}
+
 :root {
   --main-bg-color: #2e2e2e;
   --accent-bg-color: #232526;
@@ -205,6 +247,8 @@ body {
     }
   }
   &__link {
+    font-family: 'Mulish', sans-serif;
+    font-weight: 600;
     color: #c1c1c1;
     text-decoration: none;
 
@@ -213,18 +257,23 @@ body {
     }
   }
   &__profile {
+    font-family: 'Mulish', sans-serif;
+    font-weight: 700;
     display: flex;
     align-items: center;
     column-gap: 12px;
-    font-family: 'Geologica', sans-serif;
     margin-left: auto;
     color: #FFFFFF;
+    border: 1px solid transparent;
+    border-radius: 24px;
     text-decoration: none;
     cursor: pointer;
     user-select: none;
     font-size: 18px;
     line-height: 20px;
-    font-weight: 500;
+    padding: 4px 6px;
+    box-sizing: border-box;
+    transition: border-color .5s;
     
     &_button {
       padding: 8px 12px;
@@ -238,6 +287,11 @@ body {
         color: #fff5a1;
         border-color: #fff5a1;
       }
+    }
+
+    &:hover {
+      border: 1px solid rgba(255, 245, 161, 0.4);
+      box-shadow: 0 0 12px 1px rgba(255, 245, 161, 0.2);
     }
   }
   &__mobile-profile {
@@ -268,6 +322,7 @@ body {
     border: 1px solid #6f6f6f;
     padding: 2px;
     border-radius: 50%;
+    object-fit: contain;
     width: 32px;
     height: 32px;
   }
