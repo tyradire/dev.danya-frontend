@@ -213,14 +213,32 @@ body {
     }
   }
   &__profile {
+    display: flex;
+    align-items: center;
+    column-gap: 12px;
     font-family: 'Geologica', sans-serif;
     margin-left: auto;
     color: #FFFFFF;
     text-decoration: none;
     cursor: pointer;
     user-select: none;
-    font-size: 22px;
-    line-height: 26px;
+    font-size: 18px;
+    line-height: 20px;
+    font-weight: 500;
+    
+    &_button {
+      padding: 8px 12px;
+      border: 1px solid #ffffff;
+      border-radius: 19px;
+      opacity: .3;
+      transition: opacity .35s, color .35s, border-color .35s;
+
+      &:hover {
+        opacity: 1;
+        color: #fff5a1;
+        border-color: #fff5a1;
+      }
+    }
   }
   &__mobile-profile {
     display: block;
@@ -245,6 +263,19 @@ body {
       text-decoration: underline;
     }
   }
+
+  &__avatar {
+    border: 1px solid #6f6f6f;
+    padding: 2px;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+  }
+}
+
+.logo {
+  width: 44px;
+  height: 44px;
 }
 
 @media (max-width: 1400px) {

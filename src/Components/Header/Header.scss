@@ -1,15 +1,50 @@
 .header {
   max-width: 100%;
   margin: 0 auto;
-  padding: 36px;
+  padding: 24px 36px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #232526;
+  background-color: #232323;
   box-shadow: 0px 0px 24px 1px rgba(0, 0, 0, 0.28);
 
   &_scroll-fix {
     padding-right: 52px;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    column-gap: 12px;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 20px;
+    line-height: 100%;
+    font-weight: 600;
+    transition: color .5s;
+
+    svg {
+      position: relative;
+      bottom: 4px;
+      left: 0;
+      path {
+        transition: fill .5s;
+      }
+    }
+
+    &:hover {
+      color: #fff5a1;
+    }
+    &:hover svg path {
+      fill: #fff5a1;
+    }
+  }
+}
+
+.header__logo.active {
+  color: #fff5a1;
+  svg path {
+    fill: #fff5a1;
   }
 }
 
