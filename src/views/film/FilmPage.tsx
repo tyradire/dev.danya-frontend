@@ -14,7 +14,7 @@ export default function FilmPage(): ReactElement {
     areFilmLoading ? <Loader /> :
     <div className="film">
       <div className="film__heading">
-        <h1 className="film__title">{film?.name} ({film?.year})</h1>
+        <h1 className="film__title">{film?.name} <span>({film?.year})</span></h1>
         {
           film?.rating.kp && 
           <p className={`${film?.rating.kp > 8 ? 'film__rating film__rating_good' : film?.rating.kp > 6 ? 'film__rating film__rating_average' : 'film__rating film__rating_bad'}`}>{(film?.rating.kp).toFixed(1)}</p>

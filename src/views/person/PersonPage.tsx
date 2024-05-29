@@ -2,6 +2,7 @@ import { ReactElement } from "react";
 import { useParams } from "react-router-dom";
 import PersonFilmItems from "../../Components/PersonFilmItem/PersonFilmItems";
 import { useGetPersonByIdQuery } from "../../store/films/api.kinopoisk";
+import './person.scss';
 
 export default function PersonPage(): ReactElement {
 

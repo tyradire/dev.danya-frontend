@@ -1,8 +1,8 @@
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement } from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import mobileProfileIcon from '../../assets/images/default-user-icon.svg';
-import headerLogoIcon from '../../assets/images/logo.svg';
+import collectionIcon from '../../assets/images/collection-icon.svg';
+import searchIcon from '../../assets/images/search-icon.svg';
 import { LOGIN_ROUTE } from "../../data/constants";
 import { RootState } from "../../store/store";
 import './Header.scss';
@@ -26,7 +26,12 @@ export default function Header({isMobileDevice, isAuth}: {isMobileDevice: boolea
             className={({ isActive }) =>
             isActive ? "nav__link nav__status_active" : "nav__link"
           }
-            >Поиск</NavLink>
+            >
+              { isMobileDevice
+                ? 'Поиск'
+                : <img src={searchIcon} width="24px" height="24px" alt="иконка поиска" />
+              }
+            </NavLink>
           </li>
           {
             userData.isAuth &&
@@ -35,7 +40,10 @@ export default function Header({isMobileDevice, isAuth}: {isMobileDevice: boolea
               className={({ isActive }) =>
               isActive ? "nav__link nav__status_active" : "nav__link"
             }>
-              Моя коллекция 
+                { isMobileDevice
+                  ? 'Моя коллекция'
+                  : <img src={collectionIcon} width="24px" height="24px" alt="иконка коллекции" />
+                } 
                 { collectionCounter > 0 &&
                   <span>{collectionCounter || 0 }</span>
                 }

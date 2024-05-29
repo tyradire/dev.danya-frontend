@@ -6,14 +6,21 @@
     font-size: 58px;
     line-height: 64px;
     font-weight: 600;
+    word-break: break-all;
     color: #FFFFFF;
+    span {
+      word-break: keep-all;
+    }
   }
   &__genres-list {
     list-style: none;
     padding: 0;
-    margin: 16px 0 24px;
+    margin: 16px 0 4px;
     display: flex;
     gap: 12px;
+    max-width: 100%;
+    overflow-x: scroll;
+    padding-bottom: 12px;
   }
   &__genres-item {
     cursor: pointer;
@@ -137,15 +144,89 @@
   }
 }
 @media (max-width: 768px) {
+  .film {
+    margin-top: 40px;
+  }
+  .film__main {
+    column-gap: 16px;
+  }
+  .film__heading {
+    align-items: center;
+  }
+  .film__image {
+    width: 40%;
+    height: fit-content;
+  }
+  .film__content {
+    max-width: calc(60% - 16px);
+  }
+  .film__description {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .film__watch {
+    flex-direction: column;
+    align-items: baseline;
+  }
+  .film__title {
+    font-size: 42px;
+    line-height: 46px;
+  }
+  .film__rating {
+    font-size: 24px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .film__genres-list {
+    margin-bottom: 16px;
+  }
+  .film__genres-item {
+    font-size: 20px;
+    line-height: 24px;
+  }
+  .film__watch p {
+    font-size: 18px;
+  }
+  .film__watch-item,
+  .film__watch-item img {
+    width: 48px;
+    height: 48px;
+  }
+  .film__additional {
+    max-width: 100%;
+    overflow-x: scroll;
+  }
+  .film__persons {
+    margin-top: 40px;
+  }
+}
+@media (max-width: 600px) {
   .film__main {
     flex-direction: column;
   }
   .film__image {
     width: 100%;
-    height: fit-content;
   }
-  .film__description {
-    font-size: 18px;
-    line-height: 22px;
+  .film__rating {
+    font-size: 36px;
+    line-height: 64px;
+  }
+  .film__content {
+    max-width: 100%;
+    margin-top: 24px;
+  }
+  .film__watch {
+    margin-top: 24px;
+  }
+  .film__title {
+    font-size: 28px;
+    line-height: 32px;
+  }
+  .film__watch-list {
+    max-width: 100%;
+    overflow-x: scroll;
+    padding-bottom: 8px;
   }
 }
