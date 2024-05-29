@@ -1,12 +1,16 @@
+import { jwtDecode } from "jwt-decode";
 import { isValidElement, ReactElement, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { NavLink, useLocation } from "react-router-dom";
-import { registration } from "../../api/userAPI";
-import { LOGIN_ROUTE } from "../../data/constants";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { login, registration } from "../../api/userAPI";
+import { HOME_ROUTE, LOGIN_ROUTE } from "../../data/constants";
+import { FetchedUserState } from "../../models/models";
 import { setSuccessStatus } from "../../store/interface/interfaceReducer";
+import { setUserData } from "../../store/user/userReducer";
 import '../../ui.scss';
 
 export default function Registration(): ReactElement {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [emailInput, setEmailInput] = useState<string>('');
@@ -33,6 +37,21 @@ export default function Registration(): ReactElement {
         }
       }
     )
+    .then(res => 
+      login(emailInput, passwordInput)
+      .then(res =>
+        { if (res.success) {
+            let data: FetchedUserState = jwtDecode(res.result);
+            dispatch(
+              setUserData({id: data.id, email: data.email, isAuth: res.success}));
+              navigate(HOME_ROUTE);
+          } else {
+            setErrorMessage(res.result);
+          }
+        }
+      )
+    )
+    .catch(err => console.error(err))
     dispatch(setSuccessStatus({status: 'success'}))
   }
 
