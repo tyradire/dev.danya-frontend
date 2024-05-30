@@ -101,7 +101,9 @@
   --search-bg: #5e5b5b;
   --search-focus: 0 0 16px 4px #212121;
   --profile-bg: #696969;
+  --profile-hover-bg: #696969;
   --profile-color: #ffffff;
+  --profile-hover-color: #fff5a1;
   --profile-border: 1px solid transparent;
   --profile-container-bg: transparent;
   --profile-container-shadow: 0 4px 24px 1px rgba(0, 0, 0, .28);
@@ -135,6 +137,9 @@
 
   --btn-bg: #3e3e3e;
   --btn-border: 1px solid #5f5f5f;
+  --btn-hover-bg: #121212;
+  --btn-disabled-bg: #414141;
+  --btn-color: #000000;
 
   --mobile-length-bg: rgba(0, 0, 0, .55);
 }
@@ -151,7 +156,9 @@
   --search-bg: #ffffff;
   --search-focus: 0 0 16px 4px #fff9e9;
   --profile-bg: #ffffff;
-  --profile-color: #f6cc29;
+  --profile-hover-bg: #2e2e2e;
+  --profile-color: #2e2e2e;
+  --profile-hover-color: #ffffff;
   --profile-border: 1px solid #4f4f4f;
   --profile-container-bg: #e5e5e5;
   --profile-container-shadow: unset;
@@ -182,6 +189,9 @@
 
   --btn-bg: #ffffff;
   --btn-border: 1px solid #ffdb4a;
+  --btn-hover-bg: #ffdb4a;
+  --btn-disabled-bg: #c4c4c4;
+  --btn-color: #000000;
 
   --mobile-length-bg: rgb(255 255 255 / 55%);
 }
@@ -198,7 +208,9 @@
   --search-bg: #5e5b5b;
   --search-focus: 0 0 16px 4px #212121;
   --profile-bg: #696969;
+  --profile-hover-bg: #696969;
   --profile-color: #ffffff;
+  --profile-hover-color: #fff5a1;
   --profile-border: 1px solid transparent;
   --profile-container-bg: transparent;
   --profile-container-shadow: 0 4px 24px 1px rgba(0, 0, 0, .28);
@@ -229,6 +241,9 @@
 
   --btn-bg: #3e3e3e;
   --btn-border: 1px solid #5f5f5f;
+  --btn-hover-bg: #121212;
+  --btn-disabled-bg: #414141;
+  --btn-color: #000000;
 
   --mobile-length-bg: rgba(0, 0, 0, .55);
 }
@@ -402,7 +417,6 @@ body {
     margin-left: auto;
     color: var(--profile-color);
     background-color: var(--profile-bg);
-    text-shadow: 1px 1px 0px #646464;
     border: var(--profile-border);
     border-radius: 24px;
     text-decoration: none;
@@ -416,15 +430,14 @@ body {
     
     &_button {
       padding: 8px 12px;
-      border: 1px solid #ffffff;
+      border: var(--btn-border);
       border-radius: 19px;
-      opacity: .3;
-      transition: opacity .35s, color .35s, border-color .35s;
+      transition: color .35s, border-color .35s;
 
       &:hover {
-        opacity: 1;
-        color: #fff5a1;
-        border-color: #fff5a1;
+        color: var(--profile-hover-color);
+        background-color: var(--profile-hover-bg);
+        border-color: var(--profile-hover-color);
       }
     }
 
