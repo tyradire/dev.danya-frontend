@@ -83,6 +83,11 @@ export default function FilmItemMobile({ name, year, genres, movieLength, rating
     } else {
       addToLikedMovies(id)
         .then(res => dispatch(addFilmToLiked(res?.data.movieId)))
+        .then(res => {
+          addToCollectionMovies(id)
+          .then(res => dispatch(addFilmToCollection(res?.data.movieId)))
+          .catch(err => console.log(err))
+        })
         .catch(err => console.log(err))
     }
   }
