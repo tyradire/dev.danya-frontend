@@ -432,7 +432,7 @@ body {
       padding: 8px 12px;
       border: var(--btn-border);
       border-radius: 19px;
-      transition: color .35s, border-color .35s;
+      transition: color .35s, background-color .35s, border-color .35s;
 
       &:hover {
         color: var(--profile-hover-color);
