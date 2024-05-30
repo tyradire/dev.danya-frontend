@@ -1,3 +1,18 @@
+.person-page {
+  &__name {
+    color: var(--profile-text-color);
+  }
+  &__age {
+    color: var(--profile-text-color);
+  }
+  &__place {
+    color: var(--profile-text-color);
+  }
+  img {
+    border-radius: 12px;
+  }
+}
+
 @media (max-width: 768px) {
   .person-item__name {
     font-size: 12px;

@@ -16,7 +16,8 @@
   border-radius: 8px;
   box-sizing: border-box;
   transition: background-color .3s;
-  box-shadow: 0 0 31px -6px rgba(0, 0, 0, .5);
+  box-shadow: var(--card-shadow);
+  background-color: var(--card-bg);
 
   a {
     list-style: none;
@@ -24,7 +25,7 @@
   }
 
   &:hover {
-    background-color: rgb(255 255 255 / 2%);
+    background-color: var(--card-hover);
   }
 
   &:hover .film-item__image {
@@ -57,7 +58,7 @@
     height: 32px;
     border-radius: 50%;
     border: 1px solid transparent;
-    background-color: #3e3e3e;
+    background-color: var(--btn-bg);
     z-index: 1;
     transition: box-shadow .6s;
     display: flex;
@@ -69,12 +70,12 @@
     }
 
     &:hover {
-      border: 1px solid #5f5f5f;
+      border: var(--btn-border);
       box-shadow: 0 0 4px 1px rgba(255, 240, 163, 0.4);
     }
 
     &_active {
-      border: 1px solid #5f5f5f;
+      border: var(--btn-border);
       box-shadow: 0 0 4px 1px rgba(255, 240, 163, 0.4);
     }
   }
@@ -205,9 +206,11 @@
     box-sizing: border-box;
     font-size: 11px;
     line-height: 14px;
-    background-color: #232526;
-    color: #FFFFFF;
-    border: 1px solid #353535;
+    background-color: var(--card-tag-bg);
+    color: var(--card-tag-color);
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--tag-color);
     border-radius: 12px;
   }
   &__row {
@@ -217,7 +220,7 @@
   }
   &__length {
     margin: 0;
-    color: #fff9c6;
+    color: var(--card-movie-length);
     font-size: 12px;
     line-height: 16px;
     font-weight: 400;
@@ -261,18 +264,18 @@
     cursor: pointer;
     margin: 0;
     padding: 0;
-    color: #FFFFFF;
+    color: var(--viewed-color);
     transition: color .4s;
 
     &:hover {
-      color: #ffda6a;
+      color: var(--viewed-hover-color);
     }
 
     &_active {
-      color: #ffda6a;
+      color: var(--viewed-hover-color);
 
       &:hover {
-        color: #edb5b5;
+        color: var(--viewed-active-color);
       }
     }
   }
@@ -363,7 +366,7 @@
       padding: 4px;
       border-radius: 8px;
       align-self: end;
-      background-color: rgba(0, 0, 0, 0.55);
+      background-color: var(--mobile-length-bg);
     }
   }
   &__image {
@@ -411,7 +414,7 @@
     height: 40px;
     border-radius: 50%;
     border: 1px solid transparent;
-    background-color: #3e3e3e;
+    background-color: var(--btn-bg);
     z-index: 1;
     transition: box-shadow .6s;
     display: flex;
@@ -419,12 +422,12 @@
     align-items: center;
 
     &:hover {
-      border: 1px solid #5f5f5f;
+      border: var(--btn-border);
       box-shadow: 0 0 4px 1px rgba(255, 240, 163, 0.4);
     }
 
     &_active {
-      border: 1px solid #5f5f5f;
+      border: var(--btn-border);
       box-shadow: 0 0 4px 1px rgba(255, 240, 163, 0.4);
     }
   }

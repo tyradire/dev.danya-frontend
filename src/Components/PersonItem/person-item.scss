@@ -14,7 +14,7 @@
   }
   
   &:hover {
-    background-color: #212121;
+    background-color: var(--card-hover);
   }
 
   &__name {
@@ -22,7 +22,7 @@
     font-size: 14px;
     line-height: 120%;
     font-weight: 600;
-    color: #ffffff;
+    color: var(--profile-text-color);
     display: -webkit-box;
     text-overflow: ellipsis;
     overflow: hidden;

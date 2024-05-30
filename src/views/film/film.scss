@@ -7,7 +7,7 @@
     line-height: 64px;
     font-weight: 600;
     word-break: break-all;
-    color: #FFFFFF;
+    color: var(--profile-text-color);
     span {
       word-break: keep-all;
     }
@@ -19,8 +19,6 @@
     display: flex;
     gap: 12px;
     max-width: 100%;
-    overflow-x: scroll;
-    padding-bottom: 12px;
   }
   &__genres-item {
     cursor: pointer;
@@ -29,13 +27,15 @@
     font-weight: 500;
     padding: 8px;
     border-radius: 23px;
-    border: 1px solid #FFFFFF;
-    color: #FFFFFF;
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--tag-color);
+    color: var(--tag-color);
     transition: color .3s, border-color .3s;
 
     &:hover {
-      border-color: #fff5a1;
-      color: #fff5a1;
+      border-color: var(--tag-hover-color);
+      color: var(--tag-hover-color);
     }
   }
   &__heading {
@@ -62,7 +62,7 @@
     font-size: 24px;
     line-height: 28px;
     font-weight: 500;
-    color: #FFFFFF;
+    color: var(--profile-text-color);
     max-width: 852px;
     width: 100%;
   }
@@ -76,7 +76,7 @@
       font-size: 22px;
       line-height: 24px;
       font-weight: 500;
-      color: #FFFFFF;
+      color: var(--profile-text-color);
     }
 
     &-list {
@@ -174,13 +174,17 @@
   }
   .film__rating {
     font-size: 24px;
-    line-height: 24px;
+    line-height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
   .film__genres-list {
     margin-bottom: 16px;
+    max-width: 100%;
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 12px;
   }
   .film__genres-item {
     font-size: 20px;
@@ -199,7 +203,7 @@
   }
   .film__additional {
     max-width: 100%;
-    overflow-x: scroll;
+    overflow-x: auto;
   }
   .film__persons {
     margin-top: 40px;
@@ -229,7 +233,7 @@
   }
   .film__watch-list {
     max-width: 100%;
-    overflow-x: scroll;
+    overflow-x: auto;
     padding-bottom: 8px;
   }
 }

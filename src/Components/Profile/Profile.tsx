@@ -1,6 +1,5 @@
-import { KeyboardEventHandler, ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import defaultUserIcon from '../../assets/images/default-user-icon.svg';
 import './profile.scss';
 
 import {renameUser, setUserData} from '../../store/user/userReducer';
@@ -52,7 +51,7 @@ export default function Profile(): ReactElement {
   return (
     <div className="profile">
       <div className="profile__avatar">
-        <img src={defaultUserIcon} alt={`Аватар профиля ${name}`}/>
+        <img src={userData.avatar} alt={`Аватар профиля ${name}`}/>
       </div>
       <div>
         <form className="profile__form">

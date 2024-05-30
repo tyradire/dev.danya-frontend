@@ -14,9 +14,9 @@ export default function PersonPage(): ReactElement {
 
   return (
     <div className="person-page">
-      <h1>{personData?.name} ({personData?.enName})</h1>
-      <p>{birth} ({personData?.age})</p>
-      <p>{personData?.birthPlace[0]?.value} {personData?.birthPlace[1]?.value} {personData?.birthPlace[2]?.value}</p>
+      <h1 className="person-page__name">{personData?.name} ({personData?.enName})</h1>
+      <p className="person-page__age">{birth} ({personData?.age})</p>
+      <p className="person-page__place">{personData?.birthPlace[0]?.value} {personData?.birthPlace[1]?.value} {personData?.birthPlace[2]?.value}</p>
       <img src={personData?.photo} alt={personData?.name} width="320px" height="500px"/>
       <PersonFilmItems movies={personData?.movies || []} />
     </div>

@@ -3,7 +3,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 export interface interfaceState {
   modalMessage: string,
   isOpened: boolean,
-  status: string,
+  status: string
 }
 
 const initialState: interfaceState = {

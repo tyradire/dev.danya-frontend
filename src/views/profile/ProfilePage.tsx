@@ -4,6 +4,7 @@ import Profile from "../../Components/Profile/Profile";
 import { RootState } from "../../store/store";
 import watchedIcon from '../../assets/images/viewed-icon-disabled.svg';
 import likedIcon from '../../assets/images/like-icon-disabled.svg';
+import './page-profile.scss';
 
 export default function ProfilePage(): ReactElement {
 
