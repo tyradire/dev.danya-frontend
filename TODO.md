@@ -4,8 +4,10 @@
 
 ## TODO
 - [ ] Расширения страницы профиля
-- [ ] Светлая тема
 ## DONE
+
+[346e2ad](https://github.com/tyradire/dev.danya-frontend/commit/346e2ad04d699206ca1ad8a3b4148a5bc35c7942)
+- [x] Светлая тема
 
 [0154598](https://github.com/tyradire/dev.danya-frontend/commit/01545985d3c1b47e2e2ac5aafdcdb47333ccd4b6)
 - [x] Вход при регистрации нового юзера
