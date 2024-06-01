@@ -60,9 +60,12 @@ input[disabled] + .collection__switch-item {
   box-shadow: none;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+  .collection__switch {
+    margin-top: 28px;
+  }
   .collection__switch-item {
-    padding: 8px;
+    padding: 12px 8px;
     font-size: 16px;
   }
   .collection__switch-item:first-of-type {

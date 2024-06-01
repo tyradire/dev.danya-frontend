@@ -11,7 +11,7 @@ export default function CollectionPage({isMobileDevice}: {isMobileDevice: boolea
   const collectionData = useSelector((state: RootState) => state.collection)
   const likedData = useSelector((state: RootState) => state.liked)
 
-  const [filmsType, setFilmsType] = useState<string>('collection');
+  const [filmsType, setFilmsType] = useState<string>('watched');
   const [queryToApiCollection, setQueryToApiCollection] = useState<string>('&id=' + collectionData?.collection?.join('&id=') || '');
   const [queryToApiLiked, setQueryToApiLiked] = useState<string>('&id=' + likedData?.liked?.join('&id=') || '');
 
@@ -25,10 +25,6 @@ export default function CollectionPage({isMobileDevice}: {isMobileDevice: boolea
   useEffect(() => {
     setQueryToApiLiked('&id=' + likedData?.liked?.join('&id='));
   }, [likedData])
-
-  useEffect(() => {
-    console.log(filmsType)
-  }, [filmsType])
 
   return (
     <div className="collection">

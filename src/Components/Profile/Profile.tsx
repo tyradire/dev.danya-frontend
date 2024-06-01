@@ -67,6 +67,7 @@ export default function Profile(): ReactElement {
     setAvatarButtonDisabled(false)
   }
 
+
   const submitAvatar = () => {
     const formData = new FormData(); 
     formData.append('img', loadedAvatar)
@@ -83,13 +84,26 @@ export default function Profile(): ReactElement {
         <label htmlFor="profile-avatar">
           <img src={avatarPreview || userData.avatar || defaultUserAvatar} alt={`Аватар профиля ${userData.name}`} height="80px" width="80px"/>
           <div className="cover"></div>
-          <input className="profile__avatar" type="file" onChange={(e) => changeAvatar(e)} id="profile-avatar" accept='image/svg,image/jpg,image/jpeg,image/gif,image/png' />
+          <input 
+          className="profile__avatar" 
+          type="file" 
+          onChange={(e) => changeAvatar(e)} 
+          id="profile-avatar" 
+          accept='image/svg+xml,image/jpeg,image/gif,image/png,image/webp'
+        />
         </label>
         <button type="button" className="profile__button" disabled={avatarButtonDisabled} onClick={submitAvatar}>Обновить аватар</button>
       </form> 
       <div>
         <form className="profile__form">
-          <input value={userName} className="profile__field profile__field_editable" type="text" onChange={changeUserName} onKeyDown={test} />
+          <input 
+            value={userName} 
+            className="profile__field profile__field_editable" 
+            type="text" 
+            onChange={changeUserName} 
+            onKeyDown={test}
+            maxLength={16}
+          />
           <input value={`id ${userData.id}`} className="profile__field" type="text" readOnly />
         </form>
       </div>
