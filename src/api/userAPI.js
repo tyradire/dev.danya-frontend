@@ -41,23 +41,12 @@ export const rename = async (name) => {
 
 export const getUserData = async () => {
   return authHost.get(process.env.API_URL + '/api/user/userdata')
-  // .then(res => 
-  //   {
-  //     //console.log('getuserdata res: ',res)
-  //     return res
-  //   }
-  // )
-  // .catch(err => {
-  //   if (err.response.status === 401) {
-  //     refresh();
-  //   } else {
-  //     return console.log('getuserdata rej: ',err)
-  //   }
-  // })
 }
 
-// export const check = async () => {
-//   const {data} = await $authHost.get('api/user/auth' )
-//   localStorage.setItem('token', data.token)
-//   //return jwt_decode(data.token)
-// }
+export const submitUserAvatar = async (avatar) => {
+  return authHost.put(process.env.API_URL + '/api/user/avatar', avatar, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+}

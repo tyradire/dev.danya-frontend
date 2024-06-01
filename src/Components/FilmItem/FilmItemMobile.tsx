@@ -1,4 +1,4 @@
-import { Dispatch, ReactElement, SetStateAction, useState } from "react";
+import { Dispatch, ReactElement, SetStateAction, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FilmGenresType } from "../../types/FilmTypes";
 import './film-item.scss';
@@ -58,6 +58,10 @@ export default function FilmItemMobile({ name, year, genres, movieLength, rating
       removeFromCollectionMovies(id)
         .then(res => dispatch(removeFilmFromCollection(res?.data.movieId)))
         .catch(err => console.log(err))
+      if (!liked) return;
+      removeFromLikedMovies(id)
+        .then(res => dispatch(removeFilmFromLiked(res?.data.movieId)))
+        .catch(err => console.log(err))
     } else {
       addToCollectionMovies(id)
         .then(res => dispatch(addFilmToCollection(res?.data.movieId)))
@@ -83,14 +87,20 @@ export default function FilmItemMobile({ name, year, genres, movieLength, rating
     } else {
       addToLikedMovies(id)
         .then(res => dispatch(addFilmToLiked(res?.data.movieId)))
-        .then(res => {
-          addToCollectionMovies(id)
-          .then(res => dispatch(addFilmToCollection(res?.data.movieId)))
-          .catch(err => console.log(err))
-        })
+        .catch(err => console.log(err))
+      if (collection) return;
+      addToCollectionMovies(id)
+        .then(res => dispatch(addFilmToCollection(res?.data.movieId)))
         .catch(err => console.log(err))
     }
   }
+
+  useEffect(() => {
+    setCollection(collectionData.collection?.includes(id))
+  }, [collectionData])
+  useEffect(() => {
+    setLiked(likedData.liked?.includes(id))
+  }, [likedData])
 
   return (
     <li className="film-item-mobile">

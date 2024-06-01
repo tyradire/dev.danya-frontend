@@ -1,6 +1,4 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { getUserData } from '../../api/userAPI';
-
 export interface UserState {
   id: number
   email: string
@@ -23,7 +21,7 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUserData(state, action: PayloadAction<any>) {//console.log('action.payload.data.user ',action.payload.isAuth)
+    setUserData(state, action: PayloadAction<any>) {
       state.id = action.payload.id;
       state.email = action.payload.email;
       state.isAuth = action.payload.isAuth;
@@ -35,16 +33,18 @@ export const userSlice = createSlice({
       state.name = action.payload
     },
     getAllUserData(state, action: PayloadAction<any>) {
-      //console.log('action.payload.data.user')
       state.id = action.payload.data.user.id;
       state.email = action.payload.data.user.email;
       state.name = action.payload.data.user.name;
       state.avatar = action.payload.data.user.avatar;
       state.role = action.payload.data.user.role;
       state.isAuth = true;
+    },
+    setUserAvatar(state, action: PayloadAction<any>) {
+      state.avatar = action.payload;
     }
   }
 })
 
-export const { setUserData, logoutUser, renameUser, getAllUserData } = userSlice.actions
+export const { setUserData, logoutUser, renameUser, getAllUserData, setUserAvatar } = userSlice.actions
 export const userReducer = userSlice.reducer

@@ -142,6 +142,8 @@
   --btn-color: #000000;
 
   --mobile-length-bg: rgba(0, 0, 0, .55);
+
+  --avatar-cover: url("./assets/images/edit-avatar-icon.svg") center / 40px 40px no-repeat, rgba(255, 255, 255, 0.7);
 }
 
 [data-theme='light'] {
@@ -164,7 +166,7 @@
   --profile-container-shadow: unset;
   --profile-text-color: #2e2e2e;
   --profile-tag-color: #2e2e2e;
-  --profile-avatar-border: 1px solid #2e2e2e;
+  --profile-avatar-border: 1px solid #b2b2b2;
 
   --card-bg: #fffef7;
   --card-tag-color: #928459;
@@ -194,6 +196,8 @@
   --btn-color: #000000;
 
   --mobile-length-bg: rgb(255 255 255 / 55%);
+
+  --avatar-cover: url("./assets/images/edit-avatar-icon.svg") center / 40px 40px no-repeat, rgba(100, 100, 100, 0.7);
 }
 
 [data-theme='default'] {
@@ -216,7 +220,7 @@
   --profile-container-shadow: 0 4px 24px 1px rgba(0, 0, 0, .28);
   --profile-text-color: #ffffff;
   --profile-tag-color: #ffffff;
-  --profile-avatar-border: 1px solid #ffffff;
+  --profile-avatar-border: 1px solid #5b5b5b;
 
   --card-bg: transparent;
   --card-tag-color: #ffffff;
@@ -246,6 +250,8 @@
   --btn-color: #000000;
 
   --mobile-length-bg: rgba(0, 0, 0, .55);
+
+  --avatar-cover: url("./assets/images/edit-avatar-icon.svg") center / 40px 40px no-repeat, rgba(255, 255, 255, 0.7);
 }
 
 html,
@@ -333,8 +339,9 @@ body {
     padding: 0;
     margin-top: 16px;
     display: flex;
+    flex-wrap: wrap;
     gap: 8px;
-    list-style: none;
+    list-style: none; 
   }
   &__list-item {
     padding: 4px 8px;
@@ -456,9 +463,8 @@ body {
     border-radius: 50%;
 
     img {
-      width: 30px;
-      height: 30px;
-      padding: 5px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
     }
   }
@@ -472,11 +478,10 @@ body {
 
   &__avatar {
     border: 1px solid #ababab;
-    padding: 2px;
     border-radius: 50%;
     object-fit: contain;
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
   }
 }
 
