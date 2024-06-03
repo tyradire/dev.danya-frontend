@@ -1,5 +1,4 @@
 import { ReactElement } from "react";
-import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { PersonMovie } from "../../models/models";
 import './person-film.scss';

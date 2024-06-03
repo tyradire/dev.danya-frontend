@@ -97,6 +97,28 @@ export interface Votes {
   await: number
 }
 
+export interface SequelAndPrequel {
+  id: number
+  name: string
+  alternativeName: string
+  enName: any
+  type: string
+  poster: Poster
+  rating: Rating
+  year?: number
+}
+
+export interface SimilarMovie {
+  id: number
+  name: string
+  enName: any
+  alternativeName: string
+  type: string
+  poster: Poster
+  year?: number
+  rating: Rating
+}
+
 export interface IFilmSingle {
   a: number
   id: number
@@ -126,6 +148,8 @@ export interface IFilmSingle {
   persons: Person[]
   premiere: Premiere
   watchability: Watchability
+  sequelsAndPrequels: SequelAndPrequel[]
+  similarMovies: SimilarMovie[]
   top10: any
   top250: any
   isSeries: boolean

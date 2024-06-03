@@ -1,6 +1,6 @@
 import { ReactElement, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { getCollectionMovies } from "./api/collectionAPI";
 import { getLikedMovies } from "./api/likedAPI";
 import Header from "./Components/Header/Header";
@@ -16,7 +16,7 @@ import PersonPage from "./views/person/PersonPage";
 import ProfilePage from "./views/profile/ProfilePage";
 import SearchPage from "./views/search/SearchPage";
 
-import { getAllUserData, setUserData, UserState } from "./store/user/userReducer";
+import { getAllUserData, setUserData } from "./store/user/userReducer";
 import { FetchedUserState } from "./models/models";
 import { useDispatch } from "react-redux";
 import { setCollectionFilms } from "./store/user/collectionReducer";
@@ -24,9 +24,11 @@ import { getUserData } from "./api/userAPI";
 import { setLikedFilms, setLikedGenres } from "./store/user/likedReducer";
 import Modal from "./Components/UI/Modal";
 import { useGetFilmsByIdQuery } from "./store/films/api.kinopoisk";
+import BackButton from "./Components/UI/BackButton";
 
 export default function App(): ReactElement {
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const userData = useSelector((state: RootState) => state.user)
   const likedData = useSelector((state: RootState) => state.liked)
@@ -123,6 +125,9 @@ export default function App(): ReactElement {
     <div className="app">
       <Header isMobileDevice={isMobile} isAuth={userData.isAuth} />
       <main className="page">
+        {
+          (location.pathname.split('/')[1] === 'search' && location.pathname.split('/')[2]) && <BackButton />
+        }
         <Routes>
 
           <Route path={HOME_ROUTE} element={<MainPage isMobileDevice={isMobile}/>}/>

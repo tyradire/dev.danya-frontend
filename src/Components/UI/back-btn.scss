@@ -1,0 +1,31 @@
+.back-btn {
+  margin-top: 20px;
+  cursor: pointer;
+  background-color: transparent;
+  padding: 12px 20px;
+  font-family: Mulish, sans-serif;
+  font-size: 16px;
+  line-height: 100%;
+  font-weight: 600;
+  color: var(--tag-color);
+
+  border-color: var(--tag-color);
+  border-radius: 21px;
+  border-style: solid;
+  border-width: 1px;
+
+  transition: color .35s, border-color .35s;
+
+  &:hover {
+    color: var(--tag-hover-color);
+    border-color: var(--tag-hover-color);
+  }
+}
+
+@media (max-width: 768px) {
+  .back-btn {
+    margin-top: 12px;
+    padding: 8px 12px;
+    border-radius: 17px;
+  }
+}

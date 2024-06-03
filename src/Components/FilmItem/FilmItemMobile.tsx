@@ -27,6 +27,7 @@ export default function FilmItemMobile({ name, year, genres, movieLength, rating
     id: number,
     isSeries: boolean,
   }): ReactElement {
+    
   const dispatch = useDispatch();
   
   const userData = useSelector((state: RootState) => state.user)

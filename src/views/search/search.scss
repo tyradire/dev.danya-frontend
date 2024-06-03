@@ -48,4 +48,37 @@
       box-shadow: var(--search-focus);
     }
   }
+  &__reset-btn {
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    position: absolute;
+    top: 7px;
+    left: -28px;
+    background-color: transparent;
+    border: none;
+    width: 26px;
+    height: 26px;
+    background-image: url('../../assets/images/reset-button-icon.svg');
+    background-size: 26px 26px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    transition: opacity .35s;
+    opacity: 1;
+
+    &:active {
+      opacity: .7;
+    }
+    &:disabled {
+      filter: grayscale(100%);
+      opacity: 0;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .search__reset-btn {
+    left: -8px;
+  }
 }

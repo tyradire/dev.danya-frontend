@@ -13,7 +13,7 @@
     border-style: solid;
     border-color: var(--switch-tag-bg);
     border-right: none;
-    color: var(--profile-text-color);
+    color: var(--switch-tag-color);
     box-sizing: border-box;
     font-family: Mulish, sans-serif;
     font-size: 16px;
@@ -34,7 +34,7 @@
     &:hover {
       cursor: pointer;
       background-color: var(--switch-tag-bg);
-      color: var(--tag-hover-color);
+      color: var(--switch-tag-hover-color);
       box-shadow: var(--switch-tag-shadow);
     }
     &::selection {
@@ -49,7 +49,7 @@
 
 input[type="radio"]:checked + .collection__switch-item {
   background-color: var(--switch-tag-bg);
-  color: var(--tag-hover-color);
+  color: var(--switch-tag-hover-color);
   box-shadow: var(--switch-tag-shadow);
 }
 

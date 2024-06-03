@@ -3,15 +3,106 @@ import { useParams } from "react-router-dom";
 import Loader from "../../Components/Loader/Loader";
 import { useGetFilmQuery } from "../../store/films/api.kinopoisk";
 import './film.scss';
+import likedIcon from '../../assets/images/like-icon-disabled.svg';
+import likedIconActive from '../../assets/images/like-icon-active.svg';
+import viewedIcon from '../../assets/images/viewed-icon-disabled.svg';
+import viewedIconActive from '../../assets/images/viewed-icon-active.svg';
 import defaultMovieImage from '../../assets/images/default-movie-image.svg';
 import PersonItem from "../../Components/PersonItem/PersonItem";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { useDispatch } from "react-redux";
+import { setDefaultStatus, setUnauthorizedStatus } from "../../store/interface/interfaceReducer";
+import { addToCollectionMovies, removeFromCollectionMovies } from "../../api/collectionAPI";
+import { addFilmToCollection, removeFilmFromCollection } from "../../store/user/collectionReducer";
+import { addFilmToLiked, removeFilmFromLiked } from "../../store/user/likedReducer";
+import { addToLikedMovies, removeFromLikedMovies } from "../../api/likedAPI";
+import { SimilarMovie } from "../../models/models";
+import SimilarFilms from "../../Components/SimilarFilms/SimilarFilms";
 
 export default function FilmPage(): ReactElement {
+
+  const dispatch = useDispatch();
+
+  const userData = useSelector((state: RootState) => state.user)
+  const collectionData = useSelector((state: RootState) => state.collection)
+  const likedData = useSelector((state: RootState) => state.liked)
+  const interfaceData = useSelector((state: RootState) => state.interface)
+
   const filmId = useParams().id;
-  const { isLoading: areFilmLoading, data: film }  = useGetFilmQuery(Number(filmId));
+  const numberId = Number(filmId);
+  const { data: film, isLoading: filmIsLoading, isSuccess: filmIsSuccess }  = useGetFilmQuery(numberId);
+
+  const [collection, setCollection] = useState<boolean>(collectionData.collection.includes(numberId));
+  const [liked, setLiked] = useState<boolean>(likedData.liked?.includes(numberId)||false);
+  const [similarFilmsList, setSimilarFilmsList] = useState<SimilarMovie[]>([]);
+
+  const handleCollectionFilm = () => {
+    if (!userData.isAuth) {
+      if (interfaceData.isOpened) {
+        return;
+      } else {
+        dispatch(setUnauthorizedStatus({status: 'error'}))
+        setTimeout(() => dispatch(setDefaultStatus()), 5000);
+        return;
+      }
+    };
+    setCollection(!collection)
+    if (collection) {
+      removeFromCollectionMovies(numberId)
+        .then(res => dispatch(removeFilmFromCollection(res?.data.movieId)))
+        .catch(err => console.log(err))
+      if (!liked) return;
+      removeFromLikedMovies(numberId)
+        .then(res => dispatch(removeFilmFromLiked(res?.data.movieId)))
+        .catch(err => console.log(err))
+    } else {
+      addToCollectionMovies(numberId)
+        .then(res => dispatch(addFilmToCollection(res?.data.movieId)))
+        .catch(err => console.log(err))
+    } 
+  }
+
+  const handleLikedFilm = () => {
+    if (!userData.isAuth) {
+      if (interfaceData.isOpened) {
+        return;
+      } else {
+        dispatch(setUnauthorizedStatus({status: 'error'}))
+        setTimeout(() => dispatch(setDefaultStatus()), 5000);
+        return;
+      }
+    };
+    setLiked(!liked)
+    if (liked) {
+      removeFromLikedMovies(numberId)
+        .then(res => dispatch(removeFilmFromLiked(res?.data.movieId)))
+        .catch(err => console.log(err))
+    } else {
+      addToLikedMovies(numberId)
+        .then(res => dispatch(addFilmToLiked(res?.data.movieId)))
+        .catch(err => console.log(err))
+      if (collection) return;
+      addToCollectionMovies(numberId)
+        .then(res => dispatch(addFilmToCollection(res?.data.movieId)))
+        .catch(err => console.log(err))
+    }
+  }
+
+  useEffect(() => {
+    setCollection(collectionData.collection?.includes(numberId))
+  }, [collectionData, filmIsSuccess])
+  useEffect(() => {
+    setLiked(likedData.liked?.includes(numberId))
+  }, [likedData, filmIsSuccess])
+
+  useEffect(() => {
+    if (!film?.sequelsAndPrequels && !film?.similarMovies) return setSimilarFilmsList([]);
+    setSimilarFilmsList(film?.sequelsAndPrequels.concat(film.similarMovies || []) || [])
+  }, [filmIsSuccess, film])
 
   return (
-    areFilmLoading ? <Loader /> :
+    filmIsLoading ? <Loader /> :
     <div className="film">
       <div className="film__heading">
         <h1 className="film__title">{film?.name} <span>({film?.year})</span></h1>
@@ -29,6 +120,14 @@ export default function FilmPage(): ReactElement {
       <div className="film__main">
         <img className="film__image" src={film?.poster.url || defaultMovieImage} width="400px" height="534px" />
         <div className="film__content">
+          <div className="film__controls">
+            <button className="film__button" onClick={handleCollectionFilm}>
+              <img src={collection ? viewedIconActive : viewedIcon} width="32px" height="32px"/>
+            </button>
+            <button className="film__button" onClick={handleLikedFilm}>
+              <img src={liked ? likedIconActive : likedIcon} width="32px" height="32px"/>
+            </button>
+          </div>
           <p className="film__description">{film?.description}</p>
           {
             film?.watchability.items.length !== 0 ?
@@ -41,6 +140,21 @@ export default function FilmPage(): ReactElement {
             : ''
           }
         </div>
+      </div>
+      <div className="film__similar">
+        <SimilarFilms similarFilmsData={similarFilmsList || []} />
+        {/* <ul className="film__similar-list">
+          {
+            similarFilmsList?.map((film, i) => {
+              return  <li className="film__similar-item" key={i}>
+                        <Link to={`/search/${film.id}`}>
+                          <p className="film__similar-title">{film.name}</p>
+                          <img src={film.poster.previewUrl} alt={film.name} className="film__similar-poster" />
+                        </Link>
+                      </li>
+          })
+          }
+        </ul> */}
       </div>
       <div className="film__additional">
           <ul className="film__persons">

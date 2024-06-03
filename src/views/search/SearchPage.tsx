@@ -8,6 +8,7 @@ export default function SearchPage({isMobileDevice}: {isMobileDevice: boolean}):
 
   const [searchQuery, setSearchQuery] = useState<string>(localStorage.getItem('JSONFilmsQuery') || '');
   const [testQuery, setTestQuery] = useState<string>(searchQuery);
+  const [resetDisabled, setResetDisabled] = useState<boolean>(searchQuery.length < 1);
 
   const {isSuccess, isLoading, data: fetchedFilmsData} = useSearchFilmsQuery(testQuery, {
     skip: testQuery.length < 1
@@ -16,6 +17,12 @@ export default function SearchPage({isMobileDevice}: {isMobileDevice: boolean}):
   function searchMovie(event: React.FormEvent): void {
     event.preventDefault();
     setTestQuery(searchQuery);
+  }
+
+  function searchReset() {
+    setTestQuery('');
+    setSearchQuery('');
+    localStorage.setItem('JSONFilmsQuery', '')
   }
   
   useEffect(() => {
@@ -27,9 +34,16 @@ export default function SearchPage({isMobileDevice}: {isMobileDevice: boolean}):
     setTestQuery(searchQuery);
   }, [])
 
+  useEffect(() => {
+    setResetDisabled(searchQuery.length < 1);
+  }, [searchQuery])
+
+  console.log(searchQuery, searchQuery.length < 1)
+
   return (
     <div className="search">
       <form action="" className="search__form" onSubmit={searchMovie}>
+        <button className="search__reset-btn" type="reset" onClick={searchReset} disabled={resetDisabled}></button>
         <input type='text' value={searchQuery} className="search__input" onChange={(e) => setSearchQuery(e.target.value)}/>
         <button className="search__submit-btn" type="submit"></button>
       </form>

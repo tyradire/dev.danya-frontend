@@ -20,7 +20,6 @@ export default function Profile(): ReactElement {
   const [userName, setUserName] = useState<string>(userData.name)
   const [avatarPreview, setAvatarPreview] = useState<string>('');
   const [loadedAvatar, setLoadedAvatar] = useState<any>(null);
-  const [newAvatarFromSever, setNewAvatarFromServer] = useState<string>('');
   const [avatarButtonDisabled, setAvatarButtonDisabled] = useState<boolean>(true);
 
   useEffect(() => {
@@ -54,7 +53,6 @@ export default function Profile(): ReactElement {
 
   const changeAvatar = (e: any) => {
     if (
-      !e.target.value.toLowerCase().endsWith('svg') &&
       !e.target.value.toLowerCase().endsWith('jpg') &&
       !e.target.value.toLowerCase().endsWith('jpeg') &&
       !e.target.value.toLowerCase().endsWith('gif') &&
@@ -84,13 +82,7 @@ export default function Profile(): ReactElement {
         <label htmlFor="profile-avatar">
           <img src={avatarPreview || userData.avatar || defaultUserAvatar} alt={`Аватар профиля ${userData.name}`} height="80px" width="80px"/>
           <div className="cover"></div>
-          <input 
-          className="profile__avatar" 
-          type="file" 
-          onChange={(e) => changeAvatar(e)} 
-          id="profile-avatar" 
-          accept='image/svg+xml,image/jpeg,image/gif,image/png,image/webp'
-        />
+          <input className="profile__avatar" type="file" onChange={(e) => changeAvatar(e)} id="profile-avatar" accept="image/*, .jpg, .jpeg, .png, .gif"/>
         </label>
         <button type="button" className="profile__button" disabled={avatarButtonDisabled} onClick={submitAvatar}>Обновить аватар</button>
       </form> 

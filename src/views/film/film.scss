@@ -1,5 +1,5 @@
 .film {
-  margin-top: 80px;
+  margin-top: 40px;
 
   &__title {
     margin: 0;
@@ -45,6 +45,7 @@
   &__main {
     display: flex;
     column-gap: 28px;
+    margin-top: 28px;
   }
   &__image {
     width: 400px;
@@ -55,7 +56,36 @@
   &__content {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    row-gap: 16px;
+    max-width: calc(60% - 28px);
+  }
+  &__controls {
+    height: 40px;
+    display: flex;
+    column-gap: 8px;
+  }
+  &__button {
+    cursor: pointer;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    background-color: var(--btn-bg);
+    transition: box-shadow .35s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      border: var(--btn-border);
+      box-shadow: 0 0 2px 1px rgba(255, 240, 163, 0.4);
+    }
+
+    &_active {
+      border: var(--btn-border);
+      box-shadow: 0 0 2px 1px rgba(255, 240, 163, 0.4);
+    }
   }
   &__description {
     margin: 0;
@@ -68,11 +98,13 @@
   }
   &__watch {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 12px;
+    margin-top: auto;
 
     p {
       margin: 0;
+      margin-top: 8px;
       font-size: 22px;
       line-height: 24px;
       font-weight: 500;
@@ -85,6 +117,7 @@
       gap: 12px;
       padding: 0;
       margin: 0;
+      flex-wrap: wrap;
     }
     &-item {
       width: 60px;
@@ -123,9 +156,12 @@
       background-color: #119011;
     }
   }
+  &__similar {
+    margin-top: 40px;
+  }
   &__persons {
     margin: 0;
-    margin-top: 80px;
+    margin-top: 40px;
     padding: 0;
     display: flex;
     list-style: none;
@@ -145,10 +181,11 @@
 }
 @media (max-width: 768px) {
   .film {
-    margin-top: 40px;
+    margin-top: 12px;
   }
   .film__main {
     column-gap: 16px;
+    margin-top: 16px;
   }
   .film__heading {
     align-items: center;
@@ -184,11 +221,12 @@
     max-width: 100%;
     width: 100%;
     overflow-x: auto;
-    padding-bottom: 12px;
+    gap: 8px;
   }
   .film__genres-item {
-    font-size: 20px;
-    line-height: 24px;
+    font-size: 16px;
+    line-height: 18px;
+    border-radius: 18px;
   }
   .film__watch p {
     font-size: 18px;
@@ -212,13 +250,17 @@
 @media (max-width: 600px) {
   .film__main {
     flex-direction: column;
+    margin-top: 8px;
+  }
+  .film__genres-list {
+    margin-bottom: 8px;
   }
   .film__image {
     width: 100%;
   }
   .film__rating {
-    font-size: 36px;
-    line-height: 64px;
+    font-size: 32px;
+    line-height: 48px;
   }
   .film__content {
     max-width: 100%;
@@ -236,4 +278,14 @@
     overflow-x: auto;
     padding-bottom: 8px;
   }
+}
+
+.film__similar .slick-track {
+  margin-left: unset;
+  margin-right: unset;
+}
+
+.slick-slider .slick-track,
+.slick-slider .slick-list {
+  display: flex !important;
 }
