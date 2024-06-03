@@ -8,6 +8,8 @@ import { FetchedUserState } from "../../models/models";
 import { setSuccessStatus } from "../../store/interface/interfaceReducer";
 import { setUserData } from "../../store/user/userReducer";
 import '../../ui.scss';
+import showIcon from '../../assets/images/show-eye-icon.svg';
+import hideIcon from '../../assets/images/hide-eye-icon.svg';
 
 export default function Registration(): ReactElement {
   const navigate = useNavigate();
@@ -20,6 +22,15 @@ export default function Registration(): ReactElement {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [isSuccess, setIsSuccess] = useState<boolean>(true);
   const [submitDisabled, setSubmitDisabled] = useState<boolean>(true);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
+  const toggleShowPassword = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    let passwordInput: any = e.currentTarget.previousSibling;
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+    } else passwordInput.type = 'password';
+    setShowPassword(!showPassword);
+  }
 
   const submitRegistration = async (e: any) => {
     e.preventDefault();
@@ -68,11 +79,16 @@ export default function Registration(): ReactElement {
     <form className="form" onSubmit={submitRegistration}>
       <h3 className="form__title">Регистрация</h3>
       <label htmlFor="registration-email">Почта</label>
-      <input type="email" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" id="registration-email" value={emailInput} onChange={(e) => setEmailInput(e.target.value)}/>
-      <label htmlFor="registration-password">Пароль</label>
-      <input type="password" id="registration-password" value={passwordInput} onChange={(e) => setPasswordInput(e.target.value)}/>
+      <input type="email" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" id="registration-email" value={emailInput} onChange={(e) => setEmailInput(e.target.value)} required/>
+      <div className="form__wrapper">
+        <label htmlFor="registration-password">Пароль</label>
+        <input type="password" minLength={8} id="registration-password" value={passwordInput} onChange={(e) => setPasswordInput(e.target.value)} required/>
+        <button type="button" className="form__show-password" onClick={(e) => toggleShowPassword(e)}>
+          <img src={showPassword ? hideIcon : showIcon} alt="показать пароль" width="16px" height="16px" />
+        </button>
+      </div>
       <label htmlFor="registration-password-confirm">Подтверждение пароля</label>
-      <input type="password" id="registration-password-confirm" value={passwordConfirmInput} onChange={(e) => setPasswordConfirmInput(e.target.value)}/>
+      <input type="password" minLength={8} id="registration-password-confirm" value={passwordConfirmInput} onChange={(e) => setPasswordConfirmInput(e.target.value)} required/>
       <div className="form__controls">
         <span className={isSuccess ? "form__status form__status_success" : "form__status form__status_error"}>{errorMessage}</span>
         <button className="form__button" type="submit" disabled={submitDisabled}>Зарегистрироваться</button>
