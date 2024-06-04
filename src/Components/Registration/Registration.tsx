@@ -71,10 +71,6 @@ export default function Registration(): ReactElement {
     setSubmitDisabled(passwordInput !== passwordConfirmInput);
   }, [passwordInput, passwordConfirmInput])
 
-  useEffect(() => {
-    console.log(isValidElement(emailInput))
-  }, [emailInput])
-
   return (
     <form className="form" onSubmit={submitRegistration}>
       <h3 className="form__title">Регистрация</h3>

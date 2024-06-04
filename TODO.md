@@ -3,13 +3,20 @@
 Вы можете создать аккаунт, добавлять к себе в коллекцию как просмотренные фильмы, так и наиболее понравившиеся.
 
 ## TODO
-- [ ] Расширения страницы профиля
-- [ ] Загрузка/обновление аватара
-- [ ] Увеличить количество отображаемых фильмов на мобильном
+
+- [ ] Расширение страницы профиля
+- [ ] README.md
+
 ## DONE
+
+[f3a2459](https://github.com/tyradire/dev.danya-frontend/commit/f3a2459182b730f95dc4d6c8c4b07271da601925)
+- [x] Увеличить количество отображаемых фильмов на мобильном
 
 [346e2ad](https://github.com/tyradire/dev.danya-frontend/commit/346e2ad04d699206ca1ad8a3b4148a5bc35c7942)
 - [x] Светлая тема
+
+[2e6492c](https://github.com/tyradire/dev.danya-frontend/commit/2e6492c28eacbfd393b797b6d20021f97a66854f)
+- [x] Загрузка/обновление аватара
 
 [0154598](https://github.com/tyradire/dev.danya-frontend/commit/01545985d3c1b47e2e2ac5aafdcdb47333ccd4b6)
 - [x] Вход при регистрации нового юзера

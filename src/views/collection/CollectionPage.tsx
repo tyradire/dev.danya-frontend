@@ -1,8 +1,10 @@
 import { ReactElement, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import FilmItems from "../../Components/FilmItems/FilmItems";
+import { ProfileGenre } from "../../models/models";
 import { useGetFilmsByIdQuery } from "../../store/films/api.kinopoisk";
 import { RootState } from "../../store/store";
+import { setCollectionGenres } from "../../store/user/collectionReducer";
 import { setLikedGenres } from "../../store/user/likedReducer";
 import './collection.scss';
 
@@ -15,7 +17,7 @@ export default function CollectionPage({isMobileDevice}: {isMobileDevice: boolea
   const [queryToApiCollection, setQueryToApiCollection] = useState<string>('&id=' + collectionData?.collection?.join('&id=') || '');
   const [queryToApiLiked, setQueryToApiLiked] = useState<string>('&id=' + likedData?.liked?.join('&id=') || '');
 
-  const {data: collectionFIlmsData} = useGetFilmsByIdQuery(queryToApiCollection);
+  const {data: collectionFIlmsData } = useGetFilmsByIdQuery(queryToApiCollection);
   const {data: likedFIlmsData} = useGetFilmsByIdQuery(queryToApiLiked);
 
   useEffect(() => {

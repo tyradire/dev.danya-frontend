@@ -1,6 +1,5 @@
 import { IFilm, IFilmSingle, IPersonSingle, ServerResponse } from './../../models/models';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { API_KEY } from '../../data/constants';
 
 export const kinopoiskApi = createApi({
   reducerPath: 'kinopoisk/api',
@@ -8,7 +7,7 @@ export const kinopoiskApi = createApi({
     baseUrl: 'https://api.kinopoisk.dev/v1.4/',
     prepareHeaders: (headers, { getState }) => {
       headers.set('Content-Type', 'application/json')
-      headers.set('X-API-KEY', API_KEY)
+      headers.set('X-API-KEY', `${process.env.API_KEY}`)
       return headers
     }
   }),

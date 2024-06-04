@@ -23,7 +23,6 @@ export const likedSlice = createSlice({
     removeFilmFromLiked(state, action: PayloadAction<any>) {
       state.liked = state.liked.filter((movie) => movie != action.payload);
     },
-
     setLikedGenres(state, action: PayloadAction<any>) {
       state.likedGenres = action.payload;
     }

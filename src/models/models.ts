@@ -245,3 +245,8 @@ export interface FetchedUserState {
   id: number
   email: string
 }
+
+export interface ProfileGenre {
+  genre: string
+  count: number
+}

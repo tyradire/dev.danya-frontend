@@ -38,8 +38,6 @@ export default function SearchPage({isMobileDevice}: {isMobileDevice: boolean}):
     setResetDisabled(searchQuery.length < 1);
   }, [searchQuery])
 
-  console.log(searchQuery, searchQuery.length < 1)
-
   return (
     <div className="search">
       <form action="" className="search__form" onSubmit={searchMovie}>

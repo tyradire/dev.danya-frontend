@@ -5,6 +5,7 @@ import { RootState } from "../../store/store";
 import watchedIcon from '../../assets/images/viewed-icon-disabled.svg';
 import likedIcon from '../../assets/images/like-icon-disabled.svg';
 import './page-profile.scss';
+import TopGenres from "../../Components/TopGenres/TopGenres";
 
 export default function ProfilePage(): ReactElement {
 
@@ -45,6 +46,11 @@ export default function ProfilePage(): ReactElement {
               </ul>
               : ''
             }
+        </div>
+      </div>
+      <div className="page__main">
+        <div className="page__stat">
+          <TopGenres />
         </div>
       </div>
     </div>

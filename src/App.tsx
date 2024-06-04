@@ -17,9 +17,9 @@ import ProfilePage from "./views/profile/ProfilePage";
 import SearchPage from "./views/search/SearchPage";
 
 import { getAllUserData, setUserData } from "./store/user/userReducer";
-import { FetchedUserState } from "./models/models";
+import { FetchedUserState, ProfileGenre } from "./models/models";
 import { useDispatch } from "react-redux";
-import { setCollectionFilms } from "./store/user/collectionReducer";
+import { setCollectionFilms, setCollectionGenres } from "./store/user/collectionReducer";
 import { getUserData } from "./api/userAPI";
 import { setLikedFilms, setLikedGenres } from "./store/user/likedReducer";
 import Modal from "./Components/UI/Modal";
@@ -32,14 +32,42 @@ export default function App(): ReactElement {
 
   const userData = useSelector((state: RootState) => state.user)
   const likedData = useSelector((state: RootState) => state.liked)
+  const collectionData = useSelector((state: RootState) => state.collection)
 
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
   const [localUserData, setLocalUserData] = useState<string>(localStorage.getItem('token') || '');
   const [queryToApi, setQueryToApi] = useState<string>('&id=' + likedData?.liked?.join('&id=') || '');
+  const [queryToApiCollection, setQueryToApiCollection] = useState<string>('&id=' + collectionData?.collection?.join('&id=') || '');
   const [likedFilmsIds, setLikedFilmsIds] = useState<string[]>([])
+  const [genresInCollection, setGenresInCollection] = useState<ProfileGenre[]>([])
 
+  const {data: collectionFIlmsData, isSuccess: collectionIsSuccess} = useGetFilmsByIdQuery(queryToApiCollection);
   const {data: likedFIlmsData, isSuccess} = useGetFilmsByIdQuery(queryToApi);
 
+  if (collectionIsSuccess && genresInCollection.length < 1) {
+    const collectionGenres: Array<any[]> = [];
+    const genresCollection: any = {};
+    const genresArray: any = [];
+
+    collectionFIlmsData?.forEach(filmGenres => collectionGenres.push(filmGenres.genres))
+    collectionGenres.forEach(genres => {
+      genres.forEach(genre => {
+        if (!genresCollection[genre.name]) {
+          genresCollection[genre.name] = 1;
+        } else {
+          genresCollection[genre.name]++
+        }
+      })
+    })
+
+    for (let i = 0; i < Object.keys(genresCollection).length; i++) {
+      genresArray.push({genre: Object.keys(genresCollection)[i], count: Object.values(genresCollection)[i]})
+    }
+    genresArray.sort((a: any, b: any) => a.count < b.count ? 1 : -1);
+
+    setGenresInCollection([...genresArray])
+  }
+  
   useEffect(() => {
     const getWindowSize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", getWindowSize);
@@ -54,6 +82,10 @@ export default function App(): ReactElement {
     if (likedFilmsIds.length < 1) return;
     dispatch(setLikedGenres(likedFilmsIds))
   }, [likedFilmsIds])
+
+  useEffect(() => {
+    setQueryToApiCollection('&id=' + collectionData?.collection?.join('&id='));
+  }, [collectionData])
 
   const isMobile = MOBILE_DEVICE_SIZE <= windowWidth;
 
@@ -96,6 +128,10 @@ export default function App(): ReactElement {
     let data: FetchedUserState = jwtDecode(localUserData);
     dispatch(setUserData({id: data.id, email: data.email, isAuth: true}));
   }, [localUserData])
+
+  useEffect(() => {
+    dispatch(setCollectionGenres(genresInCollection))
+  }, [genresInCollection])
 
   if (isSuccess && likedFilmsIds.length < 1) {
     const collectionGenres: Array<any[]> = [];

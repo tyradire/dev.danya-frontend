@@ -14,7 +14,7 @@ const initialState: UserState = {
   name: 'Пользователь',
   avatar: '',
   role: 'USER',
-  isAuth: false,
+  isAuth: false
 }
 
 export const userSlice = createSlice({

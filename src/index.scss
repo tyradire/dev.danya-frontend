@@ -282,7 +282,7 @@ body {
 }
 
 .page {
-  min-height: calc(100vh - 98px);
+  min-height: calc(100vh - 153px);
   max-width: 1440px;
   width: 100%;
   margin: 0 auto;
@@ -307,14 +307,31 @@ body {
     gap: 40px;
     margin-top: 60px;
   }
+  &__main {
+    display: flex;
+    margin-top: 40px;
+  }
   &__container {
+    border-radius: 24px;
+    box-sizing: border-box;
+    background-color: var(--profile-container-bg);
+    box-shadow: var(--profile-container-shadow);
+    display: flex;
+    flex-direction: column;
+    padding: 24px 36px;
+    width: 100%;
+  }
+  &__stat {
     border-radius: 24px;
     background-color: var(--profile-container-bg);
     box-shadow: var(--profile-container-shadow);
     display: flex;
     flex-direction: column;
-    padding: 48px;
-    padding-bottom: 24px;
+    padding: 24px 36px;
+    width: 40%;
+    min-width: 600px;
+    margin-left: auto;
+    box-sizing: border-box;
   }
   &__stat-value {
     text-align: end;
@@ -528,6 +545,10 @@ body {
     margin-top: 0;
     padding-top: 36px;
     flex-direction: column;
+  }
+  .page__stat {
+    width: 100%;
+    min-width: unset;
   }
   .nav__list {
     gap: 0 20px;
