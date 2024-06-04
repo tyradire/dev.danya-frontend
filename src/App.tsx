@@ -79,13 +79,13 @@ export default function App(): ReactElement {
   }, [likedData])
 
   useEffect(() => {
+    setQueryToApiCollection('&id=' + collectionData?.collection?.join('&id='));
+  }, [collectionData])
+
+  useEffect(() => {
     if (likedFilmsIds.length < 1) return;
     dispatch(setLikedGenres(likedFilmsIds))
   }, [likedFilmsIds])
-
-  useEffect(() => {
-    setQueryToApiCollection('&id=' + collectionData?.collection?.join('&id='));
-  }, [collectionData])
 
   const isMobile = MOBILE_DEVICE_SIZE <= windowWidth;
 
@@ -130,6 +130,7 @@ export default function App(): ReactElement {
   }, [localUserData])
 
   useEffect(() => {
+    if (genresInCollection.length < 1) return;
     dispatch(setCollectionGenres(genresInCollection))
   }, [genresInCollection])
 

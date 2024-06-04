@@ -6,11 +6,14 @@ import watchedIcon from '../../assets/images/viewed-icon-disabled.svg';
 import likedIcon from '../../assets/images/like-icon-disabled.svg';
 import './page-profile.scss';
 import TopGenres from "../../Components/TopGenres/TopGenres";
+import Loader from "../../Components/Loader/Loader";
 
 export default function ProfilePage(): ReactElement {
 
   const collectionData = useSelector((state: RootState) => state.collection)
   const likedData = useSelector((state: RootState) => state.liked)
+
+  console.log(collectionData.genres)
 
   return (
     <div className="page-profile">
@@ -50,7 +53,11 @@ export default function ProfilePage(): ReactElement {
       </div>
       <div className="page__main">
         <div className="page__stat">
-          <TopGenres />
+          {
+            collectionData.genres.length < 1
+            ? <Loader />
+            : <TopGenres />
+          }
         </div>
       </div>
     </div>

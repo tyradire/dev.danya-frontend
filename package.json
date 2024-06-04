@@ -6,7 +6,7 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --config webpack/webpack.config.js --env env=prod",
     "start": "webpack serve --config webpack/webpack.config.js --env env=dev",
-    "server": "scp -r ./dist/* tyradire@80.90.178.201:/frontend"
+    "server": "scp -r ./dist/* root@80.90.178.201:/root/moviehub/frontend"
   },
   "keywords": [],
   "author": "",
