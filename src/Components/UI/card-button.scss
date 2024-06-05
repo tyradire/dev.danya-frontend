@@ -1,0 +1,45 @@
+.card-button {
+
+  &__fav-btn {
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    background-color: var(--btn-bg);
+    z-index: 1;
+    transition: box-shadow .6s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img svg path {
+      fill: white;
+    }
+
+    &:hover {
+      border: var(--btn-border);
+      box-shadow: 0 0 4px 1px rgba(255, 240, 163, 0.4);
+    }
+  
+    &_active {
+      border: var(--btn-border);
+      box-shadow: 0 0 4px 1px rgba(255, 240, 163, 0.4);
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .card-button__fav-btn {
+    width: 36px;
+    height: 36px;
+    right: -8px;
+    bottom: -8px;
+
+    img {
+      width: 28px;
+      height: 28px;
+    }
+  }
+}

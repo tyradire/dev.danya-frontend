@@ -111,10 +111,10 @@
   --profile-tag-color: #ffffff;
   --profile-avatar-border: 1px solid #ffffff;
 
-  --card-bg: transparent;
+  --card-bg: #2e2e2e;
   --card-tag-color: #ffffff;
   --card-tag-bg: #353535;
-  --card-hover: rgb(255 255 255 / 2%);
+  --card-hover: #323232;
   --card-shadow: 0 0 31px -6px rgba(0, 0, 0, .5);
   --viewed-color: #ffffff;
   --viewed-hover-color: #ffda6a;
@@ -149,6 +149,8 @@
   --switch-tag-hover-color: #fff5a1;
   --switch-tag-disabled-color: #515151;
   --switch-tag-shadow: inset 0 0 8px 4px rgba(0, 0, 0, .4);
+
+  --film-image-shadow: 0 0 16px 0 rgb(255 255 255 / 40%);
 }
 
 [data-theme='light'] {
@@ -208,6 +210,8 @@
   --switch-tag-hover-color: #000000;
   --switch-tag-disabled-color: #dedede;
   --switch-tag-shadow: inset 0 0px 10px 4px rgba(0,0,0,.16);
+
+  --film-image-shadow: 0 0 16px 0 rgb(0 0 0 / 40%);
 }
 
 [data-theme='default'] {
@@ -232,10 +236,10 @@
   --profile-tag-color: #ffffff;
   --profile-avatar-border: 1px solid #5b5b5b;
 
-  --card-bg: transparent;
+  --card-bg: #2e2e2e;
   --card-tag-color: #ffffff;
   --card-tag-bg: #353535;
-  --card-hover: rgb(255 255 255 / 2%);
+  --card-hover: #323232;
   --card-shadow: 0 0 31px -6px rgba(0, 0, 0, .5);
   --viewed-color: #ffffff;
   --viewed-hover-color: #ffda6a;
@@ -267,6 +271,8 @@
   --switch-tag-hover-color: #fff5a1;
   --switch-tag-disabled-color: #515151;
   --switch-tag-shadow: inset 0 0 8px 4px rgba(0, 0, 0, .4);
+
+  --film-image-shadow: 0 0 16px 0 rgb(255 255 255 / 10%);
 }
 
 html,

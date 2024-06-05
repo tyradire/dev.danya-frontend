@@ -52,6 +52,7 @@
     height: 534px;
     flex-shrink: 0;
     object-fit: cover;
+    box-shadow: var(--film-image-shadow); 
   }
   &__content {
     display: flex;

@@ -25,6 +25,8 @@ import { setLikedFilms, setLikedGenres } from "./store/user/likedReducer";
 import Modal from "./Components/UI/Modal";
 import { useGetFilmsByIdQuery } from "./store/films/api.kinopoisk";
 import BackButton from "./Components/UI/BackButton";
+import { getWishListMovies } from "./api/wishAPI";
+import { setWishlistFilms } from "./store/user/wishlistReducer";
 
 export default function App(): ReactElement {
   const dispatch = useDispatch();
@@ -118,6 +120,14 @@ export default function App(): ReactElement {
     })
     .catch(err => {
       console.log(err)
+    })
+
+    getWishListMovies()
+    .then(res => {
+      dispatch(setWishlistFilms(res.data.wish))
+      if (res.data.accessToken) {
+        localStorage.setItem('token', res.data.accessToken)
+      }
     })
     
   }, [userData.isAuth])

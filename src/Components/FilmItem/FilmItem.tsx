@@ -1,18 +1,22 @@
-import { Dispatch, ReactElement, SetStateAction, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FilmGenresType } from "../../types/FilmTypes";
 import './film-item.scss';
 import likedIcon from '../../assets/images/like-icon-disabled.svg';
 import likedIconActive from '../../assets/images/like-icon-active.svg';
+import wishIcon from '../../assets/images/wishlist-icon-disabled.svg';
+import wishIconActive from '../../assets/images/wishlist-icon-active.svg';
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { addToCollectionMovies, removeFromCollectionMovies } from "../../api/collectionAPI";
 import { addToLikedMovies, removeFromLikedMovies } from "../../api/likedAPI";
 import { useDispatch } from "react-redux";
-import { addFilmToCollection, removeFilmFromCollection, setCollectionFilms } from "../../store/user/collectionReducer";
+import { addFilmToCollection, removeFilmFromCollection } from "../../store/user/collectionReducer";
 import { addFilmToLiked, removeFilmFromLiked } from "../../store/user/likedReducer";
 import { setDefaultStatus, setUnauthorizedStatus } from "../../store/interface/interfaceReducer";
+import { addFilmToWishlist, removeFilmFromWishlist } from "../../store/user/wishlistReducer";
+import { addToWishMovie, removeFromWishMovie } from "../../api/wishAPI";
 
 export default function FilmItem({ name, year, genres, movieLength, rating, poster, top, id, isSeries }: 
   { name: string,
@@ -30,10 +34,12 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
   const userData = useSelector((state: RootState) => state.user)
   const collectionData = useSelector((state: RootState) => state.collection)
   const likedData = useSelector((state: RootState) => state.liked)
+  const wishData = useSelector((state: RootState) => state.wish)
   const interfaceData = useSelector((state: RootState) => state.interface)
 
   const [collection, setCollection] = useState<boolean>(collectionData.collection?.includes(id)||false);
   const [liked, setLiked] = useState<boolean>(likedData.liked?.includes(id)||false);
+  const [wish, setWish] = useState<boolean>(wishData.wish?.includes(id)||false);
 
   function setFilmLength(length: number): string {
     if (length > 60) {
@@ -59,7 +65,7 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
       if (!liked) return;
       removeFromLikedMovies(id)
         .then(res => dispatch(removeFilmFromLiked(res?.data.movieId)))
-        .catch(err => console.log(err))
+        .catch(err => console.log(err));
     } else {
       addToCollectionMovies(id)
         .then(res => dispatch(addFilmToCollection(res?.data.movieId)))
@@ -93,12 +99,37 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
     }
   }
 
+  const handleWishFilm = () => {
+    if (!userData.isAuth) {
+      if (interfaceData.isOpened) {
+        return;
+      } else {
+        dispatch(setUnauthorizedStatus({status: 'error'}))
+        setTimeout(() => dispatch(setDefaultStatus()), 5000);
+        return;
+      }
+    };
+    setWish(!wish)
+    if (wish) {
+      removeFromWishMovie(id)
+        .then(res => dispatch(removeFilmFromWishlist(res?.data.movieId)))
+        .catch(err => console.log(err))
+    } else {
+      addToWishMovie(id)
+        .then(res => dispatch(addFilmToWishlist(res?.data.movieId)))
+        .catch(err => console.log(err))
+    }
+  }
+
   useEffect(() => {
     setCollection(collectionData.collection?.includes(id))
   }, [collectionData])
   useEffect(() => {
     setLiked(likedData.liked?.includes(id))
   }, [likedData])
+  useEffect(() => {
+    setWish(wishData.wish?.includes(id))
+  }, [wishData])
 
   return (
     <li className="film-item">
@@ -158,9 +189,14 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
           })
         }
       </ul>
-      <button className={liked ? "film-item__fav-btn film-item__fav-btn_active" : "film-item__fav-btn"} onClick={handleLikedFilm}>
-        <img src={liked ? likedIconActive : likedIcon} width="22px" height="22px"/>
-      </button>
+      <div className="film-item__controls">
+        <button className={wish ? "film-item__wish-btn film-item__wish-btn_active" : "film-item__wish-btn"} onClick={handleWishFilm} title="Буду смотреть">
+          <img src={wish ? wishIconActive : wishIcon} width="22px" height="22px"/>
+        </button>
+        <button className={liked ? "film-item__fav-btn film-item__fav-btn_active" : "film-item__fav-btn"} onClick={handleLikedFilm} title="Понравилось">
+          <img src={liked ? likedIconActive : likedIcon} width="22px" height="22px"/>
+        </button>
+      </div>
     </li>
   )
 }
