@@ -10,6 +10,8 @@ export default function FilmItems({data, isMobileDevice}: {data: IFilm[], isMobi
 
   const [moviesVisibleCount, setMoviesVisibleCount] = useState<number>(30);
 
+  console.log(data.length, moviesVisibleCount)
+
   return (
     <>
       <ul className="film-items">
@@ -45,8 +47,12 @@ export default function FilmItems({data, isMobileDevice}: {data: IFilm[], isMobi
           })
         }
       </ul>
-      <MoreButton count={moviesVisibleCount} setCount={setMoviesVisibleCount} />
-      <ScrollButton visible={data.length > 10} />
+      { 
+        data.length > moviesVisibleCount && <MoreButton count={moviesVisibleCount} setCount={setMoviesVisibleCount} />
+      }
+      {
+        data.length > 10 && <ScrollButton visible={data.length > 10} />
+      }
     </>
   )
 }

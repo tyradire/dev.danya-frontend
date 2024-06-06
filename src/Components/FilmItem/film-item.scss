@@ -502,6 +502,7 @@
   .film-items {
     grid-template-columns: repeat(2, 160px);
     gap: 24px 16px;
+    margin-bottom: 40px;
   }
   .film-item__heading {
     width: calc(100% + 32px);
