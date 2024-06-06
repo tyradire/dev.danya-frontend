@@ -7,6 +7,8 @@ import likedIcon from '../../assets/images/like-icon-disabled.svg';
 import likedIconActive from '../../assets/images/like-icon-active.svg';
 import viewedIcon from '../../assets/images/viewed-icon-disabled.svg';
 import viewedIconActive from '../../assets/images/viewed-icon-active.svg';
+import wishIcon from '../../assets/images/wishlist-icon-disabled.svg';
+import wishIconActive from '../../assets/images/wishlist-icon-active.svg';
 import defaultMovieImage from '../../assets/images/default-movie-image.svg';
 import PersonItem from "../../Components/PersonItem/PersonItem";
 import { useSelector } from "react-redux";
@@ -19,6 +21,8 @@ import { addFilmToLiked, removeFilmFromLiked } from "../../store/user/likedReduc
 import { addToLikedMovies, removeFromLikedMovies } from "../../api/likedAPI";
 import { SimilarMovie } from "../../models/models";
 import SimilarFilms from "../../Components/SimilarFilms/SimilarFilms";
+import { addToWishMovie, removeFromWishMovie } from "../../api/wishAPI";
+import { addFilmToWishlist, removeFilmFromWishlist } from "../../store/user/wishlistReducer";
 
 export default function FilmPage(): ReactElement {
 
@@ -27,6 +31,7 @@ export default function FilmPage(): ReactElement {
   const userData = useSelector((state: RootState) => state.user)
   const collectionData = useSelector((state: RootState) => state.collection)
   const likedData = useSelector((state: RootState) => state.liked)
+  const wishData = useSelector((state: RootState) => state.wish)
   const interfaceData = useSelector((state: RootState) => state.interface)
 
   const filmId = useParams().id;
@@ -35,6 +40,7 @@ export default function FilmPage(): ReactElement {
 
   const [collection, setCollection] = useState<boolean>(collectionData.collection.includes(numberId));
   const [liked, setLiked] = useState<boolean>(likedData.liked?.includes(numberId)||false);
+  const [wish, setWish] = useState<boolean>(wishData.wish?.includes(numberId)||false);
   const [similarFilmsList, setSimilarFilmsList] = useState<SimilarMovie[]>([]);
 
   const handleCollectionFilm = () => {
@@ -89,12 +95,37 @@ export default function FilmPage(): ReactElement {
     }
   }
 
+  const handleWishFilm = () => {
+    if (!userData.isAuth) {
+      if (interfaceData.isOpened) {
+        return;
+      } else {
+        dispatch(setUnauthorizedStatus({status: 'error'}))
+        setTimeout(() => dispatch(setDefaultStatus()), 5000);
+        return;
+      }
+    };
+    setWish(!wish)
+    if (wish) {
+      removeFromWishMovie(numberId)
+        .then(res => dispatch(removeFilmFromWishlist(res?.data.movieId)))
+        .catch(err => console.log(err))
+    } else {
+      addToWishMovie(numberId)
+        .then(res => dispatch(addFilmToWishlist(res?.data.movieId)))
+        .catch(err => console.log(err))
+    }
+  }
+
   useEffect(() => {
     setCollection(collectionData.collection?.includes(numberId))
   }, [collectionData, filmIsSuccess])
   useEffect(() => {
     setLiked(likedData.liked?.includes(numberId))
   }, [likedData, filmIsSuccess])
+  useEffect(() => {
+    setWish(wishData.wish?.includes(numberId))
+  }, [wishData, filmIsSuccess])
 
   useEffect(() => {
     if (!film?.sequelsAndPrequels && !film?.similarMovies) return setSimilarFilmsList([]);
@@ -124,6 +155,9 @@ export default function FilmPage(): ReactElement {
             <button className="film__button" onClick={handleCollectionFilm}>
               <img src={collection ? viewedIconActive : viewedIcon} width="32px" height="32px"/>
             </button>
+            <button className="film__button" onClick={handleWishFilm}>
+              <img src={wish ? wishIconActive : wishIcon} width="32px" height="32px"/>
+            </button>
             <button className="film__button" onClick={handleLikedFilm}>
               <img src={liked ? likedIconActive : likedIcon} width="32px" height="32px"/>
             </button>
@@ -143,18 +177,6 @@ export default function FilmPage(): ReactElement {
       </div>
       <div className="film__similar">
         <SimilarFilms similarFilmsData={similarFilmsList || []} />
-        {/* <ul className="film__similar-list">
-          {
-            similarFilmsList?.map((film, i) => {
-              return  <li className="film__similar-item" key={i}>
-                        <Link to={`/search/${film.id}`}>
-                          <p className="film__similar-title">{film.name}</p>
-                          <img src={film.poster.previewUrl} alt={film.name} className="film__similar-poster" />
-                        </Link>
-                      </li>
-          })
-          }
-        </ul> */}
       </div>
       <div className="film__additional">
           <ul className="film__persons">
