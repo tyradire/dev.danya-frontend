@@ -1,17 +1,20 @@
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import { IFilm } from "../../models/models";
 import FilmItem from "../FilmItem/FilmItem";
 import FilmItemMobile from "../FilmItem/FilmItemMobile";
 import defaultMoviePreview from '../../assets/images/default-movie-preview-image.svg';
 import ScrollButton from "../UI/ScrollButton";
+import MoreButton from "../UI/MoreButton";
 
 export default function FilmItems({data, isMobileDevice}: {data: IFilm[], isMobileDevice: boolean}): ReactElement {
+
+  const [moviesVisibleCount, setMoviesVisibleCount] = useState<number>(30);
 
   return (
     <>
       <ul className="film-items">
         { 
-          data.map((film) => {
+          data.slice(0,moviesVisibleCount).map((film) => {
             if (isMobileDevice) {
               return <FilmItem
                 name={film.name}
@@ -42,6 +45,7 @@ export default function FilmItems({data, isMobileDevice}: {data: IFilm[], isMobi
           })
         }
       </ul>
+      <MoreButton count={moviesVisibleCount} setCount={setMoviesVisibleCount} />
       <ScrollButton visible={data.length > 10} />
     </>
   )
