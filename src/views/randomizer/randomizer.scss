@@ -1,21 +1,3 @@
-.randomizer-page {
-  &__list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  &__item {
-
-  }
-  &__image {
-    width: 200px;
-    height: 300px;
-    &_blur {
-      filter: blur(10px);
-    }
-  }
-}
-
 .randomizer {
   display: flex;
   flex-direction: column;
@@ -32,6 +14,10 @@
     font-weight: 600;
     max-width: 300px;
     width: 100%;
+
+    &_blur {
+      filter: blur(2px);
+    }
   }
   &__image {
     width: 300px;

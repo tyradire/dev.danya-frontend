@@ -14,16 +14,17 @@ export default function RandomizerPage(): ReactElement {
   
   const {data: wishFIlmsData, isSuccess: wishIsSuccess} = useGetFilmsByIdQuery(queryToWishApi);
 
-  const [randomList, setRandomList] = useState<any>([]);
+  const [randomList, setRandomList] = useState<number[]>([]);
   const [randomNumber, setRandomValue] = useState<number>(0);
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(false);
-  const [film, setFilm] = useState<IFilm>();
 
   useEffect(() => {
     setQueryToWishApi('&id=' + wishData?.wish?.join('&id='));
   }, [wishData])
+
   useEffect(() => {
-    setRandomList(wishFIlmsData?.map(film => film.id))
+    if (!wishFIlmsData) return;
+    setRandomList(wishFIlmsData.map(film => film.id))
   }, [wishIsSuccess])
 
   const randomStart = () => {
@@ -32,10 +33,9 @@ export default function RandomizerPage(): ReactElement {
 
   const randomInterval = () => {
     setButtonDisabled(true);
-    const randomAbc = setInterval(randomStart, 100)
+    const startRandomize = setInterval(randomStart, 250)
     setTimeout(function(){
-      clearInterval(randomAbc);
-      setFilm(wishFIlmsData?.filter(film => film.id === randomList[randomNumber])[0]);
+      clearInterval(startRandomize);
       setButtonDisabled(false);
     }, 3000)
   }
@@ -44,10 +44,12 @@ export default function RandomizerPage(): ReactElement {
     <div className="randomizer-page">
       <div className="randomizer">
         {
-          (wishFIlmsData && randomList) && <p className="randomizer__name">{wishFIlmsData?.filter(film => film.id === randomList[randomNumber])[0]?.name}</p>
+          (wishFIlmsData && randomList.length)
+          ? <p className={buttonDisabled ? "randomizer__name randomizer__image_blur" : "randomizer__name"}>{wishFIlmsData?.filter(film => film.id === randomList[randomNumber])[0].name}</p>
+          : ''
         }
         { 
-          (wishFIlmsData && randomList)
+          (wishFIlmsData && randomList.length)
           ? <img className={buttonDisabled ? "randomizer__image randomizer__image_blur" : "randomizer__image"} src={wishFIlmsData?.filter(film => film.id === randomList[randomNumber])[0].poster?.previewUrl} />
           : <Loader />
         }
