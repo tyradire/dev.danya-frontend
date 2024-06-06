@@ -4,10 +4,13 @@
 
 ## TODO
 
+- [ ] Рандомайзер выбора фильма из раздела "Буду смотреть" 
 - [ ] Расширение страницы профиля
-- [ ] README.md
+
 
 ## DONE
+[cddbf2e](https://github.com/tyradire/dev.danya-frontend/commit/cddbf2e5d1713e16fa5715fd4435d8670930824d)
+- [x] README.md
 
 [f3a2459](https://github.com/tyradire/dev.danya-frontend/commit/f3a2459182b730f95dc4d6c8c4b07271da601925)
 - [x] Увеличить количество отображаемых фильмов на мобильном

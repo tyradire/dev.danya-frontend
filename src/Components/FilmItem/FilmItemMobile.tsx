@@ -41,6 +41,7 @@ export default function FilmItemMobile({ name, year, genres, movieLength, rating
   const wishData = useSelector((state: RootState) => state.wish)
   const interfaceData = useSelector((state: RootState) => state.interface)
 
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [collection, setCollection] = useState<boolean>(collectionData.collection.includes(id));
   const [liked, setLiked] = useState<boolean>(likedData.liked?.includes(id)||false);
   const [wish, setWish] = useState<boolean>(wishData.wish?.includes(id)||false);
@@ -146,7 +147,6 @@ export default function FilmItemMobile({ name, year, genres, movieLength, rating
             className="film-item-mobile__image"
             effect='blur'
           />
-          <p className="film-item-mobile__name">{name}</p>
           <div className="film-item__heading">
             {
               rating > 0 &&
@@ -184,10 +184,10 @@ export default function FilmItemMobile({ name, year, genres, movieLength, rating
             </ul>
           </div>
       </Link>
-      <button className="film-item-mobile__menu">
+      <button className="film-item-mobile__menu" onClick={() => setIsOpen(!isOpen)}>
         <img src={cardMenuIcon} width="22px" height="22px" />
       </button>
-      <div className="film-item-mobile__controls">
+      <div className={isOpen ? "film-item-mobile__controls film-item-mobile__controls_active" : "film-item-mobile__controls"}>
         <button className={collection ? "film-item-mobile__viewed-btn film-item-mobile__viewed-btn_active" : "film-item-mobile__viewed-btn"} onClick={handleCollectionFilm}>
           <img src={collection ? viewedIconActive : viewedIcon} width="22px" height="22px"/>
         </button>
