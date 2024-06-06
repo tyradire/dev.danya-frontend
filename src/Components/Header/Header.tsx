@@ -8,6 +8,7 @@ import { RootState } from "../../store/store";
 import defaultUserAvatar from '../../assets/images/default-user-avatar.svg';
 import defaultThemeIcon from '../../assets/images/theme-icon-default.svg';
 import lightThemeIcon from '../../assets/images/theme-icon-light.svg';
+import randomIcon from '../../assets/images/random-icon.svg';
 import { useTheme } from "../../hooks/useTheme";
 import './Header.scss';
 
@@ -71,6 +72,18 @@ export default function Header({isMobileDevice, isAuth}: {isMobileDevice: boolea
               </NavLink>
             </li>
           }
+          <li className="nav__item">
+            <NavLink to="randomizer"
+              className={({ isActive }) =>
+              isActive ? "nav__link nav__status_active" : "nav__link"
+            }>
+              
+              { isMobileDevice
+               ? 'Рандом'
+                : <img src={randomIcon} width="36px" height="36px" />
+              }
+            </NavLink>
+          </li>
         </ul>
       </nav>
       {

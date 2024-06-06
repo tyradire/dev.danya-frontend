@@ -4,7 +4,7 @@ import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { getCollectionMovies } from "./api/collectionAPI";
 import { getLikedMovies } from "./api/likedAPI";
 import Header from "./Components/Header/Header";
-import { COLLECTION_ROUTE, HOME_ROUTE, LOGIN_ROUTE, MOBILE_DEVICE_SIZE, MOVIE_ROUTE, PERSON_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE, SEARCH_ROUTE } from "./data/constants";
+import { COLLECTION_ROUTE, HOME_ROUTE, LOGIN_ROUTE, MOBILE_DEVICE_SIZE, MOVIE_ROUTE, PERSON_ROUTE, PROFILE_ROUTE, RANDOMIZER_ROUTE, REGISTRATION_ROUTE, SEARCH_ROUTE } from "./data/constants";
 import { RootState, store } from "./store/store";
 import { jwtDecode } from "jwt-decode";
 
@@ -26,7 +26,8 @@ import Modal from "./Components/UI/Modal";
 import { useGetFilmsByIdQuery } from "./store/films/api.kinopoisk";
 import BackButton from "./Components/UI/BackButton";
 import { getWishListMovies } from "./api/wishAPI";
-import { setWishlistFilms } from "./store/user/wishlistReducer";
+import { setWishlistFilmsIds } from "./store/user/wishlistReducer";
+import RandomizerPage from "./views/randomizer/RandomizerPage";
 
 export default function App(): ReactElement {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ export default function App(): ReactElement {
   const [localUserData, setLocalUserData] = useState<string>(localStorage.getItem('token') || '');
   const [queryToApi, setQueryToApi] = useState<string>('&id=' + likedData?.liked?.join('&id=') || '');
   const [queryToApiCollection, setQueryToApiCollection] = useState<string>('&id=' + collectionData?.collection?.join('&id=') || '');
+  
   const [likedFilmsIds, setLikedFilmsIds] = useState<string[]>([])
   const [genresInCollection, setGenresInCollection] = useState<ProfileGenre[]>([])
 
@@ -124,7 +126,7 @@ export default function App(): ReactElement {
 
     getWishListMovies()
     .then(res => {
-      dispatch(setWishlistFilms(res.data.wish))
+      dispatch(setWishlistFilmsIds(res.data.wish))
       if (res.data.accessToken) {
         localStorage.setItem('token', res.data.accessToken)
       }
@@ -190,6 +192,7 @@ export default function App(): ReactElement {
               <>
                 <Route path={COLLECTION_ROUTE} element={<CollectionPage isMobileDevice={isMobile}/>}/>
                 <Route path={PROFILE_ROUTE} element={<ProfilePage />} />
+                <Route path={RANDOMIZER_ROUTE} element={<RandomizerPage />}/>
               </>
             }
 

@@ -10,8 +10,6 @@ export default function FilmItems({data, isMobileDevice}: {data: IFilm[], isMobi
 
   const [moviesVisibleCount, setMoviesVisibleCount] = useState<number>(30);
 
-  console.log(data.length, moviesVisibleCount)
-
   return (
     <>
       <ul className="film-items">

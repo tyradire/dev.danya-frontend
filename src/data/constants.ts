@@ -15,6 +15,7 @@ const HOME_ROUTE = '/'
 const LOGIN_ROUTE = '/login';
 const REGISTRATION_ROUTE = '/registration';
 const COLLECTION_ROUTE = '/collection';
+const RANDOMIZER_ROUTE = '/randomizer';
 const SEARCH_ROUTE = '/search';
 const MOVIE_ROUTE = '/search/:id';
 const PROFILE_ROUTE = '/profile';
@@ -33,6 +34,7 @@ export {
   LOGIN_ROUTE,
   REGISTRATION_ROUTE,
   COLLECTION_ROUTE,
+  RANDOMIZER_ROUTE,
   SEARCH_ROUTE,
   MOVIE_ROUTE,
   PROFILE_ROUTE,

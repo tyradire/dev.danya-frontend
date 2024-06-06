@@ -13,3 +13,10 @@
     border-color: #fff5a1;
   }
 }
+
+@media (max-width: 600px) {
+  .more-button {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+}
