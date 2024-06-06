@@ -9,6 +9,11 @@
 
 
 ## DONE
+
+[64b2112](https://github.com/tyradire/dev.danya-frontend/commit/64b21126e0d9e0c1bf955a220ac2c279d84fa5fb)
+[e3ec391](https://github.com/tyradire/dev.danya-frontend/commit/e3ec391f41bcc564d6035e1ae463ac61c87ad118)
+- [x] Добавление фильма в раздел "Буду смотреть"
+
 [cddbf2e](https://github.com/tyradire/dev.danya-frontend/commit/cddbf2e5d1713e16fa5715fd4435d8670930824d)
 - [x] README.md
 
