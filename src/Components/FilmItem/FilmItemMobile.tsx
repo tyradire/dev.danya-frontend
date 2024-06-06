@@ -6,6 +6,9 @@ import likedIcon from '../../assets/images/like-icon-disabled.svg';
 import likedIconActive from '../../assets/images/like-icon-active.svg';
 import viewedIcon from '../../assets/images/viewed-icon-disabled.svg';
 import viewedIconActive from '../../assets/images/viewed-icon-active.svg';
+import wishIcon from '../../assets/images/wishlist-icon-disabled.svg';
+import wishIconActive from '../../assets/images/wishlist-icon-active.svg';
+import cardMenuIcon from '../../assets/images/card-menu-icon.svg';
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -15,6 +18,8 @@ import { addToCollectionMovies, removeFromCollectionMovies, getCollectionMovies 
 import { setDefaultStatus, setUnauthorizedStatus } from "../../store/interface/interfaceReducer";
 import { addToLikedMovies, removeFromLikedMovies } from "../../api/likedAPI";
 import { addFilmToLiked, removeFilmFromLiked } from "../../store/user/likedReducer";
+import { addToWishMovie, removeFromWishMovie } from "../../api/wishAPI";
+import { addFilmToWishlist, removeFilmFromWishlist } from "../../store/user/wishlistReducer";
 
 export default function FilmItemMobile({ name, year, genres, movieLength, rating, poster, top, id, isSeries }: 
   { name: string,
@@ -33,10 +38,12 @@ export default function FilmItemMobile({ name, year, genres, movieLength, rating
   const userData = useSelector((state: RootState) => state.user)
   const collectionData = useSelector((state: RootState) => state.collection)
   const likedData = useSelector((state: RootState) => state.liked)
+  const wishData = useSelector((state: RootState) => state.wish)
   const interfaceData = useSelector((state: RootState) => state.interface)
 
   const [collection, setCollection] = useState<boolean>(collectionData.collection.includes(id));
   const [liked, setLiked] = useState<boolean>(likedData.liked?.includes(id)||false);
+  const [wish, setWish] = useState<boolean>(wishData.wish?.includes(id)||false);
 
   function setFilmLength(length: number): string {
     if (length > 60) {
@@ -96,12 +103,37 @@ export default function FilmItemMobile({ name, year, genres, movieLength, rating
     }
   }
 
+  const handleWishFilm = () => {
+    if (!userData.isAuth) {
+      if (interfaceData.isOpened) {
+        return;
+      } else {
+        dispatch(setUnauthorizedStatus({status: 'error'}))
+        setTimeout(() => dispatch(setDefaultStatus()), 5000);
+        return;
+      }
+    };
+    setWish(!wish)
+    if (wish) {
+      removeFromWishMovie(id)
+        .then(res => dispatch(removeFilmFromWishlist(res?.data.movieId)))
+        .catch(err => console.log(err))
+    } else {
+      addToWishMovie(id)
+        .then(res => dispatch(addFilmToWishlist(res?.data.movieId)))
+        .catch(err => console.log(err))
+    }
+  }
+
   useEffect(() => {
     setCollection(collectionData.collection?.includes(id))
   }, [collectionData])
   useEffect(() => {
     setLiked(likedData.liked?.includes(id))
   }, [likedData])
+  useEffect(() => {
+    setWish(wishData.wish?.includes(id))
+  }, [wishData])
 
   return (
     <li className="film-item-mobile">
@@ -152,12 +184,20 @@ export default function FilmItemMobile({ name, year, genres, movieLength, rating
             </ul>
           </div>
       </Link>
-      <button className={collection ? "film-item__viewed-btn film-item__viewed-btn_active" : "film-item__viewed-btn"} onClick={handleCollectionFilm}>
-        <img src={collection ? viewedIconActive : viewedIcon} width="22px" height="22px"/>
+      <button className="film-item-mobile__menu">
+        <img src={cardMenuIcon} width="22px" height="22px" />
       </button>
-      <button className={liked ? "film-item__fav-btn film-item__fav-btn_active" : "film-item__fav-btn"} onClick={handleLikedFilm}>
-        <img src={liked ? likedIconActive : likedIcon} width="22px" height="22px"/>
-      </button>
+      <div className="film-item-mobile__controls">
+        <button className={collection ? "film-item-mobile__viewed-btn film-item-mobile__viewed-btn_active" : "film-item-mobile__viewed-btn"} onClick={handleCollectionFilm}>
+          <img src={collection ? viewedIconActive : viewedIcon} width="22px" height="22px"/>
+        </button>
+        <button className={wish ? "film-item-mobile__wish-btn film-item-mobile__wish-btn_active" : "film-item-mobile__wish-btn"} onClick={handleWishFilm} title="Буду смотреть">
+          <img src={wish ? wishIconActive : wishIcon} width="22px" height="22px"/>
+        </button>
+        <button className={liked ? "film-item-mobile__fav-btn film-item-mobile__fav-btn_active" : "film-item-mobile__fav-btn"} onClick={handleLikedFilm}>
+          <img src={liked ? likedIconActive : likedIcon} width="22px" height="22px"/>
+        </button>
+      </div>
     </li>
   )
 }

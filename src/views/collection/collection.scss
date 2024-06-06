@@ -77,3 +77,9 @@ input[disabled] + .collection__switch-item {
     border-top-right-radius: 18px;
   }
 }
+
+@media (max-width: 600px) {
+  .collection__switch-item {
+    font-size: 14px;
+  }
+}
