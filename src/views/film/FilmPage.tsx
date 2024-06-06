@@ -132,6 +132,8 @@ export default function FilmPage(): ReactElement {
     setSimilarFilmsList(film?.sequelsAndPrequels.concat(film.similarMovies || []) || [])
   }, [filmIsSuccess, film])
 
+  console.log(film)
+
   return (
     filmIsLoading ? <Loader /> :
     <div className="film">
@@ -149,8 +151,15 @@ export default function FilmPage(): ReactElement {
         }
       </ul>
       <div className="film__main">
-        <img className="film__image" src={film?.poster.url || defaultMovieImage} width="400px" height="534px" />
+        <img className="film__image" src={film?.poster.previewUrl || film?.poster.url || defaultMovieImage} width="400px" height="534px" />
         <div className="film__content">
+          <div>
+          <ul className="film__countries">
+            {film?.countries.map((country, i) => 
+              <li className="film__country" key={i}>{country.name}</li>
+            )}
+          </ul>
+          </div>
           <div className="film__controls">
             <button className="film__button" onClick={handleCollectionFilm}>
               <img src={collection ? viewedIconActive : viewedIcon} width="32px" height="32px"/>
@@ -163,6 +172,7 @@ export default function FilmPage(): ReactElement {
             </button>
           </div>
           <p className="film__description">{film?.description}</p>
+          <p className="film__length">{film?.movieLength} мин</p>
           {
             film?.watchability.items.length !== 0 ?
             <div className="film__watch">

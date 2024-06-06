@@ -38,6 +38,32 @@
       color: var(--tag-hover-color);
     }
   }
+  &__countries {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  &__country {
+    font-size: 17px;
+    line-height: 100%;
+    font-weight: 500;
+    color: var(--tag-color);
+
+    &::before {
+      content: '\00B7';
+      padding-right: 7px;
+    }
+
+    &:first-of-type {
+      &::before {
+        content: none;
+        padding-right: unset;
+      }
+    }
+  }
   &__heading {
     display: flex;
     column-gap: 16px;
@@ -96,6 +122,13 @@
     color: var(--profile-text-color);
     max-width: 852px;
     width: 100%;
+  }
+  &__length {
+    margin: 0;
+    font-size: 20px;
+    line-height: 22px;
+    font-weight: 600;
+    color: var(--profile-text-color);
   }
   &__watch {
     display: flex;
@@ -197,6 +230,9 @@
   }
   .film__content {
     max-width: calc(60% - 16px);
+  }
+  .film__countries {
+    gap: 4px 8px;
   }
   .film__description {
     font-size: 18px;
