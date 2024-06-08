@@ -170,7 +170,9 @@ export default function FilmPage(): ReactElement {
             </button>
           </div>
           <p className="film__description">{film?.description}</p>
-          <p className="film__length">{film?.movieLength} мин</p>
+          <p className="film__length">
+            {film?.movieLength || film?.seriesLength} мин
+          </p>
           {
             film?.watchability.items.length !== 0 ?
             <div className="film__watch">
