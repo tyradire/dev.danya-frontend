@@ -4,10 +4,13 @@
 
 ## TODO
 
+- [ ] Добавление гибкого фильтра фильмов для страницы "Коллекций"
+- [ ] Улучшение валидации регистрации/логина
 - [ ] Расширение страницы профиля
 
 ## DONE
 
+[ca66fce](https://github.com/tyradire/dev.danya-frontend/commit/ca66fce42d02ef9b161882799e44d44b0183a808)
 - [x] Рандомайзер выбора фильма из раздела "Буду смотреть" 
 
 [64b2112](https://github.com/tyradire/dev.danya-frontend/commit/64b21126e0d9e0c1bf955a220ac2c279d84fa5fb)
