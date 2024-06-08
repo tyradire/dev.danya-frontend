@@ -25,11 +25,6 @@
       line-height: 20px;
       padding: 2px 8px;
       transition: color .3s, border-color .3s;
-
-      &:hover {
-        border-color: var(--tag-hover-color);
-        color: var(--tag-hover-color);
-      }
     }
 
     &_active button {
@@ -54,5 +49,13 @@
 @media (max-width: 1600px) {
   .filter {
     max-width: 1136px;
+  }
+}
+@media (hover: hover) {
+  .filter__item {
+     button:hover {
+      border-color: var(--tag-hover-color);
+      color: var(--tag-hover-color);
+    }
   }
 }
