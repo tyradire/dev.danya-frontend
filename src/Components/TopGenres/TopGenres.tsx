@@ -10,7 +10,7 @@ export default function TopGenres(): ReactElement {
   const collectionData = useSelector((state: RootState) => state.collection)
   const collectionGenres = collectionData.genres.map(genre=>genre.genre);
   const collectionTopGenres = collectionData.genres.map(genre=>genre.genre).slice(0,12)
-  console.log(collectionData.genres.map(genre=>genre.count).slice(12))
+
   const data = {
     labels: [...collectionData.genres.map(genre=>genre.genre).slice(0,12), 'прочее'],
     datasets: [
@@ -37,7 +37,6 @@ export default function TopGenres(): ReactElement {
       },
     ],
   };
-  console.log(collectionData.genres)
 
   return (
     <>

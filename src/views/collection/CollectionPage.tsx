@@ -1,7 +1,8 @@
 import { ReactElement, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import FilmItems from "../../Components/FilmItems/FilmItems";
-import { ProfileGenre } from "../../models/models";
+import Filter from "../../Components/UI/Filter";
+import { IFilm, ProfileGenre } from "../../models/models";
 import { useGetFilmsByIdQuery } from "../../store/films/api.kinopoisk";
 import { RootState } from "../../store/store";
 import { setCollectionGenres } from "../../store/user/collectionReducer";
@@ -19,9 +20,14 @@ export default function CollectionPage({isMobileDevice}: {isMobileDevice: boolea
   const [queryToApiLiked, setQueryToApiLiked] = useState<string>('&id=' + likedData?.liked?.join('&id=') || '');
   const [queryToApiWish, setQueryToApiWish] = useState<string>('&id=' + wishData?.wish?.join('&id=') || '');
 
-  const {data: collectionFIlmsData } = useGetFilmsByIdQuery(queryToApiCollection);
-  const {data: likedFIlmsData} = useGetFilmsByIdQuery(queryToApiLiked);
-  const {data: wishFIlmsData} = useGetFilmsByIdQuery(queryToApiWish);
+  const {data: collectionFIlmsData, isSuccess: collectionSuccess } = useGetFilmsByIdQuery(queryToApiCollection);
+  const {data: likedFIlmsData, isSuccess: likedSuccess} = useGetFilmsByIdQuery(queryToApiLiked);
+  const {data: wishFIlmsData, isSuccess: wishSuccess} = useGetFilmsByIdQuery(queryToApiWish);
+
+  const [allFilms, setAllFilms] = useState<IFilm[]|undefined>(collectionFIlmsData||[]);
+  const [viewedFilms, setViewedFilms] = useState<IFilm[]|undefined>(collectionFIlmsData||[]);
+  const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+
 
   useEffect(() => {
     setQueryToApiCollection('&id=' + collectionData?.collection?.join('&id='));
@@ -34,6 +40,38 @@ export default function CollectionPage({isMobileDevice}: {isMobileDevice: boolea
   useEffect(() => {
     setQueryToApiWish('&id=' + wishData?.wish?.join('&id='));
   }, [wishData])
+
+  useEffect(() => {
+    if (filmsType === 'watched') {
+      setViewedFilms(collectionFIlmsData);
+      setAllFilms(collectionFIlmsData);
+    } else if (filmsType === 'liked') {
+      setViewedFilms(likedFIlmsData);
+      setAllFilms(likedFIlmsData);
+    } else if (filmsType === 'wish') {
+      setViewedFilms(wishFIlmsData);
+      setAllFilms(wishFIlmsData);
+    }
+  }, [collectionSuccess, likedSuccess, wishSuccess, filmsType])
+
+  useEffect(() => {
+    if (!selectedGenres.length) {
+      if (filmsType === 'watched') {
+        setViewedFilms(collectionFIlmsData);
+        setAllFilms(collectionFIlmsData);
+      } else if (filmsType === 'liked') {
+        setViewedFilms(likedFIlmsData);
+        setAllFilms(likedFIlmsData);
+      } else if (filmsType === 'wish') {
+        setViewedFilms(wishFIlmsData);
+        setAllFilms(wishFIlmsData);
+      }
+    }
+  }, [selectedGenres])
+
+  useEffect(() => {
+    setSelectedGenres([]);
+  }, [filmsType])
 
   return (
     <div className="collection">
@@ -51,13 +89,11 @@ export default function CollectionPage({isMobileDevice}: {isMobileDevice: boolea
 
         </fieldset>
 
+      <Filter viewedFilms={allFilms||[]} selectedGenres={selectedGenres} setViewedFilms={setViewedFilms} setSelectedGenres={setSelectedGenres} />
+
       {
-        filmsType === 'watched' && collectionFIlmsData?.length
-        ? <FilmItems data={collectionFIlmsData || []} isMobileDevice={isMobileDevice} />
-        : filmsType === 'liked' && likedFIlmsData?.length
-        ? <FilmItems data={likedFIlmsData || []} isMobileDevice={isMobileDevice} />
-        : filmsType === 'wish' && wishFIlmsData?.length
-        ? <FilmItems data={wishFIlmsData || []} isMobileDevice={isMobileDevice} />
+        viewedFilms?.length
+        ? <FilmItems data={viewedFilms} isMobileDevice={isMobileDevice} />
         : <p className="page__notice">Коллекция пуста.</p>
       }
     </div>
