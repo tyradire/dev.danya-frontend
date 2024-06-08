@@ -132,8 +132,6 @@ export default function FilmPage(): ReactElement {
     setSimilarFilmsList(film?.sequelsAndPrequels.concat(film.similarMovies || []) || [])
   }, [filmIsSuccess, film])
 
-  console.log(film)
-
   return (
     filmIsLoading ? <Loader /> :
     <div className="film">

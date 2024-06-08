@@ -13,8 +13,6 @@ export default function ProfilePage(): ReactElement {
   const collectionData = useSelector((state: RootState) => state.collection)
   const likedData = useSelector((state: RootState) => state.liked)
 
-  console.log(collectionData.genres)
-
   return (
     <div className="page-profile">
       <div className="page__heading">
