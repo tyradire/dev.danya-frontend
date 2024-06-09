@@ -48,6 +48,8 @@ export default function App(): ReactElement {
   const {data: collectionFIlmsData, isSuccess: collectionIsSuccess} = useGetFilmsByIdQuery(queryToApiCollection);
   const {data: likedFIlmsData, isSuccess} = useGetFilmsByIdQuery(queryToApi);
 
+  console.log(collectionFIlmsData)
+
   if (collectionIsSuccess && genresInCollection.length < 1) {
     const collectionGenres: Array<any[]> = [];
     const genresCollection: any = {};

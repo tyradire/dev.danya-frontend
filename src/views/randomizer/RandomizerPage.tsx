@@ -40,23 +40,32 @@ export default function RandomizerPage(): ReactElement {
     }, 3000)
   }
 
+  console.log()
+
   return (
     <div className="randomizer-page">
       <div className="randomizer">
         {
-          (wishFIlmsData && randomList.length)
-          ? <p className={buttonDisabled ? "randomizer__name randomizer__image_blur" : "randomizer__name"}>{wishFIlmsData?.filter(film => film.id === randomList[randomNumber])[0].name}</p>
-          : ''
+          wishData.wish.length < 2
+          ? <p className="page__notice">Добавьте фильмы в коллекцию "Буду смотреть"</p>
+          : <>
+              {
+                (wishFIlmsData && randomList.length)
+                ? <p className={buttonDisabled ? "randomizer__name randomizer__image_blur" : "randomizer__name"}>{wishFIlmsData?.filter(film => film.id === randomList[randomNumber])[0].name}</p>
+                : ''
+              }
+              { 
+                (wishFIlmsData && randomList.length)
+                ? <img className={buttonDisabled ? "randomizer__image randomizer__image_blur" : "randomizer__image"} src={wishFIlmsData?.filter(film => film.id === randomList[randomNumber])[0].poster?.previewUrl} />
+                : <Loader />
+              }
+              <button className="randomizer__button" onClick={randomInterval} disabled={buttonDisabled}>{buttonDisabled ? 'Выбираю...' : 'Выбрать'}</button>
+              {
+                randomList && <Link className={buttonDisabled ? "randomizer__button randomizer__button_disabled" : "randomizer__button"} to={`/search/${randomList[randomNumber]}`} target="_blank">О фильме</Link>
+              }
+          </>
         }
-        { 
-          (wishFIlmsData && randomList.length)
-          ? <img className={buttonDisabled ? "randomizer__image randomizer__image_blur" : "randomizer__image"} src={wishFIlmsData?.filter(film => film.id === randomList[randomNumber])[0].poster?.previewUrl} />
-          : <Loader />
-        }
-        <button className="randomizer__button" onClick={randomInterval} disabled={buttonDisabled}>{buttonDisabled ? 'Выбираю...' : 'Выбрать'}</button>
-        {
-          randomList && <Link className={buttonDisabled ? "randomizer__button randomizer__button_disabled" : "randomizer__button"} to={`/search/${randomList[randomNumber]}`} target="_blank">О фильме</Link>
-        }
+        
       </div>
     </div>
   )
