@@ -4,7 +4,7 @@ import FilmItems from "../../Components/FilmItems/FilmItems";
 import Loader from "../../Components/Loader/Loader";
 import Tags from "../../Components/Tags/Tags";
 import { IFilm } from "../../models/models";
-import { useGetTopRatingFilmsQuery, useSearchFilmsQuery, useLazySearchFilmsForMainPageQuery, useLazyGetTopFilmsQuery } from "../../store/films/api.kinopoisk";
+import { useLazySearchFilmsForMainPageQuery, useLazyGetTopFilmsQuery } from "../../store/films/api.kinopoisk";
 import { RootState } from "../../store/store";
 
 export default function MainPage({isMobileDevice}: {isMobileDevice: boolean}): ReactElement {
@@ -17,8 +17,7 @@ export default function MainPage({isMobileDevice}: {isMobileDevice: boolean}): R
   const [mainFilmsData, setMainFilmsData] = useState<IFilm[]>([]);
   const [filmsFinished, setFilmsFinished] = useState<boolean>(true)
 
-  //const {data: fetchedFilms, isFetching: defaultFetching} = useSearchFilmsQuery('');
-  const [fetchGenres, {data: fetchedGenresFilms, isLoading: filmsForMainPageIsLoading}] = useLazySearchFilmsForMainPageQuery();
+  const [fetchGenres, {}] = useLazySearchFilmsForMainPageQuery();
   const [fetchFilms, {isLoading: topFilmsIsLoading}] = useLazyGetTopFilmsQuery();
 
   const scrollHandler = ():void => {
@@ -26,10 +25,6 @@ export default function MainPage({isMobileDevice}: {isMobileDevice: boolean}): R
       setFetching(true);
     }
   }
-
-  // useEffect(() => {
-  //   setMainFilmsData(fetchedFilms||[])
-  // }, [defaultFetching])
 
   useEffect(() => {
     if (fetching && filmsFinished) {
@@ -43,18 +38,13 @@ export default function MainPage({isMobileDevice}: {isMobileDevice: boolean}): R
     }
   }, [fetching])
 
-  // useEffect(() => {
-  //   if (fetchedGenresFilms === undefined) return;
-  //   setMainFilmsData(fetchedGenresFilms);
-  // }, [fetchedGenresFilms])
-
   useEffect(() => {
     if (mainQuery.length < 1) return;
     fetchGenres(mainQuery)
     .then((res:any) => {
       setMainFilmsData(res.data)
-      setFilmsFinished(false)
     })
+    setFilmsFinished(false)
   }, [mainQuery])
 
   useEffect(() => {
@@ -66,7 +56,7 @@ export default function MainPage({isMobileDevice}: {isMobileDevice: boolean}): R
 
   return (
     <div className="main">
-      <Tags likedGenres={likedData.likedGenres} setMainQuery={setMainQuery} />
+      <Tags likedGenres={likedData.likedGenres} setMainQuery={setMainQuery} setCurrentPage={setCurrentPage} />
       {
         topFilmsIsLoading
         ? <Loader />

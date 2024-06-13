@@ -2,11 +2,12 @@ import { ReactElement, useState } from "react";
 import Tag from "./Tag";
 import './tags.scss';
 
-export default function Tags({setMainQuery, likedGenres}: {setMainQuery: any, likedGenres: string[]}): ReactElement {
+export default function Tags({setMainQuery, likedGenres, setCurrentPage}: {setMainQuery: any, likedGenres: string[], setCurrentPage: any}): ReactElement {
 
   const [activeTag, setActiveTag] = useState<number>(-1);
 
   function setGenre(genre: string) {
+    setCurrentPage(1);
     setMainQuery(genre)
   }
 

@@ -47,7 +47,7 @@ export default function App(): ReactElement {
   const [genresInCollection, setGenresInCollection] = useState<ProfileGenre[]>([])
 
   const {data: collectionFIlmsData, isSuccess: collectionIsSuccess} = useGetFilmsByIdQuery({query: queryToApiCollection, page: currentPage});
-  const {data: likedFIlmsData, isSuccess} = useGetFilmsByIdQuery({query: queryToApi, page: currentPage});
+  const {data: likedFIlmsData, isSuccess: likedIsSuccess} = useGetFilmsByIdQuery({query: queryToApi, page: currentPage});
   const [fetchFilms, {data: LcollectionFIlmsData, isSuccess: LcollectionIsSuccess}] = useLazyGetFilmsByIdQuery();
 
   if (collectionIsSuccess && genresInCollection.length < 1) {
@@ -74,10 +74,6 @@ export default function App(): ReactElement {
     setGenresInCollection([...genresArray])
   }
   
-  // useEffect(() => {
-  //   fetchFilms()
-  // }, [])
-
   useEffect(() => {
     const getWindowSize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", getWindowSize);
@@ -152,7 +148,7 @@ export default function App(): ReactElement {
     dispatch(setCollectionGenres(genresInCollection))
   }, [genresInCollection])
 
-  if (isSuccess && likedFilmsIds.length < 1) {
+  if (likedIsSuccess && likedFilmsIds.length < 1) {
     const collectionGenres: Array<any[]> = [];
     const genresCollection: any = {};
     const genresArray: any = [];
