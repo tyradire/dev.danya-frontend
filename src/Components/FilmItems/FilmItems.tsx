@@ -14,7 +14,7 @@ export default function FilmItems({data, isMobileDevice}: {data: IFilm[], isMobi
     <>
       <ul className="film-items">
         { 
-          data.slice(0,moviesVisibleCount).map((film) => {
+          data.map((film) => {
             if (isMobileDevice) {
               return <FilmItem
                 name={film.name}
@@ -45,9 +45,9 @@ export default function FilmItems({data, isMobileDevice}: {data: IFilm[], isMobi
           })
         }
       </ul>
-      { 
+      {/* { 
         data.length > moviesVisibleCount && <MoreButton count={moviesVisibleCount} setCount={setMoviesVisibleCount} />
-      }
+      } */}
       {
         data.length > 10 && <ScrollButton visible={data.length > 10} />
       }

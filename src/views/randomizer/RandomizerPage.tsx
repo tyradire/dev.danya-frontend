@@ -11,8 +11,9 @@ export default function RandomizerPage(): ReactElement {
 
   const wishData = useSelector((state: RootState) => state.wish)
   const [queryToWishApi, setQueryToWishApi] = useState<string>('&id=' + wishData?.wish?.join('&id=') || '');
+  const [currentPage, setCurrentPage] = useState<number>(1);
   
-  const {data: wishFIlmsData, isSuccess: wishIsSuccess} = useGetFilmsByIdQuery(queryToWishApi);
+  const {data: wishFIlmsData, isSuccess: wishIsSuccess} = useGetFilmsByIdQuery({query: queryToWishApi, page: currentPage});
 
   const [randomList, setRandomList] = useState<number[]>([]);
   const [randomNumber, setRandomValue] = useState<number>(0);
@@ -33,7 +34,7 @@ export default function RandomizerPage(): ReactElement {
 
   const randomInterval = () => {
     setButtonDisabled(true);
-    const startRandomize = setInterval(randomStart, 250)
+    const startRandomize = setInterval(randomStart, 500)
     setTimeout(function(){
       clearInterval(startRandomize);
       setButtonDisabled(false);

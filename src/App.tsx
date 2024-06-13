@@ -23,7 +23,7 @@ import { setCollectionFilms, setCollectionGenres } from "./store/user/collection
 import { getUserData } from "./api/userAPI";
 import { setLikedFilms, setLikedGenres } from "./store/user/likedReducer";
 import Modal from "./Components/UI/Modal";
-import { useGetFilmsByIdQuery } from "./store/films/api.kinopoisk";
+import { useGetFilmsByIdQuery, useLazyGetFilmsByIdQuery } from "./store/films/api.kinopoisk";
 import BackButton from "./Components/UI/BackButton";
 import { getWishListMovies } from "./api/wishAPI";
 import { setWishlistFilmsIds } from "./store/user/wishlistReducer";
@@ -41,14 +41,14 @@ export default function App(): ReactElement {
   const [localUserData, setLocalUserData] = useState<string>(localStorage.getItem('token') || '');
   const [queryToApi, setQueryToApi] = useState<string>('&id=' + likedData?.liked?.join('&id=') || '');
   const [queryToApiCollection, setQueryToApiCollection] = useState<string>('&id=' + collectionData?.collection?.join('&id=') || '');
+  const [currentPage, setCurrentPage] = useState<number>(1);
   
   const [likedFilmsIds, setLikedFilmsIds] = useState<string[]>([])
   const [genresInCollection, setGenresInCollection] = useState<ProfileGenre[]>([])
 
-  const {data: collectionFIlmsData, isSuccess: collectionIsSuccess} = useGetFilmsByIdQuery(queryToApiCollection);
-  const {data: likedFIlmsData, isSuccess} = useGetFilmsByIdQuery(queryToApi);
-
-  console.log(collectionFIlmsData)
+  const {data: collectionFIlmsData, isSuccess: collectionIsSuccess} = useGetFilmsByIdQuery({query: queryToApiCollection, page: currentPage});
+  const {data: likedFIlmsData, isSuccess} = useGetFilmsByIdQuery({query: queryToApi, page: currentPage});
+  const [fetchFilms, {data: LcollectionFIlmsData, isSuccess: LcollectionIsSuccess}] = useLazyGetFilmsByIdQuery();
 
   if (collectionIsSuccess && genresInCollection.length < 1) {
     const collectionGenres: Array<any[]> = [];
@@ -74,6 +74,10 @@ export default function App(): ReactElement {
     setGenresInCollection([...genresArray])
   }
   
+  // useEffect(() => {
+  //   fetchFilms()
+  // }, [])
+
   useEffect(() => {
     const getWindowSize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", getWindowSize);

@@ -19,10 +19,11 @@ export default function CollectionPage({isMobileDevice}: {isMobileDevice: boolea
   const [queryToApiCollection, setQueryToApiCollection] = useState<string>('&id=' + collectionData?.collection?.join('&id=') || '');
   const [queryToApiLiked, setQueryToApiLiked] = useState<string>('&id=' + likedData?.liked?.join('&id=') || '');
   const [queryToApiWish, setQueryToApiWish] = useState<string>('&id=' + wishData?.wish?.join('&id=') || '');
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const {data: collectionFIlmsData, isSuccess: collectionSuccess } = useGetFilmsByIdQuery(queryToApiCollection);
-  const {data: likedFIlmsData, isSuccess: likedSuccess} = useGetFilmsByIdQuery(queryToApiLiked);
-  const {data: wishFIlmsData, isSuccess: wishSuccess} = useGetFilmsByIdQuery(queryToApiWish);
+  const {data: collectionFIlmsData, isSuccess: collectionSuccess } = useGetFilmsByIdQuery({query: queryToApiCollection, page: currentPage});
+  const {data: likedFIlmsData, isSuccess: likedSuccess} = useGetFilmsByIdQuery({query: queryToApiLiked, page: currentPage});
+  const {data: wishFIlmsData, isSuccess: wishSuccess} = useGetFilmsByIdQuery({query: queryToApiWish, page: currentPage});
 
   const [allFilms, setAllFilms] = useState<IFilm[]|undefined>(collectionFIlmsData||[]);
   const [viewedFilms, setViewedFilms] = useState<IFilm[]|undefined>(collectionFIlmsData||[]);
