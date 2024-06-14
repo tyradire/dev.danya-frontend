@@ -182,7 +182,7 @@ export default function FilmItem({ name, year, genres, movieLength, rating, post
       </div>
       <ul className="film-item__genres-list">
         {
-          genres.map((genre, index) => {
+          genres?.map((genre, index) => {
             if (index < 3) {
               return <li className="film-item__genres-item" key={index}>{genre.name}</li>
             } else return;

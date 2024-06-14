@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import FilmItems from "../../Components/FilmItems/FilmItems";
 import Filter from "../../Components/UI/Filter";
 import { IFilm, ProfileGenre } from "../../models/models";
-import { useGetFilmsByIdQuery } from "../../store/films/api.kinopoisk";
+import { useGetFilmsByIdQuery, useLazyGetFilmsByIdQuery } from "../../store/films/api.kinopoisk";
 import { RootState } from "../../store/store";
 import { setCollectionGenres } from "../../store/user/collectionReducer";
 import { setLikedGenres } from "../../store/user/likedReducer";
@@ -16,85 +16,109 @@ export default function CollectionPage({isMobileDevice}: {isMobileDevice: boolea
   const wishData = useSelector((state: RootState) => state.wish)
 
   const [filmsType, setFilmsType] = useState<string>('watched');
-  const [queryToApiCollection, setQueryToApiCollection] = useState<string>('&id=' + collectionData?.collection?.join('&id=') || '');
-  const [queryToApiLiked, setQueryToApiLiked] = useState<string>('&id=' + likedData?.liked?.join('&id=') || '');
-  const [queryToApiWish, setQueryToApiWish] = useState<string>('&id=' + wishData?.wish?.join('&id=') || '');
+  const [queryToApiCollection, setQueryToApiCollection] = useState<string>('&id=' + collectionData.collection.join('&id='));
+
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [fetching, setFetching] = useState<boolean>(true);
+  const [filmsFinished, setFilmsFinished] = useState<boolean>(true)
 
-  const {data: collectionFIlmsData, isSuccess: collectionSuccess } = useGetFilmsByIdQuery({query: queryToApiCollection, page: currentPage});
-  const {data: likedFIlmsData, isSuccess: likedSuccess} = useGetFilmsByIdQuery({query: queryToApiLiked, page: currentPage});
-  const {data: wishFIlmsData, isSuccess: wishSuccess} = useGetFilmsByIdQuery({query: queryToApiWish, page: currentPage});
+  const [fetchFilms, {isSuccess: collectionFilmsIsSuccess}] = useLazyGetFilmsByIdQuery();
 
-  const [allFilms, setAllFilms] = useState<IFilm[]|undefined>(collectionFIlmsData||[]);
-  const [viewedFilms, setViewedFilms] = useState<IFilm[]|undefined>(collectionFIlmsData||[]);
+  const [mainFilmsData, setMainFilmsData] = useState<IFilm[]>([]);
+  // const [allFilms, setAllFilms] = useState<IFilm[]|undefined>(collectionFIlmsData||[]);
+  // const [viewedFilms, setViewedFilms] = useState<IFilm[]|undefined>(collectionFIlmsData||[]);
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
 
+  const handleCollection = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFilmsType(e.target.value)
+  }
+
+  const scrollHandler = ():void => {
+    if (document.documentElement.scrollHeight - (document.documentElement.scrollTop + window.innerHeight) < 100 && filmsFinished) {
+      setFetching(true);
+    }
+  }
 
   useEffect(() => {
-    setQueryToApiCollection('&id=' + collectionData?.collection?.join('&id='));
+    setQueryToApiCollection('&id=' + collectionData.collection.join('&id='));
   }, [collectionData])
 
   useEffect(() => {
-    setQueryToApiLiked('&id=' + likedData?.liked?.join('&id='));
-  }, [likedData])
-
-  useEffect(() => {
-    setQueryToApiWish('&id=' + wishData?.wish?.join('&id='));
-  }, [wishData])
-
-  useEffect(() => {
+    setCurrentPage(1);
+    setMainFilmsData([]);
+    setFilmsFinished(true);
     if (filmsType === 'watched') {
-      setViewedFilms(collectionFIlmsData);
-      setAllFilms(collectionFIlmsData);
+      setQueryToApiCollection('&id=' + collectionData.collection.join('&id='));
+      console.log(filmsType)
     } else if (filmsType === 'liked') {
-      setViewedFilms(likedFIlmsData);
-      setAllFilms(likedFIlmsData);
+      setQueryToApiCollection('&id=' + likedData?.liked?.join('&id='));
+      console.log(filmsType)
     } else if (filmsType === 'wish') {
-      setViewedFilms(wishFIlmsData);
-      setAllFilms(wishFIlmsData);
+      setQueryToApiCollection('&id=' + wishData?.wish?.join('&id='));
+      console.log(filmsType)
     }
-  }, [collectionSuccess, likedSuccess, wishSuccess, filmsType])
+    setFetching(true);
+  }, [filmsType])
 
-  useEffect(() => {
-    if (!selectedGenres.length) {
-      if (filmsType === 'watched') {
-        setViewedFilms(collectionFIlmsData);
-        setAllFilms(collectionFIlmsData);
-      } else if (filmsType === 'liked') {
-        setViewedFilms(likedFIlmsData);
-        setAllFilms(likedFIlmsData);
-      } else if (filmsType === 'wish') {
-        setViewedFilms(wishFIlmsData);
-        setAllFilms(wishFIlmsData);
-      }
-    }
-  }, [selectedGenres])
+  // useEffect(() => {
+  //   if (!selectedGenres.length) {
+  //     if (filmsType === 'watched') {
+  //       setViewedFilms(collectionFIlmsData);
+  //       setAllFilms(collectionFIlmsData);
+  //     } else if (filmsType === 'liked') {
+  //       setViewedFilms(likedFIlmsData);
+  //       setAllFilms(likedFIlmsData);
+  //     } else if (filmsType === 'wish') {
+  //       setViewedFilms(wishFIlmsData);
+  //       setAllFilms(wishFIlmsData);
+  //     }
+  //   }
+  // }, [selectedGenres])
 
   useEffect(() => {
     setSelectedGenres([]);
   }, [filmsType])
+
+  useEffect(() => {
+    document.addEventListener('scroll', scrollHandler)
+    return function() {
+      document.removeEventListener('scroll', scrollHandler)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (fetching && filmsFinished && queryToApiCollection.length > 4) {
+      fetchFilms({query: queryToApiCollection, page: currentPage})
+      .then((res: any) => {
+        if (res.data?.length === 0) setFilmsFinished(false);
+        setMainFilmsData(mainFilmsData => mainFilmsData.concat(res.data))
+        setFetching(false)
+      });
+      setCurrentPage(currentPage => currentPage + 1)
+    }
+  }, [fetching, queryToApiCollection])
 
   return (
     <div className="collection">
 
         <fieldset className="collection__switch">
           
-          <input type="radio" name="collection" value="watched" id="allCollection" onChange={(e) => setFilmsType(e.target.value)} defaultChecked/>
+          <input type="radio" name="collection" value="watched" id="allCollection" onChange={(e) => handleCollection(e)} defaultChecked/>
           <label className="collection__switch-item" htmlFor="allCollection">Просмотренные</label>
 
-          <input type="radio" name="collection" value="liked" id="onlyLiked" onChange={(e) => setFilmsType(e.target.value)}/>
+          <input type="radio" name="collection" value="liked" id="onlyLiked" onChange={(e) => handleCollection(e)}/>
           <label className="collection__switch-item" htmlFor="onlyLiked">Любимое</label>
 
-          <input type="radio" name="collection" value="wish" id="onlyWish" onChange={(e) => setFilmsType(e.target.value)}/>
+          <input type="radio" name="collection" value="wish" id="onlyWish" onChange={(e) => handleCollection(e)}/>
           <label className="collection__switch-item" htmlFor="onlyWish">Буду смотреть</label>
 
         </fieldset>
 
-      <Filter viewedFilms={allFilms||[]} selectedGenres={selectedGenres} setViewedFilms={setViewedFilms} setSelectedGenres={setSelectedGenres} />
+      {/* <Filter viewedFilms={allFilms||[]} selectedGenres={selectedGenres} setViewedFilms={setViewedFilms} setSelectedGenres={setSelectedGenres} /> */}
 
       {
-        viewedFilms?.length
-        ? <FilmItems data={viewedFilms} isMobileDevice={isMobileDevice} />
+        collectionFilmsIsSuccess
+        ? <FilmItems data={mainFilmsData} isMobileDevice={isMobileDevice} />
         : <p className="page__notice">Коллекция пуста.</p>
       }
     </div>
