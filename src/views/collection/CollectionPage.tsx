@@ -29,6 +29,10 @@ export default function CollectionPage({isMobileDevice}: {isMobileDevice: boolea
   // const [viewedFilms, setViewedFilms] = useState<IFilm[]|undefined>(collectionFIlmsData||[]);
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
 
+  useEffect(() => {
+    setSelectedGenres(collectionData.genres.map(genre => genre.genre))
+  }, [collectionData.genres])
+
   const handleCollection = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilmsType(e.target.value)
   }
@@ -75,9 +79,9 @@ export default function CollectionPage({isMobileDevice}: {isMobileDevice: boolea
   //   }
   // }, [selectedGenres])
 
-  useEffect(() => {
-    setSelectedGenres([]);
-  }, [filmsType])
+  // useEffect(() => {
+  //   setSelectedGenres([]);
+  // }, [filmsType])
 
   useEffect(() => {
     document.addEventListener('scroll', scrollHandler)
@@ -114,7 +118,7 @@ export default function CollectionPage({isMobileDevice}: {isMobileDevice: boolea
 
         </fieldset>
 
-      {/* <Filter viewedFilms={allFilms||[]} selectedGenres={selectedGenres} setViewedFilms={setViewedFilms} setSelectedGenres={setSelectedGenres} /> */}
+      <Filter viewedFilms={mainFilmsData||[]} selectedGenres={selectedGenres} />
 
       {
         collectionFilmsIsSuccess
