@@ -1,7 +1,12 @@
 .filter {
   margin: 20px auto 0;
+  padding-top: 20px;
+  padding-bottom: 20px;
   display: flex;
   justify-content: center;
+  background-color: var(--switch-tag-bg);
+  border: 1px solid var(--switch-tag-bg);
+  border-radius: 20px;
 
   &__list {
     margin: 0;

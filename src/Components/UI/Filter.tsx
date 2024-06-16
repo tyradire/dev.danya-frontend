@@ -23,25 +23,29 @@ export default function Filter({viewedFilms, selectedGenres}: {
   const colorStyles = {
     control: (styles: any) => ({
       ...styles,
-      backgroundColor: 'transparent',
-      width: '194px',
-      height: '37px',
-      borderRadius: '10px',
-      borderColor: interfaceData.theme === 'default' ? '#232323' : '#cbcbcb',
+      padding: '8px',
+      backgroundColor: interfaceData.theme === 'default' ? 'hsla(0, 0%, 31%, .7);' : 'hsla(0, 0%, 100%, .1);',
+      minWidth: '240px',
+      width: 'fit-content',
+      maxWidth: '400px',
+      borderRadius: '22px',
+      borderColor: interfaceData.theme === 'default' ? '#232323' : '#ababab',
       borderStyle: 'solid',
       borderWidth: '1px',
+      boxShadow: "none",
       '&:hover': {
-        backgroundColor: interfaceData.theme === 'default' ? 'hsla(0, 0%, 31%, .7);' : 'hsla(47.71, 91.93%, 56.27%, 0.4);',
         cursor: 'pointer'
       }
     }),
     singleValue: (styles: any) => ({
       ...styles,
+      paddingLeft: '12px',
       color: interfaceData.theme === 'default' ? '#fff5a1' : '#000000',
     }),
     option: (styles: any) => ({
       ...styles,
       border: 'none',
+      paddingLeft: '12px',
       color: interfaceData.theme === 'default' ? '#fff5a1' : '#000000',
       backgroundColor: interfaceData.theme === 'default' ? '#2e2e2e;' : '#f2f2f2;',
       '&:hover': {
@@ -51,7 +55,7 @@ export default function Filter({viewedFilms, selectedGenres}: {
     }),
     menu: (styles: any) => ({
       ...styles,
-      zIndex: 10,
+      zIndex: 99,
       backgroundColor: interfaceData.theme === 'default' ? '#2e2e2e;' : '#f2f2f2;',
     }),
     menuList: (styles: any) => ({
@@ -74,6 +78,32 @@ export default function Filter({viewedFilms, selectedGenres}: {
         scrollbarColor: '#888888',
         scrollbarWidth: 'thin',
       }
+    }),
+    indicatorSeparator: (styles: any) => ({
+      ...styles,
+      backgroundColor: interfaceData.theme === 'default' ? '#232323' : '#cbcbcb',
+    }),
+    multiValue: (styles: any) => ({
+      ...styles,
+      borderRadius: '16px',
+      borderWidth: '1px',
+      borderStyle: 'solid',
+      padding: '4px 6px',
+      color: 'red',
+      backgroundColor: 'transparent',
+      borderColor: interfaceData.theme === 'default' ? '#232323' : '#bbbbbb',
+      '&:hover': {
+        cursor: 'pointer'
+      }
+    }),
+    multiValueLabel: (styles: any) => ({
+      ...styles,
+      fontSize: '16px',
+      color: interfaceData.theme === 'default' ? '#fff5a1' : '#FFFFFF',
+    }),
+    multiValueRemove: (styles: any) => ({
+      ...styles,
+      borderRadius: '50%'
     })
   }
 
@@ -97,7 +127,7 @@ export default function Filter({viewedFilms, selectedGenres}: {
   return (
     <search className="filter">
       {
-        genres && <Select defaultValue={{label: 'Выбрать', value: null}} options={genres} styles={colorStyles} />
+        genres && <Select placeholder="Жанр" options={genres} styles={colorStyles} noOptionsMessage={() => 'Жанр отсутствует'} isMulti />
       }
       
       {/* <ul className="filter__list">
