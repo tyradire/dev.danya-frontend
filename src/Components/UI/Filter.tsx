@@ -5,42 +5,75 @@ import { IFilm, ProfileGenre } from "../../models/models";
 import { RootState } from "../../store/store";
 import './filter.scss';
 import FilterGenreTag from "./FilterGenreTag";
-import { useTheme } from "../../hooks/useTheme";
 
 export default function Filter({viewedFilms, selectedGenres}: {
   viewedFilms: IFilm[], 
   selectedGenres: string[]
 }): ReactElement {
 
+  const interfaceData = useSelector((state: RootState) => state.interface)
+
   const collectionGenres = useSelector((state: RootState) => state.collection.genres)
   const [userGenres, setUserGenres] = useState<ProfileGenre[]>([]);
   const [visibleMoreGenres, setVisibleMoreGenres] = useState<boolean>(false);
   const [genres, setGenres] = useState<any>([]);
+  const [activeTheme, setActiveTheme] = useState<string>('');
   const filteredGenres = visibleMoreGenres ? collectionGenres.length : 5
-
-  const { theme, setTheme } = useTheme()
 
   const colorStyles = {
     control: (styles: any) => ({
       ...styles,
-      backgroundColor: theme === 'default' ? 'hsla(0, 0%, 31%);' : 'hsla(215, 100%, 64%, 0.2);',
+      backgroundColor: 'transparent',
       width: '194px',
       height: '37px',
       borderRadius: '10px',
-      border: 'none',
+      borderColor: interfaceData.theme === 'default' ? '#232323' : '#cbcbcb',
+      borderStyle: 'solid',
+      borderWidth: '1px',
       '&:hover': {
-        backgroundColor: theme === 'default' ? 'hsla(0, 0%, 31%, .7);' : 'hsla(215, 100%, 64%, 0.3);',
+        backgroundColor: interfaceData.theme === 'default' ? 'hsla(0, 0%, 31%, .7);' : 'hsla(47.71, 91.93%, 56.27%, 0.4);',
         cursor: 'pointer'
       }
     }),
     singleValue: (styles: any) => ({
       ...styles,
-      color: theme === 'default' ? '#fff' : '#000',
+      color: interfaceData.theme === 'default' ? '#fff5a1' : '#000000',
     }),
     option: (styles: any) => ({
       ...styles,
-      color: theme === 'default' ? '#fff' : '#000',
-      backgroundColor: theme === 'default' ? 'hsla(0, 0%, 31%);' : 'hsla(215, 100%, 64%, 0.2);',
+      border: 'none',
+      color: interfaceData.theme === 'default' ? '#fff5a1' : '#000000',
+      backgroundColor: interfaceData.theme === 'default' ? '#2e2e2e;' : '#f2f2f2;',
+      '&:hover': {
+        backgroundColor: interfaceData.theme === 'default' ? 'hsla(0, 0%, 31%, .7);' : 'hsla(47.71, 91.93%, 56.27%, 0.4);',
+        cursor: 'pointer'
+      }
+    }),
+    menu: (styles: any) => ({
+      ...styles,
+      zIndex: 10,
+      backgroundColor: interfaceData.theme === 'default' ? '#2e2e2e;' : '#f2f2f2;',
+    }),
+    menuList: (styles: any) => ({
+      ...styles,
+      overflowY: 'scroll',
+      "::-webkit-scrollbar": {
+        width: "4px",
+        height: "0px",
+      },
+      "::-webkit-scrollbar-track": {
+        background: "#f1f1f1"
+      },
+      "::-webkit-scrollbar-thumb": {
+        background: "#888"
+      },
+      "::-webkit-scrollbar-thumb:hover": {
+        background: "#555"
+      },
+      "@supports (-moz-appearance:none)": {
+        scrollbarColor: '#888888',
+        scrollbarWidth: 'thin',
+      }
     })
   }
 
@@ -63,7 +96,10 @@ export default function Filter({viewedFilms, selectedGenres}: {
 
   return (
     <search className="filter">
-      <Select options={genres} styles={colorStyles} />
+      {
+        genres && <Select defaultValue={{label: 'Выбрать', value: null}} options={genres} styles={colorStyles} />
+      }
+      
       {/* <ul className="filter__list">
         {
           collectionGenres.slice(0, filteredGenres).map(genre => 

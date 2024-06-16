@@ -3,13 +3,15 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 export interface interfaceState {
   modalMessage: string,
   isOpened: boolean,
-  status: string
+  status: string,
+  theme: string
 }
 
 const initialState: interfaceState = {
   modalMessage: '',
   isOpened: false,
-  status: ''
+  status: '',
+  theme: localStorage.getItem('app-theme') || 'default'
 }
 
 export const interfaceSlice = createSlice({
@@ -30,9 +32,12 @@ export const interfaceSlice = createSlice({
       state.modalMessage = '';
       state.isOpened = false;
       state.status = '';
+    },
+    toogleTheme(state, action: PayloadAction<any>) {
+      state.theme = action.payload;
     }
   }
 })
 
-export const { setSuccessStatus, setUnauthorizedStatus, setDefaultStatus } = interfaceSlice.actions
+export const { setSuccessStatus, setUnauthorizedStatus, setDefaultStatus, toogleTheme } = interfaceSlice.actions
 export const interfaceReducer = interfaceSlice.reducer
